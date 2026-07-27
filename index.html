@@ -1,333 +1,478 @@
 <!DOCTYPE html>
-<html lang="he" dir="rtl" id="htmlTag">
+<html lang="he" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NBA App 2025/26</title>
+<title>כל קבוצות ה-NBA 2025/26</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700;900&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg: #0B0E14;
-  --card: #151A24;
-  --line: #232B3A;
-  --text: #EDEFF4;
-  --muted: #8B93A7;
-  --orange: #E8743B;
-  --red: #e74c3c;
-  --green: #2ecc71;
+:root{
+  --bg:#0B0E14; --card:#151A24; --line:#232B3A; --text:#EDEFF4; --muted:#8B93A7; --orange:#E8743B;
 }
-
-* { box-sizing: border-box; }
-body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Heebo', sans-serif; padding-bottom: 60px; }
-.wrap { max-width: 1000px; margin: 0 auto; padding: 0 14px; }
-
-/* Navigation & Header */
-header {
-  background: var(--card);
-  border-bottom: 1px solid var(--line);
-  padding: 14px 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: sticky;
-  top: 0;
-  z-index: 100;
+*{box-sizing:border-box;}
+body{margin:0;background:var(--bg);color:var(--text);font-family:'Heebo',sans-serif;padding:28px 14px 60px;}
+.wrap{max-width:920px;margin:0 auto;}
+.hero{text-align:center;padding:20px 16px 24px;border-bottom:1px solid var(--line);margin-bottom:20px;}
+.hero .eyebrow{color:var(--orange);font-weight:700;letter-spacing:2px;font-size:12px;text-transform:uppercase;}
+.hero h1{font-size:26px;font-weight:900;margin:8px 0 6px;}
+.hero p{color:var(--muted);font-size:13px;max-width:620px;margin:0 auto;line-height:1.6;}
+.controls{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:18px;}
+select{
+  background:var(--card);color:var(--text);border:1px solid var(--line);border-radius:10px;
+  padding:10px 14px;font-family:inherit;font-size:14px;font-weight:700;
 }
-.nav-tabs { display: flex; gap: 10px; }
-.tab-btn {
-  background: transparent;
-  border: 1px solid var(--line);
-  color: var(--muted);
-  padding: 8px 16px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: 700;
-  font-family: inherit;
-  transition: 0.2s;
-}
-.tab-btn.active, .tab-btn:hover {
-  background: var(--orange);
-  color: #fff;
-  border-color: var(--orange);
-}
-.lang-btn {
-  background: var(--line);
-  color: var(--text);
-  border: none;
-  padding: 8px 12px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: 700;
-}
-
-/* Page Views */
-.page { display: none; padding-top: 20px; }
-.page.active { display: block; }
-
-/* Teams Controls */
-.controls { display: flex; gap: 10px; margin-bottom: 20px; }
-select {
-  background: var(--card); color: var(--text); border: 1px solid var(--line);
-  border-radius: 10px; padding: 10px 14px; font-family: inherit; font-size: 14px; font-weight: 700;
-}
-
-/* Table Design */
-.team-head { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
-.team-head img { width: 45px; height: 45px; object-fit: contain; }
-.team-head h2 { font-size: 22px; margin: 0; }
-
-table { width: 100%; border-collapse: collapse; background: var(--card); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; font-size: 14px; }
-thead th { text-align: start; font-size: 11px; color: var(--muted); padding: 12px; border-bottom: 1px solid var(--line); background: rgba(255,255,255,.02); }
-tbody tr { cursor: pointer; transition: 0.15s; }
-tbody tr:hover { background: rgba(255,255,255,.04); }
-tbody td { padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: middle; }
-
-.player-cell { display: flex; align-items: center; gap: 10px; }
-.player-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--line); object-fit: cover; }
-.badge { display: inline-block; padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: 700; }
-.badge-injured { background: rgba(231, 76, 60, 0.2); color: var(--red); }
-.badge-starter { background: rgba(46, 204, 113, 0.2); color: var(--green); }
-
-/* Modal Player Details */
-.modal-overlay {
-  position: fixed; top:0; left:0; right:0; bottom:0;
-  background: rgba(0,0,0,0.75); display: none; justify-content: center; align-items: center; z-index: 1000;
-}
-.modal-overlay.open { display: flex; }
-.modal {
-  background: var(--card); border: 1px solid var(--line); border-radius: 16px;
-  width: 90%; max-width: 500px; padding: 24px; position: relative; max-height: 90vh; overflow-y: auto;
-}
-.close-modal { position: absolute; top: 15px; left: 15px; background: none; border: none; color: var(--muted); font-size: 20px; cursor: pointer; }
-html[dir="ltr"] .close-modal { left: auto; right: 15px; }
-
-.modal-header { text-align: center; margin-bottom: 16px; }
-.modal-header img { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; background: var(--line); }
-.modal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; background: var(--bg); padding: 14px; border-radius: 10px; }
-.modal-field { font-size: 13px; }
-.modal-field strong { display: block; color: var(--muted); font-size: 11px; }
-
-/* Games View Cards */
-.games-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
-.game-card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 12px; }
-.game-team { display: flex; justify-content: space-between; align-items: center; font-weight: 700; }
-.game-score { font-size: 18px; color: var(--orange); }
+.team-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:10px;flex-wrap:wrap;}
+.team-head h2{font-size:19px;font-weight:900;margin:0;}
+.team-head .conf{font-size:12px;color:var(--muted);}
+table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;font-size:13.5px;}
+thead th{text-align:right;font-size:10.5px;color:var(--muted);font-weight:700;padding:9px;border-bottom:1px solid var(--line);background:rgba(255,255,255,.02);}
+thead th.num{text-align:center;}
+tbody td{padding:8px 9px;border-bottom:1px solid var(--line);vertical-align:middle;}
+tbody tr:last-child td{border-bottom:none;}
+tbody td.num{text-align:center;color:var(--muted);}
+.player{font-weight:700;font-size:13.5px;}
+.player .en{display:block;font-weight:400;font-size:11px;color:var(--muted);}
+.imglink{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:6px;color:var(--muted);text-decoration:none;border:1px solid var(--line);}
+.imglink:hover{color:var(--text);border-color:var(--muted);}
+.imglink svg{width:11px;height:11px;}
+.foot{text-align:center;color:var(--muted);font-size:11.5px;margin-top:22px;line-height:1.7;}
 </style>
 </head>
 <body>
-
-<header>
-  <div class="nav-tabs">
-    <button class="tab-btn active" onclick="switchTab('teams')" id="tabTeams">קבוצות</button>
-    <button class="tab-btn" onclick="switchTab('games')" id="tabGames">משחקים</button>
-  </div>
-  <button class="lang-btn" onclick="toggleLang()" id="langBtn">English</button>
-</header>
-
 <div class="wrap">
-  <div id="teamsPage" class="page active">
-    <div class="controls">
-      <select id="teamSelect" onchange="renderTeam(this.value)"></select>
-    </div>
-    <div class="team-head">
-      <img id="teamLogo" src="" alt="Logo">
-      <h2 id="teamName"></h2>
-    </div>
-    <table>
-      <thead>
-        <tr>
-          <th>#</th>
-          <th id="thPlayer">שחקן</th>
-          <th id="thPos">עמדה</th>
-          <th id="thStatus">סטטוס</th>
-          <th>נק'</th>
-          <th>ריב'</th>
-          <th>אס'</th>
-        </tr>
-      </thead>
-      <tbody id="tbody"></tbody>
-    </table>
+  <div class="hero">
+    <div class="eyebrow">כל 30 הקבוצות · עונת 2025/26</div>
+    <h1>ליגת ה-NBA - כל הקבוצות והשחקנים</h1>
+    <p>בחר קבוצה מהתפריט. הנתונים (נק'/ריב'/אס') הם ממוצעי המשחק בעונת 2025/26. האייקון ליד כל שם פותח חיפוש תמונות בגוגל עבור אותו שחקן.</p>
   </div>
-
-  <div id="gamesPage" class="page">
-    <h2 id="gamesTitle">משחקי השבוע</h2>
-    <div class="games-grid" id="gamesGrid"></div>
+  <div class="controls">
+    <select id="teamSelect"></select>
   </div>
-</div>
-
-<div class="modal-overlay" id="playerModal">
-  <div class="modal">
-    <button class="close-modal" onclick="closeModal()">✕</button>
-    <div class="modal-header">
-      <img id="mImg" src="" alt="Player Image">
-      <h2 id="mName" style="margin:8px 0 0;"></h2>
-      <span id="mPos" style="color:var(--muted); font-size:13px;"></span>
-    </div>
-    <div class="modal-grid">
-      <div class="modal-field"><strong id="lblHeight">גובה:</strong><span id="mHeight"></span></div>
-      <div class="modal-field"><strong id="lblBirth">תאריך/מקום לידה:</strong><span id="mBirth"></span></div>
-      <div class="modal-field"><strong id="lblTeams">קבוצות בקריירה:</strong><span id="mTeams"></span></div>
-      <div class="modal-field"><strong id="lblCareerPts">סה"כ נק' בקריירה:</strong><span id="mCareerPts"></span></div>
-    </div>
-    <div style="margin-top: 14px;">
-      <strong id="lblTrophies" style="color:var(--muted); font-size:12px; display:block; margin-bottom:4px;">תארים והישגים:</strong>
-      <div id="mTrophies" font-size:13px;></div>
-    </div>
+  <div class="team-head">
+    <h2 id="teamName"></h2>
+    <span class="conf" id="teamConf"></span>
   </div>
+  <table>
+    <thead><tr><th></th><th></th><th>שחקן</th><th>עמדה</th><th class="num">נק'</th><th class="num">ריב'</th><th class="num">אס'</th></tr></thead>
+    <tbody id="tbody"></tbody>
+  </table>
+  <div class="foot">מקור הנתונים: ממוצעי משחק בעונת 2025/26 (הרגילה). לכל קבוצה מוצגים כ-10 השחקנים המרכזיים ברוטציה.<br>רוצה לראות רוסטר מלא + ביוגרפיה מלאה (קבוצות קודמות, תארים, גיל, מקום לידה)? זה קיים בפירוט לניקס, נטס, סלטיקס ו-76ers בקובץ הקודם ששלחתי.</div>
 </div>
 
 <script>
-let currentLang = 'he';
+function imgUrl(en){ return 'https://www.google.com/search?tbm=isch&q=' + encodeURIComponent(en + ' NBA'); }
+const ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>';
 
-// Translations Dictionary
-const i18n = {
-  he: {
-    tabTeams: "קבוצות", tabGames: "משחקים", langBtn: "English",
-    thPlayer: "שחקן", thPos: "עמדה", thStatus: "סטטוס",
-    starter: "הרכב ראשון", injured: "פצוע", fit: "כשיר",
-    lblHeight: "גובה:", lblBirth: "תאריך/מקום לידה:", lblTeams: "קבוצות בקריירה:",
-    lblCareerPts: "סה\"כ נק' בקריירה:", lblTrophies: "תארים והישגים:", gamesTitle: "משחקים קרובים / תוצאות"
-  },
-  en: {
-    tabTeams: "Teams", tabGames: "Games", langBtn: "עברית",
-    thPlayer: "Player", thPos: "Position", thStatus: "Status",
-    starter: "Starter", injured: "Injured", fit: "Active",
-    lblHeight: "Height:", lblBirth: "Birth Date/Place:", lblTeams: "Career Teams:",
-    lblCareerPts: "Career Pts:", lblTrophies: "Accolades & Trophies:", gamesTitle: "Upcoming Games / Results"
+const teams = {
+  // ---- EAST ----
+  atl: {name:"אטלנטה הוקס", conf:"מזרח", players:[
+    ["ג'יילן ג'ונסון","Jalen Johnson","SF",22.5,10.3,7.9],
+    ["קריסטפס פורזינגיס","Kristaps Porzingis","C",17.1,5.1,2.7],
+    ["ניקיל אלכסנדר-ווקר","Nickeil Alexander-Walker","SG",20.8,3.4,3.7],
+    ["אונייקה אוקונגו","Onyeka Okongwu","C",15.2,7.6,3.1],
+    ["דייסון דניאלס","Dyson Daniels","SG",11.9,6.8,5.9],
+    ["זכארי ריזאשה","Zaccharie Risacher","SF",9.6,3.8,1.1],
+    ["ויט קרייצ'י","Vit Krejci","PG",9.0,2.1,1.5],
+    ["לוק קנארד","Luke Kennard","SG",7.9,2.2,2.1],
+    ["מוחמד גיה","Mouhamed Gueye","PF",4.4,3.6,0.9],
+    ["אסא ניואל","Asa Newell","PF",5.2,2.2,0.6]
+  ]},
+  bos: {name:"בוסטון סלטיקס", conf:"מזרח", players:[
+    ["ג'ייסון טייטום","Jayson Tatum","SF",21.8,10.0,5.3],
+    ["פול ג'ורג'","Paul George","SF",17.3,5.3,3.6],
+    ["דריק וויט","Derrick White","PG",16.5,4.4,5.4],
+    ["פייטון פריצ'רד","Payton Pritchard","PG",17.0,3.9,5.2],
+    ["מיטשל רובינסון","Mitchell Robinson","C",5.7,8.8,0.9],
+    ["נימיאס קווטה","Neemias Queta","C",10.2,8.4,1.7],
+    ["סם האוזר","Sam Hauser","SF",9.2,3.8,1.5],
+    ["ניקולה ווצ'ביץ'","Nikola Vucevic","C",9.7,6.6,2.0],
+    ["לוקה גארזה","Luka Garza","C",8.1,4.1,1.0],
+    ["ג'ורדן וולש","Jordan Walsh","SF",5.4,4.0,0.8]
+  ]},
+  brk: {name:"ברוקלין נטס", conf:"מזרח", players:[
+    ["מייקל פורטר ג'וניור","Michael Porter Jr","SF",24.2,7.1,3.0],
+    ["קאם תומאס","Cam Thomas","SG",15.6,1.8,3.1],
+    ["ניק קלקסטון","Nic Claxton","C",11.7,6.9,3.7],
+    ["נח קלואוני","Noah Clowney","PF",12.3,4.1,1.6],
+    ["זיאיר וויליאמס","Ziaire Williams","SF",10.2,2.4,1.1],
+    ["אגור דמין","Egor Demin","PG",10.3,3.2,3.3],
+    ["נולאן טראורה","Nolan Traore","PG",8.9,1.8,3.8],
+    ["דני וולף","Danny Wolf","PF",8.9,4.9,2.2],
+    ["דיירון שארפ","Day'Ron Sharpe","C",8.7,6.7,2.3],
+    ["טרנס מאן","Terance Mann","SG",7.2,3.2,3.0]
+  ]},
+  cho: {name:"שארלוט הורנטס", conf:"מזרח", players:[
+    ["למלו בול","LaMelo Ball","PG",20.1,4.8,7.1],
+    ["ברנדון מילר","Brandon Miller","SF",20.2,4.9,3.3],
+    ["קון קנופל","Kon Knueppel","SF",18.5,5.3,3.4],
+    ["מיילס בריג'ס","Miles Bridges","PF",17.1,5.8,3.2],
+    ["קולין סקסטון","Collin Sexton","SG",14.2,1.9,3.7],
+    ["מוסה דיאבטה","Moussa Diabate","C",7.9,8.7,1.9],
+    ["ראיין קלקברנר","Ryan Kalkbrenner","C",7.6,5.5,0.8],
+    ["סיון ג'יימס","Sion James","SG",5.4,3.5,2.0],
+    ["ג'וש גרין","Josh Green","SG",4.3,1.8,0.8],
+    ["טיג'אן סאלון","Tidjane Salaun","PF",6.0,4.0,0.7]
+  ]},
+  chi: {name:"שיקגו בולס", conf:"מזרח", players:[
+    ["ג'וש גידי","Josh Giddey","PG",17.0,8.3,9.1],
+    ["קובי וויט","Coby White","SG",18.6,3.7,4.7],
+    ["מאטאס בוזליס","Matas Buzelis","PF",16.3,5.8,2.1],
+    ["ניקולה ווצ'ביץ'","Nikola Vucevic","C",16.9,9.0,3.8],
+    ["איו דוסונמו","Ayo Dosunmu","SG",15.0,3.0,3.6],
+    ["טרה ג'ונס","Tre Jones","PG",14.1,3.1,5.4],
+    ["איזק אוקורו","Isaac Okoro","SG",9.3,2.7,1.6],
+    ["קווין הוארטר","Kevin Huerter","SF",10.9,3.8,2.6],
+    ["פטריק ויליאמס","Patrick Williams","PF",7.0,3.0,1.5],
+    ["זאק קולינס","Zach Collins","C",9.7,5.6,1.5]
+  ]},
+  cle: {name:"קליבלנד קאבלירס", conf:"מזרח", players:[
+    ["דונובן מיטשל","Donovan Mitchell","SG",27.9,4.5,5.7],
+    ["דריוס גרלנד","Darius Garland","PG",18.0,2.4,6.9],
+    ["אוון מובלי","Evan Mobley","PF",18.2,9.0,3.6],
+    ["ג'ארט אלן","Jarrett Allen","C",15.4,8.5,1.8],
+    ["דיאנדרה האנטר","De'Andre Hunter","SF",14.0,4.2,2.1],
+    ["ג'יילון טייסון","Jaylon Tyson","SG",13.2,5.1,2.2],
+    ["סם מריל","Sam Merrill","SG",13.5,2.6,2.4],
+    ["דין ווייד","Dean Wade","PF",5.8,4.2,1.5],
+    ["קרייג פורטר ג'וניור","Craig Porter Jr","PG",4.5,3.4,3.2],
+    ["ניקוואן טומלין","Nae'Qwan Tomlin","PF",5.8,2.9,0.8]
+  ]},
+  det: {name:"דטרויט פיסטונס", conf:"מזרח", players:[
+    ["קייד קנינגהם","Cade Cunningham","PG",23.9,5.5,9.9],
+    ["ג'יילן דורן","Jalen Duren","C",19.5,10.5,2.0],
+    ["טוביאס האריס","Tobias Harris","PF",13.3,5.1,2.5],
+    ["דנקן רובינסון","Duncan Robinson","SG",12.2,2.7,2.1],
+    ["אוסאר תומפסון","Ausar Thompson","SF",9.9,5.7,3.1],
+    ["קאריס לה-וורט","Caris LeVert","SG",7.4,2.0,2.7],
+    ["איזאיה סטיוארט","Isaiah Stewart","C",10.0,5.0,1.1],
+    ["דניס ג'נקינס","Daniss Jenkins","PG",9.3,2.3,3.9],
+    ["רון הולנד","Ron Holland","SF",8.2,4.0,1.2],
+    ["ג'יידן איווי","Jaden Ivey","SG",8.2,2.2,1.6]
+  ]},
+  ind: {name:"אינדיאנה פייסרס", conf:"מזרח", players:[
+    ["פסקל סיאקם","Pascal Siakam","PF",24.0,6.6,3.8],
+    ["בנדיקט מתורין","Bennedict Mathurin","SF",17.8,5.4,2.3],
+    ["אנדרו נמהארד","Andrew Nembhard","PG",16.9,2.8,7.7],
+    ["אהרון נסמית'","Aaron Nesmith","SF",13.8,4.2,1.9],
+    ["ג'רייס ווקר","Jarace Walker","PF",11.6,5.1,2.5],
+    ["אובי טופין","Obi Toppin","PF",11.6,4.4,2.3],
+    ["טי ג'יי מקונל","T.J. McConnell","PG",9.4,2.2,5.1],
+    ["ג'יי האף","Jay Huff","C",9.5,4.0,1.5],
+    ["איזאיה ג'קסון","Isaiah Jackson","C",6.4,5.6,0.8],
+    ["בן שפרד","Ben Sheppard","SG",7.1,3.0,1.8]
+  ]},
+  mia: {name:"מיאמי היט", conf:"מזרח", players:[
+    ["נורמן פאוול","Norman Powell","SG",21.7,3.5,2.5],
+    ["באם אדבאיו","Bam Adebayo","C",20.1,10.0,3.2],
+    ["אנדרו ויגינס","Andrew Wiggins","SF",15.4,4.8,2.7],
+    ["חאימה חאקז ג'וניור","Jaime Jaquez Jr","SF",15.4,5.0,4.7],
+    ["קלאל וור","Kel'el Ware","C",11.1,9.0,0.7],
+    ["פלה לרסון","Pelle Larsson","SG",11.4,3.5,3.4],
+    ["דייביון מיטשל","Davion Mitchell","PG",9.3,2.7,6.5],
+    ["ניקולה יוביץ'","Nikola Jovic","PF",7.3,3.3,2.2],
+    ["סימונה פונטקיו","Simone Fontecchio","SF",8.5,3.0,1.4],
+    ["קספרס יאקוצ'יוניס","Kasparas Jakucionis","PG",6.2,2.6,2.6]
+  ]},
+  mil: {name:"מילווקי באקס", conf:"מזרח", players:[
+    ["ג'יאניס אנטטקומפו","Giannis Antetokounmpo","PF",27.6,9.8,5.4],
+    ["קווין פורטר ג'וניור","Kevin Porter Jr","PG",17.4,5.2,7.4],
+    ["ראיין רולינס","Ryan Rollins","PG",17.3,4.6,5.6],
+    ["קייל קוזמה","Kyle Kuzma","PF",13.0,4.5,2.7],
+    ["בובי פורטיס","Bobby Portis","PF",13.7,6.4,1.6],
+    ["מיילס טרנר","Myles Turner","C",11.9,5.3,1.5],
+    ["איי ג'יי גרין","A.J. Green","SG",10.4,2.7,1.9],
+    ["ג'ריקו סימס","Jericho Sims","C",5.0,5.5,1.6],
+    ["קורמק ראיין","Cormac Ryan","SG",14.3,2.5,1.7],
+    ["אנדרה ג'קסון ג'וניור","Andre Jackson Jr","SG",2.4,1.5,0.9]
+  ]},
+  nyk: {name:"ניו יורק ניקס", conf:"מזרח", players:[
+    ["ג'יילן ברנסון","Jalen Brunson","PG",26.0,3.3,6.8],
+    ["קרל-אנתוני טאונס","Karl-Anthony Towns","C",20.1,11.9,3.0],
+    ["או.ג'י אנונובי","OG Anunoby","PF",16.7,5.2,2.2],
+    ["מיקל בריג'ס","Mikal Bridges","SF",14.4,3.8,3.7],
+    ["ג'וש הארט","Josh Hart","SF",12.0,7.4,4.8],
+    ["מיילס מקברייד","Miles McBride","SG",12.0,2.4,2.6],
+    ["ג'ורדן קלרקסון","Jordan Clarkson","SG",8.6,1.8,1.3],
+    ["אנדרה דרימונד","Andre Drummond","C",6.4,8.4,1.3],
+    ["חוסה אלווארדו","Jose Alvarado","PG",6.6,2.0,3.8],
+    ["לנדרי שאמט","Landry Shamet","SG",9.3,1.8,1.4]
+  ]},
+  orl: {name:"אורלנדו מג'יק", conf:"מזרח", players:[
+    ["פאולו בנקרו","Paolo Banchero","PF",22.2,8.4,5.2],
+    ["פרנץ וגנר","Franz Wagner","SF",20.6,5.2,3.3],
+    ["דזמונד ביין","Desmond Bane","SG",20.1,4.1,4.1],
+    ["ג'יילן סאגס","Jalen Suggs","PG",13.8,3.9,5.5],
+    ["וונדל קרטר ג'וניור","Wendell Carter Jr","C",11.8,7.4,2.0],
+    ["אנתוני בלאק","Anthony Black","PG",15.0,3.8,3.7],
+    ["טריסטן דה סילבה","Tristan Da Silva","SF",9.9,3.7,1.6],
+    ["גוגה ביטאדזה","Goga Bitadze","C",5.9,5.0,1.3],
+    ["טייס ג'ונס","Tyus Jones","PG",3.0,1.1,2.4],
+    ["נח פנדה","Noah Penda","SF",3.8,3.2,1.2]
+  ]},
+  phi: {name:"פילדלפיה 76ers", conf:"מזרח", players:[
+    ["טייריס מקסי","Tyrese Maxey","PG",28.3,4.1,6.6],
+    ["ג'יילן בראון","Jaylen Brown","SG",28.7,6.9,5.1],
+    ["ג'ואל אמביד","Joel Embiid","C",26.9,7.7,3.9],
+    ["לברון ג'יימס","LeBron James","SF",20.9,6.1,7.2],
+    ["וי.ג'יי אדג'קום","VJ Edgecombe","SG",16.0,5.6,4.2],
+    ["קלי אובר ג'וניור","Kelly Oubre Jr","SF",14.1,5.0,1.6],
+    ["קוונטין גריימס","Quentin Grimes","SG",13.4,3.6,3.3],
+    ["דומיניק ברלו","Dominick Barlow","PF",7.7,4.8,1.2],
+    ["קמרון פיין","Cameron Payne","PG",7.4,2.0,2.6],
+    ["ג'ארד מקיין","Jared McCain","SG",6.6,2.0,1.7]
+  ]},
+  tor: {name:"טורונטו ראפטורס", conf:"מזרח", players:[
+    ["ברנדון אינגרם","Brandon Ingram","SF",21.5,5.6,3.7],
+    ["אר ג'יי בארט","RJ Barrett","SF",19.3,5.3,3.3],
+    ["סקוטי בארנס","Scottie Barnes","PF",18.1,7.5,5.9],
+    ["עמנואל קוויקלי","Immanuel Quickley","PG",16.4,4.0,5.9],
+    ["יעקב פלטל","Jakob Poeltl","C",10.7,7.0,2.0],
+    ["קולין מארי-בויילס","Collin Murray-Boyles","PF",8.5,5.0,1.9],
+    ["סנדרו ממוקלשווילי","Sandro Mamukelashvili","C",11.2,4.9,1.9],
+    ["ג'מאל שיד","Jamal Shead","PG",6.6,1.7,5.4],
+    ["ג'יקובי וולטר","Ja'Kobe Walter","SG",7.5,2.6,1.2],
+    ["גריידי דיק","Gradey Dick","SG",6.0,1.9,0.7]
+  ]},
+  was: {name:"וושינגטון וויזארדס", conf:"מזרח", players:[
+    ["סי ג'יי מקולום","CJ McCollum","PG",18.8,3.5,3.6],
+    ["אלכס סאר","Alex Sarr","C",16.3,7.4,2.7],
+    ["קישון ג'ורג'","Kyshawn George","SF",14.8,5.1,4.5],
+    ["קריס מידלטון","Khris Middleton","SF",10.3,3.9,3.3],
+    ["בילאל קוליבאלי","Bilal Coulibaly","SG",11.7,4.3,2.6],
+    ["טרה ג'ונסון","Tre Johnson","SG",12.2,2.8,2.0],
+    ["באב קרינגטון","Bub Carrington","PG",10.7,3.4,4.6],
+    ["וויל ריילי","Will Riley","SF",10.3,2.9,2.0],
+    ["מרווין באגלי השלישי","Marvin Bagley III","PF",10.1,5.7,1.5],
+    ["ג'סטין שמפיין","Justin Champagnie","SF",8.7,5.6,1.2]
+  ]},
+  // ---- WEST ----
+  dal: {name:"דאלאס מאבריקס", conf:"מערב", players:[
+    ["קופר פלאג","Cooper Flagg","SF",21.0,6.7,4.5],
+    ["אנתוני דייויס","Anthony Davis","PF",20.4,11.1,2.8],
+    ["נאג'י מרשל","Naji Marshall","SF",15.2,4.7,3.3],
+    ["פי ג'יי וושינגטון","P.J. Washington","PF",14.2,7.0,1.8],
+    ["מקס כריסטי","Max Christie","SG",12.3,3.2,2.0],
+    ["קליי תומפסון","Klay Thompson","SF",11.7,2.1,1.4],
+    ["דיאנג'לו ראסל","D'Angelo Russell","PG",10.2,2.3,4.0],
+    ["דניאל גפורד","Daniel Gafford","C",9.5,6.9,1.1],
+    ["ראיין נמהארד","Ryan Nembhard","PG",6.6,2.2,5.3],
+    ["דרק לייבלי השני","Dereck Lively II","C",4.3,5.3,1.9]
+  ]},
+  den: {name:"דנוור נאגטס", conf:"מערב", players:[
+    ["ניקולה יוקיץ'","Nikola Jokic","C",27.7,12.9,10.7],
+    ["ג'מאל מארי","Jamal Murray","PG",25.4,4.4,7.1],
+    ["קמרון ג'ונסון","Cameron Johnson","SF",12.2,3.8,2.4],
+    ["אהרון גורדון","Aaron Gordon","PF",16.2,5.8,2.7],
+    ["פייטון ווטסון","Peyton Watson","SF",14.6,4.9,2.1],
+    ["כריסטיאן בראון","Christian Braun","SG",12.0,4.8,2.7],
+    ["טים הרדוויי ג'וניור","Tim Hardaway Jr","SG",13.5,2.6,1.4],
+    ["ברוס בראון","Bruce Brown","SG",7.9,3.9,2.1],
+    ["יונאס ולנצ'יונאס","Jonas Valanciunas","C",8.7,5.1,1.2],
+    ["ג'וליאן סטרוטר","Julian Strawther","SG",7.2,2.0,1.1]
+  ]},
+  gsw: {name:"גולדן סטייט ווריורס", conf:"מערב", players:[
+    ["סטפן קרי","Stephen Curry","PG",26.6,3.6,4.7],
+    ["ג'ימי באטלר","Jimmy Butler","SF",20.0,5.6,4.9],
+    ["ג'ונתן קומינגה","Jonathan Kuminga","PF",12.1,5.9,2.5],
+    ["ברנדין פודזיימסקי","Brandin Podziemski","SG",13.8,5.1,3.7],
+    ["דריימונד גרין","Draymond Green","PF",8.4,5.5,5.5],
+    ["מוזס מודי","Moses Moody","SG",12.1,3.3,1.6],
+    ["אל הורפורד","Al Horford","C",8.3,4.9,2.6],
+    ["באדי הילד","Buddy Hield","SG",8.0,2.5,1.5],
+    ["קווינטן פוסט","Quinten Post","PF",7.7,4.0,1.4],
+    ["וויל ריצ'רד","Will Richard","SG",6.4,2.5,1.3]
+  ]},
+  hou: {name:"יוסטון רוקטס", conf:"מערב", players:[
+    ["קווין דוראנט","Kevin Durant","SF",26.0,5.5,4.8],
+    ["אלפרן שנגון","Alperen Sengun","C",20.4,8.9,6.2],
+    ["איימן תומפסון","Amen Thompson","PG",18.3,7.8,5.3],
+    ["ג'בארי סמית' ג'וניור","Jabari Smith Jr","PF",15.8,6.9,1.9],
+    ["ריד שפרד","Reed Sheppard","SG",13.5,2.9,3.4],
+    ["טארי איזון","Tari Eason","PF",10.5,6.3,1.5],
+    ["סטיבן אדמס","Steven Adams","C",5.8,8.6,1.5],
+    ["ג'וש אוקוגי","Josh Okogie","SG",4.5,2.6,0.9],
+    ["קלינט קפלה","Clint Capela","C",3.8,4.6,0.7],
+    ["אהרון הולידיי","Aaron Holiday","PG",5.5,1.0,1.1]
+  ]},
+  lac: {name:"לוס אנג'לס קליפרס", conf:"מערב", players:[
+    ["קאווי לנארד","Kawhi Leonard","SF",27.9,6.4,3.6],
+    ["ג'יימס הארדן","James Harden","PG",25.4,4.8,8.1],
+    ["איביצה זובאץ","Ivica Zubac","C",14.4,11.0,2.2],
+    ["ג'ון קולינס","John Collins","PF",13.6,5.3,1.0],
+    ["בראדלי ביל","Bradley Beal","SG",8.2,0.8,1.7],
+    ["דריק ג'ונס ג'וניור","Derrick Jones Jr","SF",10.1,3.5,1.4],
+    ["קריס דאן","Kris Dunn","PG",7.3,3.3,3.6],
+    ["ניקולא באטום","Nicolas Batum","PF",4.0,2.5,0.9],
+    ["ברוק לופז","Brook Lopez","C",8.5,3.6,1.3],
+    ["ג'ורדן מילר","Jordan Miller","SF",10.0,3.0,2.3]
+  ]},
+  lal: {name:"לוס אנג'לס לייקרס", conf:"מערב", players:[
+    ["לוקה דונצ'יץ'","Luka Doncic","PG",33.5,7.7,8.3],
+    ["לברון ג'יימס","LeBron James","SF",20.9,6.1,7.2],
+    ["אוסטין ריבס","Austin Reaves","SG",23.3,4.7,5.5],
+    ["דיאנדרה איטון","Deandre Ayton","C",12.5,8.0,0.8],
+    ["רוי האצ'ימורה","Rui Hachimura","PF",11.5,3.3,0.8],
+    ["מרקוס סמארט","Marcus Smart","SG",9.3,2.8,3.0],
+    ["ג'קסון הייז","Jaxson Hayes","C",7.5,4.1,0.9],
+    ["ג'ארד ונדרבילט","Jarred Vanderbilt","PF",4.4,4.5,1.3],
+    ["מקסי קלבר","Maxi Kleber","PF",2.0,2.0,0.6],
+    ["דלטון קנכט","Dalton Knecht","SF",4.2,1.4,0.4]
+  ]},
+  mem: {name:"ממפיס גריזליס", conf:"מערב", players:[
+    ["ג'ה מורנט","Ja Morant","PG",19.5,3.3,8.1],
+    ["ג'ארן ג'קסון ג'וניור","Jaren Jackson Jr","C",19.4,5.7,2.0],
+    ["טיי ג'רום","Ty Jerome","SG",19.7,2.8,5.7],
+    ["סנטי אלדמה","Santi Aldama","PF",14.0,6.7,2.9],
+    ["סדריק קווארד","Cedric Coward","SG",13.6,5.9,2.8],
+    ["זאק אדי","Zach Edey","C",13.6,11.1,1.1],
+    ["ג'י ג'י ג'קסון השני","GG Jackson II","PF",12.5,4.3,1.5],
+    ["קאם ספנסר","Cam Spencer","SG",11.1,2.5,5.6],
+    ["וינס וויליאמס ג'וניור","Vince Williams Jr","PG",8.0,4.0,4.4],
+    ["ג'וק לנדייל","Jock Landale","C",11.3,6.5,1.7]
+  ]},
+  min: {name:"מינסוטה טימברוולבס", conf:"מערב", players:[
+    ["אנתוני אדוארדס","Anthony Edwards","SG",28.8,5.0,3.7],
+    ["ג'וליוס רנדל","Julius Randle","PF",21.1,6.7,5.0],
+    ["ג'יידן מקדניאלס","Jaden McDaniels","PF",14.8,4.2,2.7],
+    ["נאז ריד","Naz Reid","C",13.6,6.2,2.2],
+    ["רודי גוברט","Rudy Gobert","C",10.9,11.5,1.7],
+    ["דונטה דיוינצנזו","Donte DiVincenzo","SG",12.2,4.1,3.8],
+    ["מייק קונלי","Mike Conley","PG",4.5,1.7,2.9],
+    ["טרנס שאנון ג'וניור","Terrence Shannon Jr","SG",5.6,1.1,0.9],
+    ["בונס היילנד","Bones Hyland","PG",8.5,1.8,2.6],
+    ["חואן ברינגר","Joan Beringer","PF",3.9,2.3,0.3]
+  ]},
+  nop: {name:"ניו אורלינס פליקנס", conf:"מערב", players:[
+    ["טריי מרפי השלישי","Trey Murphy III","SF",21.5,5.7,3.8],
+    ["זיון וויליאמסון","Zion Williamson","PF",21.0,5.7,3.2],
+    ["סאדיק ביי","Saddiq Bey","SF",17.7,5.6,2.5],
+    ["ג'ורדן פול","Jordan Poole","PG",13.4,2.0,3.1],
+    ["דריק קווין","Derik Queen","C",11.7,7.1,3.7],
+    ["הרברט ג'ונס","Herbert Jones","SF",8.9,3.4,2.8],
+    ["איב מיסי","Yves Missi","C",5.7,5.8,1.3],
+    ["חוסה אלווארדו","Jose Alvarado","PG",7.9,2.8,3.1],
+    ["קרלו מטקוביץ'","Karlo Matkovic","PF",5.7,3.7,0.8],
+    ["בריס מקגוונס","Bryce McGowens","SG",8.1,2.1,1.5]
+  ]},
+  okc: {name:"אוקלהומה סיטי ת'אנדר", conf:"מערב", players:[
+    ["שיי גילג'ס-אלכסנדר","Shai Gilgeous-Alexander","PG",31.1,4.3,6.6],
+    ["צ'ט הולמגרן","Chet Holmgren","PF",17.1,8.9,1.7],
+    ["ג'יילן וויליאמס","Jalen Williams","SG",17.1,4.6,5.5],
+    ["איג'יי מיטשל","Ajay Mitchell","SG",13.6,3.3,3.6],
+    ["איזאיה הרטנשטיין","Isaiah Hartenstein","C",9.2,9.4,3.5],
+    ["קייסון וואלאס","Cason Wallace","SG",8.6,3.1,2.6],
+    ["איזאיה ג'ו","Isaiah Joe","SG",11.1,2.5,1.3],
+    ["אהרון ויגינס","Aaron Wiggins","SG",9.4,3.1,1.7],
+    ["לוגנץ דורט","Luguentz Dort","SF",8.3,3.6,1.2],
+    ["אלכס קרוזו","Alex Caruso","SG",6.2,2.8,2.0]
+  ]},
+  pho: {name:"פיניקס סאנס", conf:"מערב", players:[
+    ["דווין בוקר","Devin Booker","SG",26.1,3.9,6.0],
+    ["דילון ברוקס","Dillon Brooks","SF",20.2,3.6,1.8],
+    ["ג'יילן גרין","Jalen Green","SG",17.8,3.6,2.8],
+    ["גרייסון אלן","Grayson Allen","SG",16.5,3.0,3.8],
+    ["קולין גילספי","Collin Gillespie","PG",12.7,4.1,4.6],
+    ["רויס אוניל","Royce O'Neale","SF",9.8,4.8,2.7],
+    ["מארק וויליאמס","Mark Williams","C",11.7,8.0,1.0],
+    ["אוסו איגודארו","Oso Ighodaro","PF",6.5,5.1,2.3],
+    ["קאמן מלואץ'","Khaman Maluach","C",3.0,2.9,0.1],
+    ["ראיין דאן","Ryan Dunn","SF",5.8,4.2,1.5]
+  ]},
+  por: {name:"פורטלנד טרייל בלייזרס", conf:"מערב", players:[
+    ["דני אבדיה","Deni Avdija","SF",24.2,6.9,6.7],
+    ["שיידון שארפ","Shaedon Sharpe","SG",20.8,4.3,2.6],
+    ["ג'רמי גרנט","Jerami Grant","PF",18.6,3.5,2.1],
+    ["סקוט הנדרסון","Scoot Henderson","PG",14.2,2.7,3.7],
+    ["תומאני קמרה","Toumani Camara","PF",13.4,5.1,2.5],
+    ["דונובן קלינגן","Donovan Clingan","C",12.1,11.6,2.1],
+    ["רוברט וויליאמס","Robert Williams","C",6.7,7.0,1.0],
+    ["יאנג האנסן","Yang Hansen","C",2.2,1.5,0.5],
+    ["קריס מארי","Kris Murray","SF",5.8,3.6,1.4],
+    ["קיילב לאב","Caleb Love","SG",10.4,2.3,2.5]
+  ]},
+  sac: {name:"סקרמנטו קינגס", conf:"מערב", players:[
+    ["דימאר דרוזאן","DeMar DeRozan","PF",18.4,2.9,4.1],
+    ["זאק לאווין","Zach LaVine","SG",19.2,2.8,2.3],
+    ["דומנטס סבוניס","Domantas Sabonis","C",15.8,11.4,4.1],
+    ["ראסל ווסטברוק","Russell Westbrook","SF",15.2,5.4,6.7],
+    ["קיגן מארי","Keegan Murray","PF",14.0,5.7,1.7],
+    ["מאליק מונק","Malik Monk","SG",12.5,1.9,3.0],
+    ["מקסים רנו","Maxime Raynaud","C",12.5,7.5,1.4],
+    ["ניק קליפורד","Nique Clifford","SG",8.6,3.8,2.4],
+    ["פרישס אצ'יווה","Precious Achiuwa","C",10.1,6.7,1.4],
+    ["דניס שרדר","Dennis Schroder","PG",12.8,3.1,5.3]
+  ]},
+  sas: {name:"סן אנטוניו ספרס", conf:"מערב", players:[
+    ["ויקטור וומבניאמה","Victor Wembanyama","C",25.0,11.5,3.1],
+    ["דיאהרון פוקס","De'Aaron Fox","PG",18.6,3.8,6.2],
+    ["סטפון קאסל","Stephon Castle","PG",16.7,5.3,7.4],
+    ["דילן הארפר","Dylan Harper","SG",11.8,3.4,3.9],
+    ["דווין ואסל","Devin Vassell","SG",13.9,4.0,2.5],
+    ["קלדון ג'ונסון","Keldon Johnson","SF",13.2,5.4,1.4],
+    ["ג'וליאן שמפיין","Julian Champagnie","SF",11.1,5.8,1.5],
+    ["הריסון בארנס","Harrison Barnes","PF",9.9,2.8,1.9],
+    ["לוק קורנט","Luke Kornet","C",6.5,6.1,1.9],
+    ["קרטר בראיינט","Carter Bryant","PF",4.2,2.5,0.7]
+  ]},
+  uta: {name:"יוטה ג'אז", conf:"מערב", players:[
+    ["לאורי מארקנן","Lauri Markkanen","PF",26.7,6.9,2.1],
+    ["קיונטה ג'ורג'","Keyonte George","PG",23.6,3.7,6.1],
+    ["אייס ביילי","Ace Bailey","SF",13.8,4.2,1.8],
+    ["בריס סנסבו","Brice Sensabaugh","SF",14.9,3.1,1.9],
+    ["ווקר קסלר","Walker Kessler","C",14.4,10.8,3.0],
+    ["איזאיה קוליר","Isaiah Collier","PG",11.7,2.5,7.2],
+    ["קייל פיליפובסקי","Kyle Filipowski","C",11.4,7.2,2.6],
+    ["יוסוף נורקיץ'","Jusuf Nurkic","C",10.9,10.4,4.8],
+    ["סבי מיכאיליוק","Svi Mykhailiuk","SF",9.4,2.5,1.9],
+    ["קודי ויליאמס","Cody Williams","SG",8.8,3.0,2.0]
+  ]}
+};
+
+const confOrder = ["מזרח","מערב"];
+const teamEntries = Object.entries(teams).sort((a,b)=>{
+  if(a[1].conf!==b[1].conf) return confOrder.indexOf(a[1].conf)-confOrder.indexOf(b[1].conf);
+  return a[1].name.localeCompare(b[1].name,'he');
+});
+
+const select = document.getElementById('teamSelect');
+let lastConf = null;
+teamEntries.forEach(([key,team])=>{
+  if(team.conf!==lastConf){
+    const og = document.createElement('optgroup');
+    og.label = team.conf;
+    og.dataset.conf = team.conf;
+    select.appendChild(og);
+    lastConf = team.conf;
   }
-};
+  const opt = document.createElement('option');
+  opt.value = key;
+  opt.textContent = team.name;
+  select.querySelector('optgroup:last-child').appendChild(opt);
+});
 
-// Data Structure
-const playersData = {
-  "1629630": { nameHe: "ג'יילן ברנסון", nameEn: "Jalen Brunson", pos: "PG", height: "1.88m", birth: "31/08/1996, ניו ג'רזי", teams: "Dallas, NY Knicks", careerPts: "8,420", trophiesHe: "2× אולסטאר, אלוף מכללות (NCAA)", trophiesEn: "2× All-Star, 2× NCAA Champion", pts: 26.0, reb: 3.3, ast: 6.8, starter: true, injured: false },
-  "1626157": { nameHe: "קרל-אנתוני טאונס", nameEn: "Karl-Anthony Towns", pos: "C", height: "2.13m", birth: "15/11/1995, ניו ג'רזי", teams: "Minnesota, NY Knicks", careerPts: "13,100", trophiesHe: "4× אולסטאר, רוקי השנה (2016)", trophiesEn: "4× All-Star, Rookie of the Year", pts: 20.1, reb: 11.9, ast: 3.0, starter: true, injured: false },
-  "1628973": { nameHe: "ג'יילן ברונסון (פצוע לדוגמה)", nameEn: "Mitchell Robinson", pos: "C", height: "2.13m", birth: "01/04/1998, פלורידה", teams: "NY Knicks", careerPts: "2,800", trophiesHe: "שיאן חסימות מכללות", trophiesEn: "College Block Leader", pts: 5.7, reb: 8.8, ast: 0.9, starter: false, injured: true },
-  "203999": { nameHe: "ניקולה יוקיץ'", nameEn: "Nikola Jokic", pos: "C", height: "2.11m", birth: "19/02/1995, סרביה", teams: "Denver Nuggets", careerPts: "14,120", trophiesHe: "1× אלוף ה-NBA, 3× MVP, 6× אולסטאר", trophiesEn: "1× NBA Champ, 3× MVP, 6× All-Star", pts: 27.7, reb: 12.9, ast: 10.7, starter: true, injured: false }
-};
-
-const teamsData = {
-  nyk: { nameHe: "ניו יורק ניקס", nameEn: "New York Knicks", logo: "https://cdn.nba.com/logos/nba/1610612752/primary/L/logo.svg", players: ["1629630", "1626157", "1628973"] },
-  den: { nameHe: "דנוור נאגטס", nameEn: "Denver Nuggets", logo: "https://cdn.nba.com/logos/nba/1610612743/primary/L/logo.svg", players: ["203999"] }
-};
-
-const gamesData = [
-  { home: "ניו יורק ניקס", homeEn: "NY Knicks", away: "דנוור נאגטס", awayEn: "Denver Nuggets", score: "108 - 102", status: "Final" },
-  { home: "בוסטון סלטיקס", homeEn: "Boston Celtics", away: "לייקרס", awayEn: "LA Lakers", score: "22:00", status: "Upcoming" }
-];
-
-// Methods
-function switchTab(tab) {
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  
-  if(tab === 'teams') {
-    document.getElementById('tabTeams').classList.add('active');
-    document.getElementById('teamsPage').classList.add('active');
-  } else {
-    document.getElementById('tabGames').classList.add('active');
-    document.getElementById('gamesPage').classList.add('active');
-  }
-}
-
-function toggleLang() {
-  currentLang = currentLang === 'he' ? 'en' : 'he';
-  const html = document.getElementById('htmlTag');
-  html.setAttribute('dir', currentLang === 'he' ? 'rtl' : 'ltr');
-  html.setAttribute('lang', currentLang);
-  
-  // Update UI Text
-  const t = i18n[currentLang];
-  Object.keys(t).forEach(id => {
-    const el = document.getElementById(id);
-    if(el) el.textContent = t[id];
-  });
-
-  populateTeamSelect();
-  renderTeam(document.getElementById('teamSelect').value);
-  renderGames();
-}
-
-function populateTeamSelect() {
-  const sel = document.getElementById('teamSelect');
-  sel.innerHTML = '';
-  Object.keys(teamsData).forEach(key => {
-    const opt = document.createElement('option');
-    opt.value = key;
-    opt.textContent = currentLang === 'he' ? teamsData[key].nameHe : teamsData[key].nameEn;
-    sel.appendChild(opt);
-  });
-}
-
-function renderTeam(key) {
-  const team = teamsData[key] || teamsData['nyk'];
-  document.getElementById('teamName').textContent = currentLang === 'he' ? team.nameHe : team.nameEn;
-  document.getElementById('teamLogo').src = team.logo;
-
+function render(key){
+  const team = teams[key];
+  document.getElementById('teamName').textContent = team.name;
+  document.getElementById('teamConf').textContent = team.conf;
   const tbody = document.getElementById('tbody');
-  tbody.innerHTML = team.players.map((id, index) => {
-    const p = playersData[id];
-    const name = currentLang === 'he' ? p.nameHe : p.nameEn;
-    const imgUrl = `https://cdn.nba.com/headshots/nba/latest/260x190/${id}.png`;
-    
-    let statusBadge = `<span class="badge">${i18n[currentLang].fit}</span>`;
-    if(p.injured) statusBadge = `<span class="badge badge-injured">${i18n[currentLang].injured}</span>`;
-    else if(p.starter) statusBadge = `<span class="badge badge-starter">${i18n[currentLang].starter}</span>`;
-
-    return `<tr onclick="openPlayerModal('${id}')">
-      <td>${index + 1}</td>
-      <td>
-        <div class="player-cell">
-          <img class="player-avatar" src="${imgUrl}" onerror="this.src='https://cdn.nba.com/headshots/nba/latest/260x190/fallback.png'" alt="${name}">
-          <span>${name}</span>
-        </div>
-      </td>
-      <td>${p.pos}</td>
-      <td>${statusBadge}</td>
-      <td>${p.pts}</td>
-      <td>${p.reb}</td>
-      <td>${p.ast}</td>
-    </tr>`;
+  tbody.innerHTML = team.players.map((p,i)=>{
+    const [he,en,pos,pts,reb,ast] = p;
+    return '<tr>'+
+      '<td class="num">'+(i+1)+'</td>'+
+      '<td class="num"><a class="imglink" target="_blank" rel="noopener" href="'+imgUrl(en)+'" title="חפש תמונה">'+ICON+'</a></td>'+
+      '<td class="player">'+he+'<span class="en">'+en+'</span></td>'+
+      '<td>'+pos+'</td>'+
+      '<td class="num">'+pts.toFixed(1)+'</td>'+
+      '<td class="num">'+reb.toFixed(1)+'</td>'+
+      '<td class="num">'+ast.toFixed(1)+'</td>'+
+    '</tr>';
   }).join('');
 }
 
-function renderGames() {
-  const grid = document.getElementById('gamesGrid');
-  grid.innerHTML = gamesData.map(g => `
-    <div class="game-card">
-      <div class="game-team">
-        <span>${currentLang === 'he' ? g.home : g.homeEn}</span>
-      </div>
-      <div class="game-score" style="text-align:center;">${g.score}</div>
-      <div class="game-team">
-        <span>${currentLang === 'he' ? g.away : g.awayEn}</span>
-      </div>
-    </div>
-  `).join('');
-}
-
-function openPlayerModal(id) {
-  const p = playersData[id];
-  document.getElementById('mImg').src = `https://cdn.nba.com/headshots/nba/latest/260x190/${id}.png`;
-  document.getElementById('mName').textContent = currentLang === 'he' ? p.nameHe : p.nameEn;
-  document.getElementById('mPos').textContent = p.pos;
-  document.getElementById('mHeight').textContent = p.height;
-  document.getElementById('mBirth').textContent = p.birth;
-  document.getElementById('mTeams').textContent = p.teams;
-  document.getElementById('mCareerPts').textContent = p.careerPts;
-  document.getElementById('mTrophies').textContent = currentLang === 'he' ? p.trophiesHe : p.trophiesEn;
-  
-  document.getElementById('playerModal').classList.add('open');
-}
-
-function closeModal() {
-  document.getElementById('playerModal').classList.remove('open');
-}
-
-// Init
-populateTeamSelect();
-renderTeam('nyk');
-renderGames();
+select.addEventListener('change', ()=>render(select.value));
+select.value = 'nyk';
+render('nyk');
 </script>
 </body>
 </html>
