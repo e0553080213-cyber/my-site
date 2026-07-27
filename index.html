@@ -3,476 +3,415 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>כל קבוצות ה-NBA 2025/26</title>
+<title>הרוסטרים המלאים 2026/27</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700;900&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#0B0E14; --card:#151A24; --line:#232B3A; --text:#EDEFF4; --muted:#8B93A7; --orange:#E8743B;
+  --bg: #0B0E14;
+  --card: #151A24;
+  --card-line: #232B3A;
+  --text: #EDEFF4;
+  --muted: #8B93A7;
+  --orange: #E8743B;
 }
 *{box-sizing:border-box;}
-body{margin:0;background:var(--bg);color:var(--text);font-family:'Heebo',sans-serif;padding:28px 14px 60px;}
-.wrap{max-width:920px;margin:0 auto;}
-.hero{text-align:center;padding:20px 16px 24px;border-bottom:1px solid var(--line);margin-bottom:20px;}
-.hero .eyebrow{color:var(--orange);font-weight:700;letter-spacing:2px;font-size:12px;text-transform:uppercase;}
-.hero h1{font-size:26px;font-weight:900;margin:8px 0 6px;}
-.hero p{color:var(--muted);font-size:13px;max-width:620px;margin:0 auto;line-height:1.6;}
-.controls{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:18px;}
-select{
-  background:var(--card);color:var(--text);border:1px solid var(--line);border-radius:10px;
-  padding:10px 14px;font-family:inherit;font-size:14px;font-weight:700;
+body{ margin:0; background: var(--bg); color: var(--text); font-family: 'Heebo', sans-serif; padding: 32px 16px 64px; }
+.wrap{max-width: 940px; margin: 0 auto;}
+.hero{ text-align:center; padding: 24px 20px 28px; border-bottom: 1px solid var(--card-line); margin-bottom: 24px; }
+.hero .eyebrow{ color: var(--orange); font-weight: 700; letter-spacing: 2px; font-size: 13px; text-transform: uppercase; }
+.hero h1{ font-size: 30px; font-weight: 900; margin: 10px 0 8px; line-height: 1.25; }
+.hero p{ color: var(--muted); font-size: 14px; max-width: 600px; margin: 0 auto; line-height: 1.7; }
+.tabs{ display:flex; gap:8px; justify-content:center; flex-wrap:wrap; margin-bottom: 20px; }
+.tab{ padding: 10px 18px; border-radius: 999px; border: 1px solid var(--card-line); background: var(--card); color: var(--muted); font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer; display:flex; align-items:center; gap:8px; }
+.tab .dot{ width: 10px; height:10px; border-radius:50%; }
+.tab.active{ color: var(--text); box-shadow: inset 0 0 0 1px var(--accent); }
+.panel{ display:none; }
+.panel.active{ display:block; }
+.team-head{ display:flex; align-items:baseline; justify-content: space-between; gap: 12px; margin-bottom: 12px; flex-wrap: wrap; }
+.team-head h2{ font-size: 21px; font-weight: 900; margin: 0; }
+.team-head .note{ font-size: 12.5px; color: var(--muted); }
+table{ width: 100%; border-collapse: collapse; background: var(--card); border: 1px solid var(--card-line); border-radius: 12px; overflow: hidden; font-size: 13.5px; }
+thead th{ text-align: right; font-size: 11px; letter-spacing: .4px; color: var(--muted); font-weight: 700; padding: 10px 10px; border-bottom: 1px solid var(--card-line); background: rgba(255,255,255,0.02); white-space: nowrap; }
+thead th.num{ text-align: center; }
+thead th.imgcol{ text-align: center; width: 50px; }
+tbody td{ padding: 9px 10px; border-bottom: 1px solid var(--card-line); vertical-align: middle; }
+tbody tr{ cursor: pointer; transition: background 0.2s; }
+tbody tr:hover{ background: rgba(255, 255, 255, 0.05); }
+tbody td.num{ text-align: center; color: var(--muted); }
+tbody td.imgtd{ text-align: center; padding: 4px; }
+tbody tr:last-child td{ border-bottom: none; }
+tbody tr.star td{ background: rgba(232,116,59,0.06); }
+.player{ font-weight: 700; font-size: 14px; }
+.role{ display:block; font-weight: 400; font-size: 11.5px; color: var(--muted); margin-top: 1px; }
+.badge{ display:inline-block; padding: 2px 8px; border-radius: 999px; font-size: 10.5px; font-weight: 700; margin-inline-start: 6px; vertical-align: middle; }
+.badge.new{ background: rgba(30,158,90,.18); color:#6FE3A5; }
+.player-img{ width: 44px; height: 32px; object-fit: cover; border-radius: 4px; background: var(--card-line); display: block; margin: 0 auto; }
+.legend{ font-size: 11.5px; color: var(--muted); margin: 10px 2px 20px; }
+.foot{ text-align:center; color: var(--muted); font-size: 12px; margin-top: 28px; line-height: 1.6; }
+
+.modal-overlay{ display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.75); z-index: 1000; justify-content: center; align-items: center; padding: 16px; }
+.modal-overlay.active{ display: flex; }
+.modal-content{ background: var(--card); border: 1px solid var(--card-line); border-radius: 16px; padding: 24px; max-width: 440px; width: 100%; text-align: center; position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.5); max-height: 88vh; overflow-y: auto; }
+.modal-close{ position: absolute; top: 12px; left: 16px; background: none; border: none; color: var(--muted); font-size: 20px; cursor: pointer; }
+.modal-img{ width: 100px; height: 75px; object-fit: cover; border-radius: 8px; margin-bottom: 12px; }
+.modal-name{ font-size: 20px; font-weight: 900; margin-bottom: 4px; }
+.modal-en{ color: var(--muted); font-size: 13px; margin-bottom: 4px; }
+.modal-bio{ color: var(--muted); font-size: 12.5px; margin-bottom: 16px; }
+.stats-grid{ display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; text-align: right; background: rgba(0,0,0,0.2); padding: 12px; border-radius: 8px; margin-bottom: 14px; }
+.stat-item{ font-size: 13px; }
+.stat-item span{ color: var(--muted); }
+.modal-section{ text-align: right; background: rgba(0,0,0,0.15); padding: 12px 14px; border-radius: 8px; margin-bottom: 10px; }
+.modal-section h4{ margin: 0 0 6px; font-size: 12px; color: var(--orange); font-weight: 700; letter-spacing: .3px; }
+.modal-section p{ margin: 0; font-size: 13px; line-height: 1.6; color: var(--text); }
+.team-tag{ display:inline-block; background: rgba(255,255,255,0.06); border: 1px solid var(--card-line); padding: 3px 9px; border-radius: 999px; font-size: 12px; margin: 2px 3px 2px 0; }
+
+@media (max-width: 640px){
+  thead th:nth-child(7), tbody td:nth-child(7){ display:none; }
+  .hero h1{ font-size: 23px; }
+  table{ font-size: 12px; }
 }
-.team-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:10px;flex-wrap:wrap;}
-.team-head h2{font-size:19px;font-weight:900;margin:0;}
-.team-head .conf{font-size:12px;color:var(--muted);}
-table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;font-size:13.5px;}
-thead th{text-align:right;font-size:10.5px;color:var(--muted);font-weight:700;padding:9px;border-bottom:1px solid var(--line);background:rgba(255,255,255,.02);}
-thead th.num{text-align:center;}
-tbody td{padding:8px 9px;border-bottom:1px solid var(--line);vertical-align:middle;}
-tbody tr:last-child td{border-bottom:none;}
-tbody td.num{text-align:center;color:var(--muted);}
-.player{font-weight:700;font-size:13.5px;}
-.player .en{display:block;font-weight:400;font-size:11px;color:var(--muted);}
-.imglink{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:6px;color:var(--muted);text-decoration:none;border:1px solid var(--line);}
-.imglink:hover{color:var(--text);border-color:var(--muted);}
-.imglink svg{width:11px;height:11px;}
-.foot{text-align:center;color:var(--muted);font-size:11.5px;margin-top:22px;line-height:1.7;}
 </style>
 </head>
 <body>
+
 <div class="wrap">
   <div class="hero">
-    <div class="eyebrow">כל 30 הקבוצות · עונת 2025/26</div>
-    <h1>ליגת ה-NBA - כל הקבוצות והשחקנים</h1>
-    <p>בחר קבוצה מהתפריט. הנתונים (נק'/ריב'/אס') הם ממוצעי המשחק בעונת 2025/26. האייקון ליד כל שם פותח חיפוש תמונות בגוגל עבור אותו שחקן.</p>
+    <div class="eyebrow">רוסטרים מלאים · לקראת עונת 2026/27</div>
+    <h1>ניקס, נטס, סלטיקס ו-76ers: כל השחקנים</h1>
+    <p>לחץ על שחקן לצפייה בנתונים המלאים: גיל, תאריך לידה, מקום לידה, קבוצות קודמות, תארים, גובה וסטטיסטיקות.</p>
   </div>
-  <div class="controls">
-    <select id="teamSelect"></select>
+
+  <div class="tabs" id="tabs">
+    <button class="tab active" data-team="knicks" style="--accent:#F58426"><span class="dot" style="background:#F58426"></span>ניקס</button>
+    <button class="tab" data-team="nets" style="--accent:#C9CCD4"><span class="dot" style="background:#C9CCD4"></span>נטס</button>
+    <button class="tab" data-team="celtics" style="--accent:#1E9E5A"><span class="dot" style="background:#1E9E5A"></span>סלטיקס</button>
+    <button class="tab" data-team="sixers" style="--accent:#ED174C"><span class="dot" style="background:#ED174C"></span>76ers</button>
   </div>
-  <div class="team-head">
-    <h2 id="teamName"></h2>
-    <span class="conf" id="teamConf"></span>
+
+  <div class="panel active" id="panel-knicks" style="--accent:#F58426">
+    <div class="team-head"><h2>ניו יורק ניקס</h2><span class="note">אלופת ה-NBA 2026 · מאמן: מייק בראון</span></div>
+    <table>
+      <thead><tr><th class="num">#</th><th class="imgcol">תמונה</th><th>שחקן</th><th>עמדה</th><th class="num">נק'</th><th class="num">ריב'</th><th class="num">אס'</th></tr></thead>
+      <tbody id="tbody-knicks"></tbody>
+    </table>
+    <div class="legend">מיטשל רובינסון עזב לסלטיקס בפייה החופשית · דרימונד הגיע מפילדלפיה במקומו</div>
   </div>
-  <table>
-    <thead><tr><th></th><th></th><th>שחקן</th><th>עמדה</th><th class="num">נק'</th><th class="num">ריב'</th><th class="num">אס'</th></tr></thead>
-    <tbody id="tbody"></tbody>
-  </table>
-  <div class="foot">מקור הנתונים: ממוצעי משחק בעונת 2025/26 (הרגילה). לכל קבוצה מוצגים כ-10 השחקנים המרכזיים ברוטציה.<br>רוצה לראות רוסטר מלא + ביוגרפיה מלאה (קבוצות קודמות, תארים, גיל, מקום לידה)? זה קיים בפירוט לניקס, נטס, סלטיקס ו-76ers בקובץ הקודם ששלחתי.</div>
+
+  <div class="panel" id="panel-nets" style="--accent:#C9CCD4">
+    <div class="team-head"><h2>ברוקלין נטס</h2><span class="note">20-62 בעונה שעברה · בעיצומו של ריבילד · מאמן: ג'ורדי פרננדז</span></div>
+    <table>
+      <thead><tr><th class="num">#</th><th class="imgcol">תמונה</th><th>שחקן</th><th>עמדה</th><th class="num">נק'</th><th class="num">ריב'</th><th class="num">אס'</th></tr></thead>
+      <tbody id="tbody-nets"></tbody>
+    </table>
+    <div class="legend">רוסטר צעיר עם המון רוקים מהדראפט האחרון · פורטר ג'וניור נותר יעד טרייד מרכזי לקראת דצמבר</div>
+  </div>
+
+  <div class="panel" id="panel-celtics" style="--accent:#1E9E5A">
+    <div class="team-head"><h2>בוסטון סלטיקס</h2><span class="note">56-26 בעונה שעברה · מאמן: ג'ו מזולה</span></div>
+    <table>
+      <thead><tr><th class="num">#</th><th class="imgcol">תמונה</th><th>שחקן</th><th>עמדה</th><th class="num">נק'</th><th class="num">ריב'</th><th class="num">אס'</th></tr></thead>
+      <tbody id="tbody-celtics"></tbody>
+    </table>
+    <div class="legend">ג'יילן בראון עזב לפילדלפיה · אנפרני סיימונס עזב בסיין-אנד-טרייד · פול ג'ורג' ומיטשל רובינסון הצטרפו</div>
+  </div>
+
+  <div class="panel" id="panel-sixers" style="--accent:#ED174C">
+    <div class="team-head"><h2>פילדלפיה 76ers</h2><span class="note">45-37 בעונה שעברה · הקיץ הכי גדול בליגה · מאמן: ניק נרס</span></div>
+    <table>
+      <thead><tr><th class="num">#</th><th class="imgcol">תמונה</th><th>שחקן</th><th>עמדה</th><th class="num">נק'</th><th class="num">ריב'</th><th class="num">אס'</th></tr></thead>
+      <tbody id="tbody-sixers"></tbody>
+    </table>
+    <div class="legend">פול ג'ורג' עזב לבוסטון · אנדרה דרימונד עזב לניקס · ג'יילן בראון ולברון ג'יימס הצטרפו · שימו לב: ג'ארד מקיין נסחר לת'אנדר בפברואר 2026, ייתכן שיש להוריד אותו מהרשימה</div>
+  </div>
+
+  <div class="foot">נתונים: ממוצעי משחק, עונת 2025/26 (העונה האחרונה שהושלמה) · שיבוצי הרוסטר משקפים טריידים וחתימות חופשיות עד 25 ביולי 2026<br>פרטי לידה לשחקנים פחות מוכרים (רוקים/שחקני ספסל) הם למיטב הידיעה ולא אומתו במלואם<br><b>עודכן:</b> תוקנו 12 מזהי תמונה שגויים שגרמו לתמונות שחקנים לא נכונות</div>
+</div>
+
+<div class="modal-overlay" id="playerModal">
+  <div class="modal-content">
+    <button class="modal-close" id="modalClose">&times;</button>
+    <img id="mImg" class="modal-img" src="" alt="">
+    <div id="mName" class="modal-name"></div>
+    <div id="mEn" class="modal-en"></div>
+    <div id="mBio" class="modal-bio"></div>
+    <div class="stats-grid">
+      <div class="stat-item"><span>גובה:</span> <b id="mHeight"></b></div>
+      <div class="stat-item"><span>דקות למשחק:</span> <b id="mMin"></b></div>
+      <div class="stat-item"><span>נקודות:</span> <b id="mPts"></b></div>
+      <div class="stat-item"><span>ריבאונדים:</span> <b id="mReb"></b></div>
+      <div class="stat-item"><span>אסיסטים:</span> <b id="mAst"></b></div>
+      <div class="stat-item"><span>עמדה:</span> <b id="mPos"></b></div>
+    </div>
+    <div class="modal-section">
+      <h4>קבוצות בקריירה</h4>
+      <p id="mTeams"></p>
+    </div>
+    <div class="modal-section">
+      <h4>תארים והישגים</h4>
+      <p id="mAwards"></p>
+    </div>
+  </div>
 </div>
 
 <script>
-function imgUrl(en){ return 'https://www.google.com/search?tbm=isch&q=' + encodeURIComponent(en + ' NBA'); }
-const ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>';
+function getPlayerImg(id){
+  return 'https://cdn.nba.com/headshots/nba/latest/260x190/' + id + '.png';
+}
 
-const teams = {
-  // ---- EAST ----
-  atl: {name:"אטלנטה הוקס", conf:"מזרח", players:[
-    ["ג'יילן ג'ונסון","Jalen Johnson","SF",22.5,10.3,7.9],
-    ["קריסטפס פורזינגיס","Kristaps Porzingis","C",17.1,5.1,2.7],
-    ["ניקיל אלכסנדר-ווקר","Nickeil Alexander-Walker","SG",20.8,3.4,3.7],
-    ["אונייקה אוקונגו","Onyeka Okongwu","C",15.2,7.6,3.1],
-    ["דייסון דניאלס","Dyson Daniels","SG",11.9,6.8,5.9],
-    ["זכארי ריזאשה","Zaccharie Risacher","SF",9.6,3.8,1.1],
-    ["ויט קרייצ'י","Vit Krejci","PG",9.0,2.1,1.5],
-    ["לוק קנארד","Luke Kennard","SG",7.9,2.2,2.1],
-    ["מוחמד גיה","Mouhamed Gueye","PF",4.4,3.6,0.9],
-    ["אסא ניואל","Asa Newell","PF",5.2,2.2,0.6]
-  ]},
-  bos: {name:"בוסטון סלטיקס", conf:"מזרח", players:[
-    ["ג'ייסון טייטום","Jayson Tatum","SF",21.8,10.0,5.3],
-    ["פול ג'ורג'","Paul George","SF",17.3,5.3,3.6],
-    ["דריק וויט","Derrick White","PG",16.5,4.4,5.4],
-    ["פייטון פריצ'רד","Payton Pritchard","PG",17.0,3.9,5.2],
-    ["מיטשל רובינסון","Mitchell Robinson","C",5.7,8.8,0.9],
-    ["נימיאס קווטה","Neemias Queta","C",10.2,8.4,1.7],
-    ["סם האוזר","Sam Hauser","SF",9.2,3.8,1.5],
-    ["ניקולה ווצ'ביץ'","Nikola Vucevic","C",9.7,6.6,2.0],
-    ["לוקה גארזה","Luka Garza","C",8.1,4.1,1.0],
-    ["ג'ורדן וולש","Jordan Walsh","SF",5.4,4.0,0.8]
-  ]},
-  brk: {name:"ברוקלין נטס", conf:"מזרח", players:[
-    ["מייקל פורטר ג'וניור","Michael Porter Jr","SF",24.2,7.1,3.0],
-    ["קאם תומאס","Cam Thomas","SG",15.6,1.8,3.1],
-    ["ניק קלקסטון","Nic Claxton","C",11.7,6.9,3.7],
-    ["נח קלואוני","Noah Clowney","PF",12.3,4.1,1.6],
-    ["זיאיר וויליאמס","Ziaire Williams","SF",10.2,2.4,1.1],
-    ["אגור דמין","Egor Demin","PG",10.3,3.2,3.3],
-    ["נולאן טראורה","Nolan Traore","PG",8.9,1.8,3.8],
-    ["דני וולף","Danny Wolf","PF",8.9,4.9,2.2],
-    ["דיירון שארפ","Day'Ron Sharpe","C",8.7,6.7,2.3],
-    ["טרנס מאן","Terance Mann","SG",7.2,3.2,3.0]
-  ]},
-  cho: {name:"שארלוט הורנטס", conf:"מזרח", players:[
-    ["למלו בול","LaMelo Ball","PG",20.1,4.8,7.1],
-    ["ברנדון מילר","Brandon Miller","SF",20.2,4.9,3.3],
-    ["קון קנופל","Kon Knueppel","SF",18.5,5.3,3.4],
-    ["מיילס בריג'ס","Miles Bridges","PF",17.1,5.8,3.2],
-    ["קולין סקסטון","Collin Sexton","SG",14.2,1.9,3.7],
-    ["מוסה דיאבטה","Moussa Diabate","C",7.9,8.7,1.9],
-    ["ראיין קלקברנר","Ryan Kalkbrenner","C",7.6,5.5,0.8],
-    ["סיון ג'יימס","Sion James","SG",5.4,3.5,2.0],
-    ["ג'וש גרין","Josh Green","SG",4.3,1.8,0.8],
-    ["טיג'אן סאלון","Tidjane Salaun","PF",6.0,4.0,0.7]
-  ]},
-  chi: {name:"שיקגו בולס", conf:"מזרח", players:[
-    ["ג'וש גידי","Josh Giddey","PG",17.0,8.3,9.1],
-    ["קובי וויט","Coby White","SG",18.6,3.7,4.7],
-    ["מאטאס בוזליס","Matas Buzelis","PF",16.3,5.8,2.1],
-    ["ניקולה ווצ'ביץ'","Nikola Vucevic","C",16.9,9.0,3.8],
-    ["איו דוסונמו","Ayo Dosunmu","SG",15.0,3.0,3.6],
-    ["טרה ג'ונס","Tre Jones","PG",14.1,3.1,5.4],
-    ["איזק אוקורו","Isaac Okoro","SG",9.3,2.7,1.6],
-    ["קווין הוארטר","Kevin Huerter","SF",10.9,3.8,2.6],
-    ["פטריק ויליאמס","Patrick Williams","PF",7.0,3.0,1.5],
-    ["זאק קולינס","Zach Collins","C",9.7,5.6,1.5]
-  ]},
-  cle: {name:"קליבלנד קאבלירס", conf:"מזרח", players:[
-    ["דונובן מיטשל","Donovan Mitchell","SG",27.9,4.5,5.7],
-    ["דריוס גרלנד","Darius Garland","PG",18.0,2.4,6.9],
-    ["אוון מובלי","Evan Mobley","PF",18.2,9.0,3.6],
-    ["ג'ארט אלן","Jarrett Allen","C",15.4,8.5,1.8],
-    ["דיאנדרה האנטר","De'Andre Hunter","SF",14.0,4.2,2.1],
-    ["ג'יילון טייסון","Jaylon Tyson","SG",13.2,5.1,2.2],
-    ["סם מריל","Sam Merrill","SG",13.5,2.6,2.4],
-    ["דין ווייד","Dean Wade","PF",5.8,4.2,1.5],
-    ["קרייג פורטר ג'וניור","Craig Porter Jr","PG",4.5,3.4,3.2],
-    ["ניקוואן טומלין","Nae'Qwan Tomlin","PF",5.8,2.9,0.8]
-  ]},
-  det: {name:"דטרויט פיסטונס", conf:"מזרח", players:[
-    ["קייד קנינגהם","Cade Cunningham","PG",23.9,5.5,9.9],
-    ["ג'יילן דורן","Jalen Duren","C",19.5,10.5,2.0],
-    ["טוביאס האריס","Tobias Harris","PF",13.3,5.1,2.5],
-    ["דנקן רובינסון","Duncan Robinson","SG",12.2,2.7,2.1],
-    ["אוסאר תומפסון","Ausar Thompson","SF",9.9,5.7,3.1],
-    ["קאריס לה-וורט","Caris LeVert","SG",7.4,2.0,2.7],
-    ["איזאיה סטיוארט","Isaiah Stewart","C",10.0,5.0,1.1],
-    ["דניס ג'נקינס","Daniss Jenkins","PG",9.3,2.3,3.9],
-    ["רון הולנד","Ron Holland","SF",8.2,4.0,1.2],
-    ["ג'יידן איווי","Jaden Ivey","SG",8.2,2.2,1.6]
-  ]},
-  ind: {name:"אינדיאנה פייסרס", conf:"מזרח", players:[
-    ["פסקל סיאקם","Pascal Siakam","PF",24.0,6.6,3.8],
-    ["בנדיקט מתורין","Bennedict Mathurin","SF",17.8,5.4,2.3],
-    ["אנדרו נמהארד","Andrew Nembhard","PG",16.9,2.8,7.7],
-    ["אהרון נסמית'","Aaron Nesmith","SF",13.8,4.2,1.9],
-    ["ג'רייס ווקר","Jarace Walker","PF",11.6,5.1,2.5],
-    ["אובי טופין","Obi Toppin","PF",11.6,4.4,2.3],
-    ["טי ג'יי מקונל","T.J. McConnell","PG",9.4,2.2,5.1],
-    ["ג'יי האף","Jay Huff","C",9.5,4.0,1.5],
-    ["איזאיה ג'קסון","Isaiah Jackson","C",6.4,5.6,0.8],
-    ["בן שפרד","Ben Sheppard","SG",7.1,3.0,1.8]
-  ]},
-  mia: {name:"מיאמי היט", conf:"מזרח", players:[
-    ["נורמן פאוול","Norman Powell","SG",21.7,3.5,2.5],
-    ["באם אדבאיו","Bam Adebayo","C",20.1,10.0,3.2],
-    ["אנדרו ויגינס","Andrew Wiggins","SF",15.4,4.8,2.7],
-    ["חאימה חאקז ג'וניור","Jaime Jaquez Jr","SF",15.4,5.0,4.7],
-    ["קלאל וור","Kel'el Ware","C",11.1,9.0,0.7],
-    ["פלה לרסון","Pelle Larsson","SG",11.4,3.5,3.4],
-    ["דייביון מיטשל","Davion Mitchell","PG",9.3,2.7,6.5],
-    ["ניקולה יוביץ'","Nikola Jovic","PF",7.3,3.3,2.2],
-    ["סימונה פונטקיו","Simone Fontecchio","SF",8.5,3.0,1.4],
-    ["קספרס יאקוצ'יוניס","Kasparas Jakucionis","PG",6.2,2.6,2.6]
-  ]},
-  mil: {name:"מילווקי באקס", conf:"מזרח", players:[
-    ["ג'יאניס אנטטקומפו","Giannis Antetokounmpo","PF",27.6,9.8,5.4],
-    ["קווין פורטר ג'וניור","Kevin Porter Jr","PG",17.4,5.2,7.4],
-    ["ראיין רולינס","Ryan Rollins","PG",17.3,4.6,5.6],
-    ["קייל קוזמה","Kyle Kuzma","PF",13.0,4.5,2.7],
-    ["בובי פורטיס","Bobby Portis","PF",13.7,6.4,1.6],
-    ["מיילס טרנר","Myles Turner","C",11.9,5.3,1.5],
-    ["איי ג'יי גרין","A.J. Green","SG",10.4,2.7,1.9],
-    ["ג'ריקו סימס","Jericho Sims","C",5.0,5.5,1.6],
-    ["קורמק ראיין","Cormac Ryan","SG",14.3,2.5,1.7],
-    ["אנדרה ג'קסון ג'וניור","Andre Jackson Jr","SG",2.4,1.5,0.9]
-  ]},
-  nyk: {name:"ניו יורק ניקס", conf:"מזרח", players:[
-    ["ג'יילן ברנסון","Jalen Brunson","PG",26.0,3.3,6.8],
-    ["קרל-אנתוני טאונס","Karl-Anthony Towns","C",20.1,11.9,3.0],
-    ["או.ג'י אנונובי","OG Anunoby","PF",16.7,5.2,2.2],
-    ["מיקל בריג'ס","Mikal Bridges","SF",14.4,3.8,3.7],
-    ["ג'וש הארט","Josh Hart","SF",12.0,7.4,4.8],
-    ["מיילס מקברייד","Miles McBride","SG",12.0,2.4,2.6],
-    ["ג'ורדן קלרקסון","Jordan Clarkson","SG",8.6,1.8,1.3],
-    ["אנדרה דרימונד","Andre Drummond","C",6.4,8.4,1.3],
-    ["חוסה אלווארדו","Jose Alvarado","PG",6.6,2.0,3.8],
-    ["לנדרי שאמט","Landry Shamet","SG",9.3,1.8,1.4]
-  ]},
-  orl: {name:"אורלנדו מג'יק", conf:"מזרח", players:[
-    ["פאולו בנקרו","Paolo Banchero","PF",22.2,8.4,5.2],
-    ["פרנץ וגנר","Franz Wagner","SF",20.6,5.2,3.3],
-    ["דזמונד ביין","Desmond Bane","SG",20.1,4.1,4.1],
-    ["ג'יילן סאגס","Jalen Suggs","PG",13.8,3.9,5.5],
-    ["וונדל קרטר ג'וניור","Wendell Carter Jr","C",11.8,7.4,2.0],
-    ["אנתוני בלאק","Anthony Black","PG",15.0,3.8,3.7],
-    ["טריסטן דה סילבה","Tristan Da Silva","SF",9.9,3.7,1.6],
-    ["גוגה ביטאדזה","Goga Bitadze","C",5.9,5.0,1.3],
-    ["טייס ג'ונס","Tyus Jones","PG",3.0,1.1,2.4],
-    ["נח פנדה","Noah Penda","SF",3.8,3.2,1.2]
-  ]},
-  phi: {name:"פילדלפיה 76ers", conf:"מזרח", players:[
-    ["טייריס מקסי","Tyrese Maxey","PG",28.3,4.1,6.6],
-    ["ג'יילן בראון","Jaylen Brown","SG",28.7,6.9,5.1],
-    ["ג'ואל אמביד","Joel Embiid","C",26.9,7.7,3.9],
-    ["לברון ג'יימס","LeBron James","SF",20.9,6.1,7.2],
-    ["וי.ג'יי אדג'קום","VJ Edgecombe","SG",16.0,5.6,4.2],
-    ["קלי אובר ג'וניור","Kelly Oubre Jr","SF",14.1,5.0,1.6],
-    ["קוונטין גריימס","Quentin Grimes","SG",13.4,3.6,3.3],
-    ["דומיניק ברלו","Dominick Barlow","PF",7.7,4.8,1.2],
-    ["קמרון פיין","Cameron Payne","PG",7.4,2.0,2.6],
-    ["ג'ארד מקיין","Jared McCain","SG",6.6,2.0,1.7]
-  ]},
-  tor: {name:"טורונטו ראפטורס", conf:"מזרח", players:[
-    ["ברנדון אינגרם","Brandon Ingram","SF",21.5,5.6,3.7],
-    ["אר ג'יי בארט","RJ Barrett","SF",19.3,5.3,3.3],
-    ["סקוטי בארנס","Scottie Barnes","PF",18.1,7.5,5.9],
-    ["עמנואל קוויקלי","Immanuel Quickley","PG",16.4,4.0,5.9],
-    ["יעקב פלטל","Jakob Poeltl","C",10.7,7.0,2.0],
-    ["קולין מארי-בויילס","Collin Murray-Boyles","PF",8.5,5.0,1.9],
-    ["סנדרו ממוקלשווילי","Sandro Mamukelashvili","C",11.2,4.9,1.9],
-    ["ג'מאל שיד","Jamal Shead","PG",6.6,1.7,5.4],
-    ["ג'יקובי וולטר","Ja'Kobe Walter","SG",7.5,2.6,1.2],
-    ["גריידי דיק","Gradey Dick","SG",6.0,1.9,0.7]
-  ]},
-  was: {name:"וושינגטון וויזארדס", conf:"מזרח", players:[
-    ["סי ג'יי מקולום","CJ McCollum","PG",18.8,3.5,3.6],
-    ["אלכס סאר","Alex Sarr","C",16.3,7.4,2.7],
-    ["קישון ג'ורג'","Kyshawn George","SF",14.8,5.1,4.5],
-    ["קריס מידלטון","Khris Middleton","SF",10.3,3.9,3.3],
-    ["בילאל קוליבאלי","Bilal Coulibaly","SG",11.7,4.3,2.6],
-    ["טרה ג'ונסון","Tre Johnson","SG",12.2,2.8,2.0],
-    ["באב קרינגטון","Bub Carrington","PG",10.7,3.4,4.6],
-    ["וויל ריילי","Will Riley","SF",10.3,2.9,2.0],
-    ["מרווין באגלי השלישי","Marvin Bagley III","PF",10.1,5.7,1.5],
-    ["ג'סטין שמפיין","Justin Champagnie","SF",8.7,5.6,1.2]
-  ]},
-  // ---- WEST ----
-  dal: {name:"דאלאס מאבריקס", conf:"מערב", players:[
-    ["קופר פלאג","Cooper Flagg","SF",21.0,6.7,4.5],
-    ["אנתוני דייויס","Anthony Davis","PF",20.4,11.1,2.8],
-    ["נאג'י מרשל","Naji Marshall","SF",15.2,4.7,3.3],
-    ["פי ג'יי וושינגטון","P.J. Washington","PF",14.2,7.0,1.8],
-    ["מקס כריסטי","Max Christie","SG",12.3,3.2,2.0],
-    ["קליי תומפסון","Klay Thompson","SF",11.7,2.1,1.4],
-    ["דיאנג'לו ראסל","D'Angelo Russell","PG",10.2,2.3,4.0],
-    ["דניאל גפורד","Daniel Gafford","C",9.5,6.9,1.1],
-    ["ראיין נמהארד","Ryan Nembhard","PG",6.6,2.2,5.3],
-    ["דרק לייבלי השני","Dereck Lively II","C",4.3,5.3,1.9]
-  ]},
-  den: {name:"דנוור נאגטס", conf:"מערב", players:[
-    ["ניקולה יוקיץ'","Nikola Jokic","C",27.7,12.9,10.7],
-    ["ג'מאל מארי","Jamal Murray","PG",25.4,4.4,7.1],
-    ["קמרון ג'ונסון","Cameron Johnson","SF",12.2,3.8,2.4],
-    ["אהרון גורדון","Aaron Gordon","PF",16.2,5.8,2.7],
-    ["פייטון ווטסון","Peyton Watson","SF",14.6,4.9,2.1],
-    ["כריסטיאן בראון","Christian Braun","SG",12.0,4.8,2.7],
-    ["טים הרדוויי ג'וניור","Tim Hardaway Jr","SG",13.5,2.6,1.4],
-    ["ברוס בראון","Bruce Brown","SG",7.9,3.9,2.1],
-    ["יונאס ולנצ'יונאס","Jonas Valanciunas","C",8.7,5.1,1.2],
-    ["ג'וליאן סטרוטר","Julian Strawther","SG",7.2,2.0,1.1]
-  ]},
-  gsw: {name:"גולדן סטייט ווריורס", conf:"מערב", players:[
-    ["סטפן קרי","Stephen Curry","PG",26.6,3.6,4.7],
-    ["ג'ימי באטלר","Jimmy Butler","SF",20.0,5.6,4.9],
-    ["ג'ונתן קומינגה","Jonathan Kuminga","PF",12.1,5.9,2.5],
-    ["ברנדין פודזיימסקי","Brandin Podziemski","SG",13.8,5.1,3.7],
-    ["דריימונד גרין","Draymond Green","PF",8.4,5.5,5.5],
-    ["מוזס מודי","Moses Moody","SG",12.1,3.3,1.6],
-    ["אל הורפורד","Al Horford","C",8.3,4.9,2.6],
-    ["באדי הילד","Buddy Hield","SG",8.0,2.5,1.5],
-    ["קווינטן פוסט","Quinten Post","PF",7.7,4.0,1.4],
-    ["וויל ריצ'רד","Will Richard","SG",6.4,2.5,1.3]
-  ]},
-  hou: {name:"יוסטון רוקטס", conf:"מערב", players:[
-    ["קווין דוראנט","Kevin Durant","SF",26.0,5.5,4.8],
-    ["אלפרן שנגון","Alperen Sengun","C",20.4,8.9,6.2],
-    ["איימן תומפסון","Amen Thompson","PG",18.3,7.8,5.3],
-    ["ג'בארי סמית' ג'וניור","Jabari Smith Jr","PF",15.8,6.9,1.9],
-    ["ריד שפרד","Reed Sheppard","SG",13.5,2.9,3.4],
-    ["טארי איזון","Tari Eason","PF",10.5,6.3,1.5],
-    ["סטיבן אדמס","Steven Adams","C",5.8,8.6,1.5],
-    ["ג'וש אוקוגי","Josh Okogie","SG",4.5,2.6,0.9],
-    ["קלינט קפלה","Clint Capela","C",3.8,4.6,0.7],
-    ["אהרון הולידיי","Aaron Holiday","PG",5.5,1.0,1.1]
-  ]},
-  lac: {name:"לוס אנג'לס קליפרס", conf:"מערב", players:[
-    ["קאווי לנארד","Kawhi Leonard","SF",27.9,6.4,3.6],
-    ["ג'יימס הארדן","James Harden","PG",25.4,4.8,8.1],
-    ["איביצה זובאץ","Ivica Zubac","C",14.4,11.0,2.2],
-    ["ג'ון קולינס","John Collins","PF",13.6,5.3,1.0],
-    ["בראדלי ביל","Bradley Beal","SG",8.2,0.8,1.7],
-    ["דריק ג'ונס ג'וניור","Derrick Jones Jr","SF",10.1,3.5,1.4],
-    ["קריס דאן","Kris Dunn","PG",7.3,3.3,3.6],
-    ["ניקולא באטום","Nicolas Batum","PF",4.0,2.5,0.9],
-    ["ברוק לופז","Brook Lopez","C",8.5,3.6,1.3],
-    ["ג'ורדן מילר","Jordan Miller","SF",10.0,3.0,2.3]
-  ]},
-  lal: {name:"לוס אנג'לס לייקרס", conf:"מערב", players:[
-    ["לוקה דונצ'יץ'","Luka Doncic","PG",33.5,7.7,8.3],
-    ["לברון ג'יימס","LeBron James","SF",20.9,6.1,7.2],
-    ["אוסטין ריבס","Austin Reaves","SG",23.3,4.7,5.5],
-    ["דיאנדרה איטון","Deandre Ayton","C",12.5,8.0,0.8],
-    ["רוי האצ'ימורה","Rui Hachimura","PF",11.5,3.3,0.8],
-    ["מרקוס סמארט","Marcus Smart","SG",9.3,2.8,3.0],
-    ["ג'קסון הייז","Jaxson Hayes","C",7.5,4.1,0.9],
-    ["ג'ארד ונדרבילט","Jarred Vanderbilt","PF",4.4,4.5,1.3],
-    ["מקסי קלבר","Maxi Kleber","PF",2.0,2.0,0.6],
-    ["דלטון קנכט","Dalton Knecht","SF",4.2,1.4,0.4]
-  ]},
-  mem: {name:"ממפיס גריזליס", conf:"מערב", players:[
-    ["ג'ה מורנט","Ja Morant","PG",19.5,3.3,8.1],
-    ["ג'ארן ג'קסון ג'וניור","Jaren Jackson Jr","C",19.4,5.7,2.0],
-    ["טיי ג'רום","Ty Jerome","SG",19.7,2.8,5.7],
-    ["סנטי אלדמה","Santi Aldama","PF",14.0,6.7,2.9],
-    ["סדריק קווארד","Cedric Coward","SG",13.6,5.9,2.8],
-    ["זאק אדי","Zach Edey","C",13.6,11.1,1.1],
-    ["ג'י ג'י ג'קסון השני","GG Jackson II","PF",12.5,4.3,1.5],
-    ["קאם ספנסר","Cam Spencer","SG",11.1,2.5,5.6],
-    ["וינס וויליאמס ג'וניור","Vince Williams Jr","PG",8.0,4.0,4.4],
-    ["ג'וק לנדייל","Jock Landale","C",11.3,6.5,1.7]
-  ]},
-  min: {name:"מינסוטה טימברוולבס", conf:"מערב", players:[
-    ["אנתוני אדוארדס","Anthony Edwards","SG",28.8,5.0,3.7],
-    ["ג'וליוס רנדל","Julius Randle","PF",21.1,6.7,5.0],
-    ["ג'יידן מקדניאלס","Jaden McDaniels","PF",14.8,4.2,2.7],
-    ["נאז ריד","Naz Reid","C",13.6,6.2,2.2],
-    ["רודי גוברט","Rudy Gobert","C",10.9,11.5,1.7],
-    ["דונטה דיוינצנזו","Donte DiVincenzo","SG",12.2,4.1,3.8],
-    ["מייק קונלי","Mike Conley","PG",4.5,1.7,2.9],
-    ["טרנס שאנון ג'וניור","Terrence Shannon Jr","SG",5.6,1.1,0.9],
-    ["בונס היילנד","Bones Hyland","PG",8.5,1.8,2.6],
-    ["חואן ברינגר","Joan Beringer","PF",3.9,2.3,0.3]
-  ]},
-  nop: {name:"ניו אורלינס פליקנס", conf:"מערב", players:[
-    ["טריי מרפי השלישי","Trey Murphy III","SF",21.5,5.7,3.8],
-    ["זיון וויליאמסון","Zion Williamson","PF",21.0,5.7,3.2],
-    ["סאדיק ביי","Saddiq Bey","SF",17.7,5.6,2.5],
-    ["ג'ורדן פול","Jordan Poole","PG",13.4,2.0,3.1],
-    ["דריק קווין","Derik Queen","C",11.7,7.1,3.7],
-    ["הרברט ג'ונס","Herbert Jones","SF",8.9,3.4,2.8],
-    ["איב מיסי","Yves Missi","C",5.7,5.8,1.3],
-    ["חוסה אלווארדו","Jose Alvarado","PG",7.9,2.8,3.1],
-    ["קרלו מטקוביץ'","Karlo Matkovic","PF",5.7,3.7,0.8],
-    ["בריס מקגוונס","Bryce McGowens","SG",8.1,2.1,1.5]
-  ]},
-  okc: {name:"אוקלהומה סיטי ת'אנדר", conf:"מערב", players:[
-    ["שיי גילג'ס-אלכסנדר","Shai Gilgeous-Alexander","PG",31.1,4.3,6.6],
-    ["צ'ט הולמגרן","Chet Holmgren","PF",17.1,8.9,1.7],
-    ["ג'יילן וויליאמס","Jalen Williams","SG",17.1,4.6,5.5],
-    ["איג'יי מיטשל","Ajay Mitchell","SG",13.6,3.3,3.6],
-    ["איזאיה הרטנשטיין","Isaiah Hartenstein","C",9.2,9.4,3.5],
-    ["קייסון וואלאס","Cason Wallace","SG",8.6,3.1,2.6],
-    ["איזאיה ג'ו","Isaiah Joe","SG",11.1,2.5,1.3],
-    ["אהרון ויגינס","Aaron Wiggins","SG",9.4,3.1,1.7],
-    ["לוגנץ דורט","Luguentz Dort","SF",8.3,3.6,1.2],
-    ["אלכס קרוזו","Alex Caruso","SG",6.2,2.8,2.0]
-  ]},
-  pho: {name:"פיניקס סאנס", conf:"מערב", players:[
-    ["דווין בוקר","Devin Booker","SG",26.1,3.9,6.0],
-    ["דילון ברוקס","Dillon Brooks","SF",20.2,3.6,1.8],
-    ["ג'יילן גרין","Jalen Green","SG",17.8,3.6,2.8],
-    ["גרייסון אלן","Grayson Allen","SG",16.5,3.0,3.8],
-    ["קולין גילספי","Collin Gillespie","PG",12.7,4.1,4.6],
-    ["רויס אוניל","Royce O'Neale","SF",9.8,4.8,2.7],
-    ["מארק וויליאמס","Mark Williams","C",11.7,8.0,1.0],
-    ["אוסו איגודארו","Oso Ighodaro","PF",6.5,5.1,2.3],
-    ["קאמן מלואץ'","Khaman Maluach","C",3.0,2.9,0.1],
-    ["ראיין דאן","Ryan Dunn","SF",5.8,4.2,1.5]
-  ]},
-  por: {name:"פורטלנד טרייל בלייזרס", conf:"מערב", players:[
-    ["דני אבדיה","Deni Avdija","SF",24.2,6.9,6.7],
-    ["שיידון שארפ","Shaedon Sharpe","SG",20.8,4.3,2.6],
-    ["ג'רמי גרנט","Jerami Grant","PF",18.6,3.5,2.1],
-    ["סקוט הנדרסון","Scoot Henderson","PG",14.2,2.7,3.7],
-    ["תומאני קמרה","Toumani Camara","PF",13.4,5.1,2.5],
-    ["דונובן קלינגן","Donovan Clingan","C",12.1,11.6,2.1],
-    ["רוברט וויליאמס","Robert Williams","C",6.7,7.0,1.0],
-    ["יאנג האנסן","Yang Hansen","C",2.2,1.5,0.5],
-    ["קריס מארי","Kris Murray","SF",5.8,3.6,1.4],
-    ["קיילב לאב","Caleb Love","SG",10.4,2.3,2.5]
-  ]},
-  sac: {name:"סקרמנטו קינגס", conf:"מערב", players:[
-    ["דימאר דרוזאן","DeMar DeRozan","PF",18.4,2.9,4.1],
-    ["זאק לאווין","Zach LaVine","SG",19.2,2.8,2.3],
-    ["דומנטס סבוניס","Domantas Sabonis","C",15.8,11.4,4.1],
-    ["ראסל ווסטברוק","Russell Westbrook","SF",15.2,5.4,6.7],
-    ["קיגן מארי","Keegan Murray","PF",14.0,5.7,1.7],
-    ["מאליק מונק","Malik Monk","SG",12.5,1.9,3.0],
-    ["מקסים רנו","Maxime Raynaud","C",12.5,7.5,1.4],
-    ["ניק קליפורד","Nique Clifford","SG",8.6,3.8,2.4],
-    ["פרישס אצ'יווה","Precious Achiuwa","C",10.1,6.7,1.4],
-    ["דניס שרדר","Dennis Schroder","PG",12.8,3.1,5.3]
-  ]},
-  sas: {name:"סן אנטוניו ספרס", conf:"מערב", players:[
-    ["ויקטור וומבניאמה","Victor Wembanyama","C",25.0,11.5,3.1],
-    ["דיאהרון פוקס","De'Aaron Fox","PG",18.6,3.8,6.2],
-    ["סטפון קאסל","Stephon Castle","PG",16.7,5.3,7.4],
-    ["דילן הארפר","Dylan Harper","SG",11.8,3.4,3.9],
-    ["דווין ואסל","Devin Vassell","SG",13.9,4.0,2.5],
-    ["קלדון ג'ונסון","Keldon Johnson","SF",13.2,5.4,1.4],
-    ["ג'וליאן שמפיין","Julian Champagnie","SF",11.1,5.8,1.5],
-    ["הריסון בארנס","Harrison Barnes","PF",9.9,2.8,1.9],
-    ["לוק קורנט","Luke Kornet","C",6.5,6.1,1.9],
-    ["קרטר בראיינט","Carter Bryant","PF",4.2,2.5,0.7]
-  ]},
-  uta: {name:"יוטה ג'אז", conf:"מערב", players:[
-    ["לאורי מארקנן","Lauri Markkanen","PF",26.7,6.9,2.1],
-    ["קיונטה ג'ורג'","Keyonte George","PG",23.6,3.7,6.1],
-    ["אייס ביילי","Ace Bailey","SF",13.8,4.2,1.8],
-    ["בריס סנסבו","Brice Sensabaugh","SF",14.9,3.1,1.9],
-    ["ווקר קסלר","Walker Kessler","C",14.4,10.8,3.0],
-    ["איזאיה קוליר","Isaiah Collier","PG",11.7,2.5,7.2],
-    ["קייל פיליפובסקי","Kyle Filipowski","C",11.4,7.2,2.6],
-    ["יוסוף נורקיץ'","Jusuf Nurkic","C",10.9,10.4,4.8],
-    ["סבי מיכאיליוק","Svi Mykhailiuk","SF",9.4,2.5,1.9],
-    ["קודי ויליאמס","Cody Williams","SG",8.8,3.0,2.0]
-  ]}
+const data = {
+  knicks: [
+    {rank:1, id:1628973, star:true, he:"ג'יילן ברנסון", en:"Jalen Brunson", role:"מנהיג ההתקפה, אול-אן.בי.איי", pos:"PG", pts:26.0, reb:3.3, ast:6.8, height:"1.88m", min:35.4,
+      age:29, dob:"31 באוגוסט 1996", birthplace:"אדלפי, פנסילבניה, ארה\"ב",
+      teams:["דאלאס מאבריקס (2018-2022)","ניו יורק ניקס (2022-)"],
+      awards:"אול-סטאר (2024, 2025) · אול-אן.בי.איי סקונד/פירסט טים · אלוף NBA 2026 עם הניקס"},
+    {rank:2, id:1626157, star:true, he:"קרל-אנתוני טאונס", en:"Karl-Anthony Towns", role:"אול-סטאר", pos:"C", pts:20.1, reb:11.9, ast:3.0, height:"2.13m", min:34.2,
+      age:30, dob:"15 בנובמבר 1995", birthplace:"אדיסון, ניו ג'רזי, ארה\"ב",
+      teams:["מינסוטה טימברוולבס (2015-2024)","ניו יורק ניקס (2024-)"],
+      awards:"רוקי השנה (2016) · 4x אול-סטאר · אול-אן.בי.איי טים · אלוף NBA 2026 עם הניקס"},
+    {rank:3, id:1628384, he:"או.ג'י אנונובי", en:"OG Anunoby", pos:"PF", pts:16.7, reb:5.2, ast:2.2, height:"2.01m", min:33.1,
+      age:29, dob:"17 ביולי 1997", birthplace:"לונדון, אנגליה",
+      teams:["טורונטו ראפטורס (2017-2024)","ניו יורק ניקס (2024-)"],
+      awards:"אלוף NBA 2019 עם הראפטורס · אלוף NBA 2026 עם הניקס · אול-דיפנסיב טים"},
+    {rank:4, id:1628969, he:"מיקל בריג'ס", en:"Mikal Bridges", pos:"SF", pts:14.4, reb:3.8, ast:3.7, height:"1.98m", min:34.8,
+      age:29, dob:"31 באוגוסט 1996", birthplace:"פילדלפיה, פנסילבניה, ארה\"ב",
+      teams:["פיניקס סאנס (2018-2023)","ברוקלין נטס (2023)","ניו יורק ניקס (2023-)"],
+      awards:"אול-רוקי טים · אלוף NBA 2026 עם הניקס · ידוע ברצף המשחקים הרצוף שלו"},
+    {rank:5, id:1628404, he:"ג'וש הארט", en:"Josh Hart", pos:"SF", pts:12.0, reb:7.4, ast:4.8, height:"1.93m", min:33.0,
+      age:31, dob:"6 במרץ 1995", birthplace:"סילבר ספרינג, מרילנד, ארה\"ב",
+      teams:["לוס אנג'לס לייקרס (2017-2019)","ניו אורלינס פליקנס (2019-2023)","פורטלנד טרייל בלייזרס (2023)","ניו יורק ניקס (2023-)"],
+      awards:"אלוף NBA 2026 עם הניקס · אין תארים אישיים מרכזיים"},
+    {rank:6, id:1630540, he:"מיילס מקברייד", en:"Miles McBride", pos:"SG", pts:12.0, reb:2.4, ast:2.6, height:"1.85m", min:22.5,
+      age:25, dob:"8 בספטמבר 2000", birthplace:"סינסינטי, אוהיו, ארה\"ב",
+      teams:["ניו יורק ניקס (2021-)"],
+      awards:"אלוף NBA 2026 עם הניקס · אין תארים אישיים"},
+    {rank:7, id:1629013, he:"לנדרי שאמט", en:"Landry Shamet", pos:"SG", pts:9.3, reb:1.8, ast:1.4, height:"1.93m", min:18.1,
+      age:29, dob:"13 במרץ 1997", birthplace:"אוק גרוב, מיזורי, ארה\"ב",
+      teams:["לוס אנג'לס קליפרס (2018-2019)","פיניקס סאנס (2019-2021)","ברוקלין נטס (2021-2023)","וושינגטון וויזארדס (2023-2024)","ניו יורק ניקס (2024-)"],
+      awards:"אלוף NBA 2026 עם הניקס"},
+    {rank:8, id:1625244, he:"ג'ורדן קלרקסון", en:"Jordan Clarkson", role:"סופר-סאב", pos:"SG", pts:8.6, reb:1.8, ast:1.3, height:"1.91m", min:19.5,
+      age:34, dob:"7 ביוני 1992", birthplace:"סן אנטוניו, טקסס, ארה\"ב",
+      teams:["לוס אנג'לס לייקרס (2014-2018)","קליבלנד קאבלירס (2018-2020)","יוטה ג'אז (2020-2025)","ניו יורק ניקס (2025-)"],
+      awards:"NBA Sixth Man of the Year (2021) · אלוף NBA 2026 עם הניקס"},
+    {rank:9, id:203083, he:"אנדרה דרימונד", en:"Andre Drummond", role:"הגיע מפילדלפיה", badge:"חתימה חדשה", pos:"C", pts:6.4, reb:8.4, ast:1.3, height:"2.11m", min:17.2,
+      age:32, dob:"10 באוגוסט 1993", birthplace:"מאונט ורנון, ניו יורק, ארה\"ב",
+      teams:["דטרויט פיסטונס (2012-2020)","קליבלנד קאבלירס (2020)","לוס אנג'לס לייקרס (2021)","שיקגו בולס (2021-2022)","פילדלפיה 76ers (2022-2026)","ניו יורק ניקס (2026-)"],
+      awards:"2x אלוף ריבאונדים בליגה · 2x אול-סטאר (2016, 2018)"},
+    {rank:10, id:1630631, he:"חוסה אלווארדו", en:"Jose Alvarado", pos:"PG", pts:6.6, reb:2.0, ast:3.8, height:"1.83m", min:18.4,
+      age:27, dob:"12 בנובמבר 1998", birthplace:"ברוקלין, ניו יורק, ארה\"ב",
+      teams:["ניו אורלינס פליקנס (2021-2026)","ניו יורק ניקס (2026-)"],
+      awards:"ידוע כמגן פורח ('גרנד תפט אלווארדו')"},
+    {rank:11, id:1642278, he:"טיילר קולק", en:"Tyler Kolek", pos:"PG", pts:4.4, reb:1.6, ast:2.7, height:"1.91m", min:12.0,
+      age:25, dob:"26 במרץ 2001", birthplace:"מסאפקווה, ניו יורק, ארה\"ב",
+      teams:["ניו יורק ניקס (2024-)"], awards:"אין תארים אישיים עדיין"},
+    {rank:12, id:1631110, he:"ג'רמי סוצ'אן", en:"Jeremy Sochan", pos:"PF", pts:2.8, reb:2.1, ast:0.8, height:"2.03m", min:14.5,
+      age:22, dob:"21 במאי 2004", birthplace:"אולדנבורג, גרמניה",
+      teams:["סן אנטוניו ספרס (2022-2026)","ניו יורק ניקס (2026-)"], awards:"אין תארים אישיים עדיין"},
+    {rank:13, id:1642885, he:"מוחמד דיאווארה", en:"Mohamed Diawara", pos:"SF", pts:3.6, reb:1.4, ast:0.8, height:"2.04m", min:10.2,
+      age:20, dob:"2005 (תאריך מדויק לא ידוע)", birthplace:"פונטנה-סו-בואה, צרפת",
+      teams:["ניו יורק ניקס (2025-)"], awards:"רוקי, אין תארים עדיין"},
+    {rank:14, id:1630561, he:"אריאל הוקפורטי", en:"Ariel Hukporti", pos:"C", pts:2.2, reb:2.9, ast:0.5, height:"2.13m", min:8.5,
+      age:24, dob:"8 במאי 2002", birthplace:"ברלין, גרמניה",
+      teams:["ניו יורק ניקס (2023-)"], awards:"אין תארים אישיים"},
+    {rank:15, id:1642358, he:"פאקום דדייה", en:"Pacome Dadiet", pos:"SG", pts:1.7, reb:0.9, ast:0.4, height:"2.03m", min:7.0,
+      age:21, dob:"3 בפברואר 2005", birthplace:"וילפאנט, צרפת",
+      teams:["ניו יורק ניקס (2024-)"], awards:"אין תארים אישיים עדיין"}
+  ],
+  nets: [
+    {rank:1, id:1629008, star:true, he:"מייקל פורטר ג'וניור", en:"Michael Porter Jr", role:"הכוכב הבולט, יעד טרייד מרכזי", pos:"SF", pts:24.2, reb:7.1, ast:3.0, height:"2.08m", min:32.1,
+      age:28, dob:"29 ביוני 1998", birthplace:"קולומביה, מיזורי, ארה\"ב",
+      teams:["דנוור נאגטס (2018-2024)","ברוקלין נטס (2024-)"], awards:"אלוף NBA 2023 עם הנאגטס"},
+    {rank:2, id:1630560, he:"קאם תומאס", en:"Cam Thomas", role:"כדרן פורה, מוגבל בפציעות", pos:"SG", pts:15.6, reb:1.8, ast:3.1, height:"1.91m", min:28.0,
+      age:24, dob:"13 באוקטובר 2001", birthplace:"באטון רוז', לואיזיאנה, ארה\"ב",
+      teams:["ברוקלין נטס (2021-)"], awards:"אין תארים אישיים עדיין"},
+    {rank:3, id:1629651, he:"ניק קלקסטון", en:"Nic Claxton", pos:"C", pts:11.7, reb:6.9, ast:3.7, height:"2.11m", min:29.5,
+      age:27, dob:"17 באפריל 1999", birthplace:"הפזיבה, ג'ורג'יה, ארה\"ב",
+      teams:["ברוקלין נטס (2019-)"], awards:"אין תארים אישיים עדיין"},
+    {rank:4, id:1641730, he:"נח קלואוני", en:"Noah Clowney", pos:"PF", pts:12.3, reb:4.1, ast:1.6, height:"2.08m", min:24.2,
+      age:22, dob:"21 בפברואר 2004", birthplace:"רידג'לנד, דרום קרוליינה, ארה\"ב",
+      teams:["ברוקלין נטס (2023-)"], awards:"אין תארים אישיים עדיין"},
+    {rank:5, id:1630533, he:"זיאיר וויליאמס", en:"Ziaire Williams", pos:"SF", pts:10.2, reb:2.4, ast:1.1, height:"2.06m", min:20.3,
+      age:24, dob:"12 בספטמבר 2001", birthplace:"לוס אנג'לס, קליפורניה, ארה\"ב",
+      teams:["ממפיס גריזליס (2021-2023)","ברוקלין נטס (2023-)"], awards:"אין תארים אישיים"},
+    {rank:6, id:1642856, he:"אגור דמין", en:"Egor Demin", role:"בחירה 8, מגן חדש", pos:"PG", pts:10.3, reb:3.2, ast:3.3, height:"2.03m", min:23.0,
+      age:19, dob:"3 בפברואר 2007", birthplace:"מוסקבה, רוסיה",
+      teams:["ברוקלין נטס (2025-)"], awards:"בחירה 8 בדראפט 2025, רוקי"},
+    {rank:7, id:1642849, he:"נולאן טראורה", en:"Nolan Traore", role:"רוקי", pos:"PG", pts:8.9, reb:1.8, ast:3.8, height:"1.91m", min:21.0,
+      age:20, dob:"8 בפברואר 2006", birthplace:"מאנט-לה-ז'ולי, צרפת",
+      teams:["ברוקלין נטס (2025-)"], awards:"רוקי, אין תארים עדיין"},
+    {rank:8, id:1642874, he:"דני וולף", en:"Danny Wolf", role:"רוקי", pos:"PF", pts:8.9, reb:4.9, ast:2.2, height:"2.11m", min:19.5,
+      age:23, dob:"2003 (תאריך מדויק לא ידוע)", birthplace:"היילנד פארק, אילינוי, ארה\"ב",
+      teams:["ברוקלין נטס (2025-)"], awards:"רוקי, אין תארים עדיין"},
+    {rank:9, id:1630549, he:"דיירון שארפ", en:"Day'Ron Sharpe", pos:"C", pts:8.7, reb:6.7, ast:2.3, height:"2.06m", min:18.0,
+      age:25, dob:"10 בינואר 2001", birthplace:"גרינסבורו, צפון קרוליינה, ארה\"ב",
+      teams:["ברוקלין נטס (2021-)"], awards:"אין תארים אישיים"},
+    {rank:10, id:1629611, he:"טרנס מאן", en:"Terance Mann", pos:"SG", pts:7.2, reb:3.2, ast:3.0, height:"1.96m", min:21.5,
+      age:29, dob:"18 באוקטובר 1996", birthplace:"סאפרן, ניו יורק, ארה\"ב",
+      teams:["לוס אנג'לס קליפרס (2019-2025)","ברוקלין נטס (2025-)"], awards:"אין תארים אישיים"},
+    {rank:11, id:1642879, he:"בן סראף", en:"Ben Saraf", role:"רוקי", pos:"SG", pts:7.5, reb:2.1, ast:3.3, height:"1.97m", min:18.5,
+      age:20, dob:"2006, ישראל (תאריך מדויק לא ידוע)", birthplace:"ישראל",
+      teams:["ברוקלין נטס (2025-)"], awards:"רוקי, אין תארים עדיין"},
+    {rank:12, id:1630620, he:"טייסון אטיין", en:"Tyson Etienne", pos:"PG", pts:7.9, reb:1.1, ast:1.7, height:"1.88m", min:15.0,
+      age:26, dob:"1999-2000 (תאריך מדויק לא ידוע)", birthplace:"ספרינגפילד, מסצ'וסטס, ארה\"ב",
+      teams:["ברוקלין נטס (חוזה שני-דרכים)"], awards:"אין תארים אישיים"},
+    {rank:13, id:1642962, he:"דרייק פאוול", en:"Drake Powell", pos:"SG", pts:6.5, reb:1.8, ast:1.4, height:"1.98m", min:14.2,
+      age:21, dob:"2004-2005 (תאריך מדויק לא ידוע)", birthplace:"צפון קרוליינה, ארה\"ב",
+      teams:["ברוקלין נטס (2025-)"], awards:"רוקי, אין תארים עדיין"},
+    {rank:14, id:1630592, he:"ג'יילן ווילסון", en:"Jalen Wilson", pos:"PF", pts:6.4, reb:2.1, ast:0.9, height:"2.03m", min:13.8,
+      age:26, dob:"18 בפברואר 2000", birthplace:"דנטון, טקסס, ארה\"ב",
+      teams:["ברוקלין נטס (2023-)"], awards:"אין תארים אישיים"}
+  ],
+  celtics: [
+    {rank:1, id:1628369, star:true, he:"ג'ייסון טייטום", en:"Jayson Tatum", role:"חוזר מפציעת אכילס", pos:"SF", pts:21.8, reb:10.0, ast:5.3, height:"2.03m", min:35.7,
+      age:28, dob:"3 במרץ 1998", birthplace:"סנט לואיס, מיזורי, ארה\"ב",
+      teams:["בוסטון סלטיקס (2017-)"], awards:"אלוף NBA 2024 · 6x אול-סטאר · אול-אן.בי.איי פירסט טים · מדליית זהב אולימפית 2024"},
+    {rank:2, id:202331, star:true, he:"פול ג'ורג'", en:"Paul George", role:"הגיע מפילדלפיה תמורת ג'יילן בראון", badge:"הגיע בטרייד", pos:"SF", pts:17.3, reb:5.3, ast:3.6, height:"2.03m", min:33.8,
+      age:36, dob:"2 במאי 1990", birthplace:"פאלמדייל, קליפורניה, ארה\"ב",
+      teams:["אינדיאנה פייסרס (2010-2017)","אוקלהומה סיטי ת'אנדר (2017-2019)","לוס אנג'לס קליפרס (2019-2025)","פילדלפיה 76ers (2025-2026)","בוסטון סלטיקס (2026-)"],
+      awards:"9x אול-סטאר · אול-אן.בי.איי וגם אול-דיפנסיב טים מרובים · מדליית זהב אולימפית"},
+    {rank:3, id:1628401, he:"דריק וויט", en:"Derrick White", pos:"PG", pts:16.5, reb:4.4, ast:5.4, height:"1.93m", min:32.5,
+      age:32, dob:"2 ביולי 1994", birthplace:"פארקר, קולורדו, ארה\"ב",
+      teams:["סן אנטוניו ספרס (2017-2022)","בוסטון סלטיקס (2022-)"], awards:"אלוף NBA 2024 · אול-דיפנסיב טים · אול-סטאר (2025)"},
+    {rank:4, id:1630202, he:"פייטון פריצ'רד", en:"Payton Pritchard", role:"מנצח תואר הבא מהספסל בעונה שעברה", pos:"PG", pts:17.0, reb:3.9, ast:5.2, height:"1.85m", min:28.1,
+      age:28, dob:"28 בינואר 1998", birthplace:"וסט לין, אורגון, ארה\"ב",
+      teams:["בוסטון סלטיקס (2020-)"], awards:"אלוף NBA 2024 · NBA Sixth Man of the Year (2025)"},
+    {rank:5, id:1629011, he:"מיטשל רובינסון", en:"Mitchell Robinson", role:"הגיע מניו יורק בחופשית", badge:"חתימה חדשה", pos:"C", pts:5.7, reb:8.8, ast:0.9, height:"2.13m", min:24.0,
+      age:28, dob:"1 באפריל 1998", birthplace:"פורט וורת', טקסס, ארה\"ב",
+      teams:["ניו יורק ניקס (2018-2026)","בוסטון סלטיקס (2026-)"], awards:"מוביל ריבאונד התקפי בליגה בכמה עונות"},
+    {rank:6, id:1629750, he:"נימיאס קווטה", en:"Neemias Queta", pos:"C", pts:10.2, reb:8.4, ast:1.7, height:"2.13m", min:21.2,
+      age:26, dob:"13 בנובמבר 1999", birthplace:"קווה דה פיאדדה, פורטוגל",
+      teams:["סקרמנטו קינגס (חוזה שני-דרכים)","בוסטון סלטיקס (2023-)"], awards:"אין תארים אישיים"},
+    {rank:7, id:1629833, he:"סם האוזר", en:"Sam Hauser", pos:"SF", pts:9.2, reb:3.8, ast:1.5, height:"2.01m", min:22.0,
+      age:28, dob:"8 בדצמבר 1997", birthplace:"סטיבנס פוינט, ויסקונסין, ארה\"ב",
+      teams:["בוסטון סלטיקס (2021-)"], awards:"אלוף NBA 2024"},
+    {rank:8, id:202696, he:"ניקולה ווצ'ביץ'", en:"Nikola Vucevic", pos:"C", pts:9.7, reb:6.6, ast:2.0, height:"2.08m", min:20.5,
+      age:35, dob:"24 באוקטובר 1990", birthplace:"מורז', שוויץ",
+      teams:["אורלנדו מג'יק (2011-2021)","שיקגו בולס (2021-2025)","בוסטון סלטיקס (2025-)"], awards:"2x אול-סטאר"},
+    {rank:9, id:1630568, he:"לוקה גארזה", en:"Luka Garza", pos:"C", pts:8.1, reb:4.1, ast:1.0, height:"2.08m", min:15.3,
+      age:27, dob:"27 בנובמבר 1998", birthplace:"וושינגטון די.סי, ארה\"ב",
+      teams:["בוסטון סלטיקס"], awards:"אין תארים אישיים ב-NBA"},
+    {rank:10, id:1631248, he:"בייילור שייארמן", en:"Baylor Scheierman", pos:"SG", pts:5.5, reb:3.5, ast:1.5, height:"2.01m", min:14.0,
+      age:25, dob:"6 באפריל 2001", birthplace:"סו פולס, דרום דקוטה, ארה\"ב",
+      teams:["בוסטון סלטיקס (2024-)"], awards:"אין תארים אישיים עדיין"},
+    {rank:11, id:1631172, he:"ג'ורדן וולש", en:"Jordan Walsh", pos:"SF", pts:5.4, reb:4.0, ast:0.8, height:"2.01m", min:13.2,
+      age:22, dob:"3 בנובמבר 2003", birthplace:"פורט וורת', טקסס, ארה\"ב",
+      teams:["בוסטון סלטיקס (2023-)"], awards:"אין תארים אישיים"},
+    {rank:12, id:1631167, he:"ג'וש מינוט", en:"Josh Minott", pos:"SF", pts:5.8, reb:3.6, ast:1.0, height:"2.03m", min:12.8,
+      age:23, dob:"13 בספטמבר 2002", birthplace:"ג'רמנטאון, מרילנד, ארה\"ב",
+      teams:["מינסוטה טימברוולבס (2022-2024)","בוסטון סלטיקס (2024-)"], awards:"אין תארים אישיים"},
+    {rank:13, id:1642864, he:"הוגו גונסלס", en:"Hugo Gonzalez", pos:"SF", pts:3.9, reb:3.3, ast:0.5, height:"1.98m", min:10.0,
+      age:19, dob:"2006, מדריד (תאריך מדויק לא ידוע)", birthplace:"מדריד, ספרד",
+      teams:["בוסטון סלטיקס (2025-)"], awards:"רוקי, אין תארים עדיין"}
+  ],
+  sixers: [
+    {rank:1, id:1630178, star:true, he:"טייריס מקסי", en:"Tyrese Maxey", pos:"PG", pts:28.3, reb:4.1, ast:6.6, height:"1.88m", min:37.5,
+      age:25, dob:"4 בנובמבר 2000", birthplace:"גרלנד, טקסס, ארה\"ב",
+      teams:["פילדלפיה 76ers (2020-)"], awards:"NBA Most Improved Player (2023) · 2x אול-סטאר (2024, 2025) · אול-אן.בי.איי תירד טים"},
+    {rank:2, id:1627759, star:true, he:"ג'יילן בראון", en:"Jaylen Brown", role:"הגיע מבוסטון תמורת פול ג'ורג'", badge:"הגיע בטרייד", pos:"SG/SF", pts:28.7, reb:6.9, ast:5.1, height:"1.98m", min:35.3,
+      age:29, dob:"24 באוקטובר 1996", birthplace:"מריאטה, ג'ורג'יה, ארה\"ב",
+      teams:["בוסטון סלטיקס (2016-2026)","פילדלפיה 76ers (2026-)"], awards:"אלוף NBA 2024 · NBA Finals MVP (2024) · 3x אול-סטאר · מדליית זהב אולימפית 2024"},
+    {rank:3, id:203954, star:true, he:"ג'ואל אמביד", en:"Joel Embiid", role:"כשבריא - כוכב עילית", pos:"C", pts:26.9, reb:7.7, ast:3.9, height:"2.13m", min:33.6,
+      age:32, dob:"16 במרץ 1994", birthplace:"יאונדה, קמרון",
+      teams:["פילדלפיה 76ers (2014-)"], awards:"NBA MVP (2023) · 6x אול-סטאר · מוביל מלך שערים בליגה כמה עונות · מדליית זהב אולימפית 2024"},
+    {rank:4, id:2544, star:true, he:"לברון ג'יימס", en:"LeBron James", role:"הגיע מהלייקרס בחופשית", badge:"חתימה ענקית", pos:"SF", pts:20.9, reb:6.1, ast:7.2, height:"2.06m", min:34.0,
+      age:41, dob:"30 בדצמבר 1984", birthplace:"אקרון, אוהיו, ארה\"ב",
+      teams:["קליבלנד קאבלירס (2003-2010)","מיאמי היט (2010-2014)","קליבלנד קאבלירס (2014-2018)","לוס אנג'לס לייקרס (2018-2026)","פילדלפיה 76ers (2026-)"],
+      awards:"4x אלוף NBA · 4x NBA Finals MVP · 4x NBA MVP · שיא כל הזמנים באול-סטאר (21) · מלך הקלעים ההיסטורי בליגה · 2x מדליית זהב אולימפית"},
+    {rank:5, id:1642845, he:"וי.ג'יי אדג'קום", en:"VJ Edgecombe", role:"מועמד רוקי השנה", pos:"SG", pts:16.0, reb:5.6, ast:4.2, height:"1.96m", min:29.0,
+      age:20, dob:"2006, נסאו (תאריך מדויק לא ידוע)", birthplace:"נסאו, איי בהאמה",
+      teams:["פילדלפיה 76ers (2025-)"], awards:"בחירה 3 בדראפט 2025, מועמד לרוקי השנה"},
+    {rank:6, id:1626162, he:"קלי אובר ג'וניור", en:"Kelly Oubre Jr", pos:"SF", pts:14.1, reb:5.0, ast:1.6, height:"2.01m", min:28.2,
+      age:30, dob:"9 בדצמבר 1995", birthplace:"רימוסקי, קוויבק, קנדה",
+      teams:["וושינגטון וויזארדס (2015-2019)","פיניקס סאנס (2019-2020)","גולדן סטייט ווריורס (2020-2021)","שארלוט הורנטס (2021-2024)","פילדלפיה 76ers (2024-)"],
+      awards:"אין תארים אישיים מרכזיים"},
+    {rank:7, id:1630193, he:"קוונטין גריימס", en:"Quentin Grimes", pos:"SG", pts:13.4, reb:3.6, ast:3.3, height:"1.96m", min:26.0,
+      age:26, dob:"8 במאי 2000", birthplace:"פיאוריה, אילינוי, ארה\"ב",
+      teams:["ניו יורק ניקס (2021-2024)","דטרויט פיסטונס (2024-2025)","פילדלפיה 76ers (2025-)"], awards:"אין תארים אישיים"},
+    {rank:8, id:1631230, he:"דומיניק ברלו", en:"Dominick Barlow", pos:"PF", pts:7.7, reb:4.8, ast:1.2, height:"2.06m", min:16.5,
+      age:22, dob:"26 באוקטובר 2003", birthplace:"לורנסוויל, ג'ורג'יה, ארה\"ב",
+      teams:["סן אנטוניו ספרס (חוזה שני-דרכים)","אטלנטה הוקס","פילדלפיה 76ers"], awards:"אין תארים אישיים"},
+    {rank:9, id:1626166, he:"קמרון פיין", en:"Cameron Payne", pos:"PG", pts:7.4, reb:2.0, ast:2.6, height:"1.85m", min:15.2,
+      age:32, dob:"8 ביולי 1994", birthplace:"הילסבורו, אוהיו, ארה\"ב",
+      teams:["אוקלהומה סיטי ת'אנדר (2015-2020)","שיקגו בולס (2020)","פיניקס סאנס (2020-2023)","פילדלפיה 76ers (2023-)"], awards:"אין תארים אישיים"},
+    {rank:10, id:1642272, he:"ג'ארד מקיין", en:"Jared McCain", role:"⚠ נסחר לת'אנדר בפברואר 2026", pos:"SG", pts:6.6, reb:2.0, ast:1.7, height:"1.91m", min:14.0,
+      age:22, dob:"4 בפברואר 2004", birthplace:"קורונה, קליפורניה, ארה\"ב",
+      teams:["פילדלפיה 76ers (2024-2026)","אוקלהומה סיטי ת'אנדר (2026-)"], awards:"אין תארים אישיים עדיין (עונת רוקי נקטעה בפציעה) · שים לב: כבר לא בסיקסרס"},
+    {rank:11, id:1630240, he:"טרנדון ווטפורד", en:"Trendon Watford", pos:"PF", pts:6.5, reb:3.3, ast:2.5, height:"2.03m", min:13.5,
+      age:25, dob:"24 בנובמבר 2000", birthplace:"האנטסוויל, אלבמה, ארה\"ב",
+      teams:["פורטלנד טרייל בלייזרס (2021-2023)","ברוקלין נטס (2023-2024)","פילדלפיה 76ers (2024-)"], awards:"אין תארים אישיים"},
+    {rank:12, id:1641733, he:"ג'סטין אדוארדס", en:"Justin Edwards", pos:"SF", pts:6.0, reb:1.5, ast:1.3, height:"2.01m", min:11.8,
+      age:21, dob:"8 בינואר 2005", birthplace:"פילדלפיה, פנסילבניה, ארה\"ב",
+      teams:["פילדלפיה 76ers (2024-)"], awards:"אין תארים אישיים עדיין"},
+    {rank:13, id:1641737, he:"אדם בונה", en:"Adem Bona", pos:"C", pts:4.8, reb:4.3, ast:0.5, height:"2.08m", min:10.5,
+      age:23, dob:"21 במרץ 2003", birthplace:"לאגוס, ניגריה",
+      teams:["פילדלפיה 76ers (2024-)"], awards:"אין תארים אישיים עדיין"}
+  ]
 };
 
-const confOrder = ["מזרח","מערב"];
-const teamEntries = Object.entries(teams).sort((a,b)=>{
-  if(a[1].conf!==b[1].conf) return confOrder.indexOf(a[1].conf)-confOrder.indexOf(b[1].conf);
-  return a[1].name.localeCompare(b[1].name,'he');
-});
+function render(teamKey){
+  const tbody = document.getElementById('tbody-' + teamKey);
+  tbody.innerHTML = data[teamKey].map(p => {
+    const badgeHtml = p.badge ? '<span class="badge new">' + p.badge + '</span>' : '';
+    const roleHtml = p.role ? '<span class="role">' + p.role + '</span>' : '';
 
-const select = document.getElementById('teamSelect');
-let lastConf = null;
-teamEntries.forEach(([key,team])=>{
-  if(team.conf!==lastConf){
-    const og = document.createElement('optgroup');
-    og.label = team.conf;
-    og.dataset.conf = team.conf;
-    select.appendChild(og);
-    lastConf = team.conf;
-  }
-  const opt = document.createElement('option');
-  opt.value = key;
-  opt.textContent = team.name;
-  select.querySelector('optgroup:last-child').appendChild(opt);
-});
-
-function render(key){
-  const team = teams[key];
-  document.getElementById('teamName').textContent = team.name;
-  document.getElementById('teamConf').textContent = team.conf;
-  const tbody = document.getElementById('tbody');
-  tbody.innerHTML = team.players.map((p,i)=>{
-    const [he,en,pos,pts,reb,ast] = p;
-    return '<tr>'+
-      '<td class="num">'+(i+1)+'</td>'+
-      '<td class="num"><a class="imglink" target="_blank" rel="noopener" href="'+imgUrl(en)+'" title="חפש תמונה">'+ICON+'</a></td>'+
-      '<td class="player">'+he+'<span class="en">'+en+'</span></td>'+
-      '<td>'+pos+'</td>'+
-      '<td class="num">'+pts.toFixed(1)+'</td>'+
-      '<td class="num">'+reb.toFixed(1)+'</td>'+
-      '<td class="num">'+ast.toFixed(1)+'</td>'+
+    return '<tr class="' + (p.star ? 'star' : '') + '" onclick="showPlayerDetails(\'' + teamKey + '\', ' + p.rank + ')">' +
+      '<td class="num">' + p.rank + '</td>' +
+      '<td class="imgtd"><img class="player-img" src="' + getPlayerImg(p.id) + '" alt="' + p.en + '" onerror="this.style.visibility=\'hidden\'"></td>' +
+      '<td class="player">' + p.he + badgeHtml + roleHtml + '</td>' +
+      '<td>' + p.pos + '</td>' +
+      '<td class="num">' + p.pts.toFixed(1) + '</td>' +
+      '<td class="num">' + p.reb.toFixed(1) + '</td>' +
+      '<td class="num">' + p.ast.toFixed(1) + '</td>' +
     '</tr>';
   }).join('');
 }
 
-select.addEventListener('change', ()=>render(select.value));
-select.value = 'nyk';
-render('nyk');
+['knicks','nets','celtics','sixers'].forEach(render);
+
+const tabs = document.querySelectorAll('.tab');
+const panels = document.querySelectorAll('.panel');
+
+tabs.forEach(tab => {
+  tab.addEventListener('click', () => {
+    tabs.forEach(t => t.classList.remove('active'));
+    panels.forEach(p => p.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById('panel-' + tab.dataset.team).classList.add('active');
+  });
+});
+
+function showPlayerDetails(teamKey, rank) {
+  const player = data[teamKey].find(p => p.rank === rank);
+  if(!player) return;
+
+  document.getElementById('mImg').src = getPlayerImg(player.id);
+  document.getElementById('mName').innerText = player.he;
+  document.getElementById('mEn').innerText = player.en;
+  document.getElementById('mBio').innerText = 'גיל ' + player.age + ' · נולד/ה ' + player.dob + ' · ' + player.birthplace;
+  document.getElementById('mHeight').innerText = player.height || 'לא צוין';
+  document.getElementById('mMin').innerText = player.min ? player.min + ' דק\'' : 'לא צוין';
+  document.getElementById('mPts').innerText = player.pts.toFixed(1);
+  document.getElementById('mReb').innerText = player.reb.toFixed(1);
+  document.getElementById('mAst').innerText = player.ast.toFixed(1);
+  document.getElementById('mPos').innerText = player.pos;
+
+  const teamsHtml = (player.teams || []).map(t => '<span class="team-tag">' + t + '</span>').join(' ');
+  document.getElementById('mTeams').innerHTML = teamsHtml || 'אין מידע';
+  document.getElementById('mAwards').innerText = player.awards || 'אין תארים אישיים ידועים';
+
+  document.getElementById('playerModal').classList.add('active');
+}
+
+document.getElementById('modalClose').addEventListener('click', () => {
+  document.getElementById('playerModal').classList.remove('active');
+});
+
+document.getElementById('playerModal').addEventListener('click', (e) => {
+  if (e.target.id === 'playerModal') {
+    document.getElementById('playerModal').classList.remove('active');
+  }
+});
 </script>
+
 </body>
 </html>
