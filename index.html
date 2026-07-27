@@ -14,25 +14,55 @@
   --text: #EDEFF4;
   --muted: #8B93A7;
   --orange: #E8743B;
+  --red: #E5484D;
+  --green: #3CB878;
 }
 *{box-sizing:border-box;}
 body{ margin:0; background: var(--bg); color: var(--text); font-family: 'Heebo', sans-serif; padding: 32px 16px 64px; }
-.wrap{max-width: 940px; margin: 0 auto;}
-.hero{ text-align:center; padding: 24px 20px 28px; border-bottom: 1px solid var(--card-line); margin-bottom: 24px; }
+body.ltr{ direction: ltr; }
+.wrap{max-width: 960px; margin: 0 auto;}
+.hero{ position:relative; text-align:center; padding: 24px 20px 28px; border-bottom: 1px solid var(--card-line); margin-bottom: 20px; }
 .hero .eyebrow{ color: var(--orange); font-weight: 700; letter-spacing: 2px; font-size: 13px; text-transform: uppercase; }
-.hero h1{ font-size: 30px; font-weight: 900; margin: 10px 0 8px; line-height: 1.25; }
+.hero h1{ font-size: 28px; font-weight: 900; margin: 10px 0 8px; line-height: 1.25; }
 .hero p{ color: var(--muted); font-size: 14px; max-width: 600px; margin: 0 auto; line-height: 1.7; }
-.tabs{ display:flex; gap:8px; justify-content:center; flex-wrap:wrap; margin-bottom: 20px; }
-.tab{ padding: 10px 18px; border-radius: 999px; border: 1px solid var(--card-line); background: var(--card); color: var(--muted); font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer; display:flex; align-items:center; gap:8px; }
-.tab .dot{ width: 10px; height:10px; border-radius:50%; }
-.tab.active{ color: var(--text); box-shadow: inset 0 0 0 1px var(--accent); }
-.panel{ display:none; }
-.panel.active{ display:block; }
-.team-head{ display:flex; align-items:baseline; justify-content: space-between; gap: 12px; margin-bottom: 12px; flex-wrap: wrap; }
-.team-head h2{ font-size: 21px; font-weight: 900; margin: 0; }
+.lang-switch{ position:absolute; top:0; inset-inline-end:0; }
+.lang-btn{ background: var(--card); border:1px solid var(--card-line); color: var(--text); font-family:inherit; font-weight:700; font-size:12.5px; padding:8px 14px; border-radius:999px; cursor:pointer; display:flex; align-items:center; gap:6px; }
+.lang-btn:hover{ border-color: var(--orange); }
+
+.mainnav{ display:flex; gap:8px; justify-content:center; margin-bottom: 22px; }
+.navbtn{ padding: 11px 26px; border-radius: 999px; border: 1px solid var(--card-line); background: var(--card); color: var(--muted); font-family: inherit; font-size: 14.5px; font-weight: 800; cursor: pointer; }
+.navbtn.active{ color: var(--bg); background: var(--orange); border-color: var(--orange); }
+
+.team-grid{ display:grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-bottom: 8px; }
+@media (max-width: 560px){ .team-grid{ grid-template-columns: 1fr; } }
+.team-card{ cursor:pointer; background: var(--card); border: 1px solid var(--card-line); border-radius: 14px; padding: 18px; text-align: start; transition: transform .15s, border-color .15s; position:relative; overflow:hidden; }
+.team-card:hover{ transform: translateY(-2px); border-color: var(--accent); }
+.team-card .accent-bar{ position:absolute; inset-inline-start:0; top:0; bottom:0; width:5px; background: var(--accent); }
+.team-card h3{ margin:0 0 6px; font-size:19px; font-weight:900; }
+.team-card .meta{ color: var(--muted); font-size: 12.5px; line-height:1.6; }
+.team-card .badges{ margin-top:10px; display:flex; gap:6px; flex-wrap:wrap; }
+.pill{ font-size:11px; font-weight:700; padding:3px 10px; border-radius:999px; }
+.pill.inj{ background: rgba(229,72,77,.15); color: var(--red); }
+.pill.roster{ background: rgba(255,255,255,.06); color: var(--muted); }
+
+.back-btn{ background:none; border:1px solid var(--card-line); color: var(--muted); font-family:inherit; font-size:13px; font-weight:700; padding:8px 16px; border-radius: 999px; cursor:pointer; margin-bottom:16px; }
+.back-btn:hover{ color:var(--text); border-color: var(--orange); }
+
+.team-head{ display:flex; align-items:baseline; justify-content: space-between; gap: 12px; margin-bottom: 14px; flex-wrap: wrap; }
+.team-head h2{ font-size: 22px; font-weight: 900; margin: 0; }
 .team-head .note{ font-size: 12.5px; color: var(--muted); }
+
+.injured-box{ background: rgba(229,72,77,.06); border: 1px solid rgba(229,72,77,.25); border-radius: 12px; padding: 14px 16px; margin-bottom: 18px; }
+.injured-box h4{ margin:0 0 10px; font-size: 13px; color: var(--red); font-weight:800; display:flex; align-items:center; gap:6px; }
+.injured-row{ display:flex; align-items:center; gap:10px; padding:6px 0; border-top: 1px solid rgba(229,72,77,.15); }
+.injured-row:first-of-type{ border-top:none; }
+.injured-row img{ width:34px; height:25px; object-fit:cover; border-radius:4px; background:var(--card-line); }
+.injured-row .iname{ font-weight:700; font-size:13.5px; }
+.injured-row .istatus{ font-size:11.5px; color: var(--muted); }
+.injured-empty{ color: var(--muted); font-size: 12.5px; }
+
 table{ width: 100%; border-collapse: collapse; background: var(--card); border: 1px solid var(--card-line); border-radius: 12px; overflow: hidden; font-size: 13.5px; }
-thead th{ text-align: right; font-size: 11px; letter-spacing: .4px; color: var(--muted); font-weight: 700; padding: 10px 10px; border-bottom: 1px solid var(--card-line); background: rgba(255,255,255,0.02); white-space: nowrap; }
+thead th{ text-align: start; font-size: 11px; letter-spacing: .4px; color: var(--muted); font-weight: 700; padding: 10px 10px; border-bottom: 1px solid var(--card-line); background: rgba(255,255,255,0.02); white-space: nowrap; }
 thead th.num{ text-align: center; }
 thead th.imgcol{ text-align: center; width: 50px; }
 tbody td{ padding: 9px 10px; border-bottom: 1px solid var(--card-line); vertical-align: middle; }
@@ -42,34 +72,47 @@ tbody td.num{ text-align: center; color: var(--muted); }
 tbody td.imgtd{ text-align: center; padding: 4px; }
 tbody tr:last-child td{ border-bottom: none; }
 tbody tr.star td{ background: rgba(232,116,59,0.06); }
+tbody tr.injured-row-flag td{ background: rgba(229,72,77,0.05); }
 .player{ font-weight: 700; font-size: 14px; }
 .role{ display:block; font-weight: 400; font-size: 11.5px; color: var(--muted); margin-top: 1px; }
 .badge{ display:inline-block; padding: 2px 8px; border-radius: 999px; font-size: 10.5px; font-weight: 700; margin-inline-start: 6px; vertical-align: middle; }
 .badge.new{ background: rgba(30,158,90,.18); color:#6FE3A5; }
+.badge.inj{ background: rgba(229,72,77,.18); color: var(--red); }
 .player-img{ width: 44px; height: 32px; object-fit: cover; border-radius: 4px; background: var(--card-line); display: block; margin: 0 auto; }
 .legend{ font-size: 11.5px; color: var(--muted); margin: 10px 2px 20px; }
 .foot{ text-align:center; color: var(--muted); font-size: 12px; margin-top: 28px; line-height: 1.6; }
 
+.games-list{ display:flex; flex-direction:column; gap:10px; }
+.game-card{ background: var(--card); border:1px solid var(--card-line); border-radius:12px; padding:14px 16px; }
+.game-card .glabel{ font-size:11px; color: var(--orange); font-weight:800; text-transform:uppercase; letter-spacing:.3px; margin-bottom:6px; }
+.game-row{ display:flex; align-items:center; justify-content:space-between; gap:10px; font-weight:800; font-size:15px; }
+.game-row .vs{ color:var(--muted); font-weight:600; font-size:12.5px; }
+.game-card .gnote{ margin-top:6px; color:var(--muted); font-size:12px; }
+.games-note{ text-align:center; color:var(--muted); font-size:12.5px; margin-top:14px; line-height:1.6; }
+
 .modal-overlay{ display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.75); z-index: 1000; justify-content: center; align-items: center; padding: 16px; }
 .modal-overlay.active{ display: flex; }
 .modal-content{ background: var(--card); border: 1px solid var(--card-line); border-radius: 16px; padding: 24px; max-width: 440px; width: 100%; text-align: center; position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.5); max-height: 88vh; overflow-y: auto; }
-.modal-close{ position: absolute; top: 12px; left: 16px; background: none; border: none; color: var(--muted); font-size: 20px; cursor: pointer; }
+.modal-close{ position: absolute; top: 12px; inset-inline-start: 16px; background: none; border: none; color: var(--muted); font-size: 20px; cursor: pointer; }
 .modal-img{ width: 100px; height: 75px; object-fit: cover; border-radius: 8px; margin-bottom: 12px; }
 .modal-name{ font-size: 20px; font-weight: 900; margin-bottom: 4px; }
 .modal-en{ color: var(--muted); font-size: 13px; margin-bottom: 4px; }
-.modal-bio{ color: var(--muted); font-size: 12.5px; margin-bottom: 16px; }
-.stats-grid{ display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; text-align: right; background: rgba(0,0,0,0.2); padding: 12px; border-radius: 8px; margin-bottom: 14px; }
+.modal-bio{ color: var(--muted); font-size: 12.5px; margin-bottom: 12px; }
+.modal-injury{ background: rgba(229,72,77,.1); border:1px solid rgba(229,72,77,.3); color: var(--red); font-size:12px; font-weight:700; padding:8px 10px; border-radius:8px; margin-bottom:14px; text-align:start; }
+.stats-grid{ display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; text-align: start; background: rgba(0,0,0,0.2); padding: 12px; border-radius: 8px; margin-bottom: 14px; }
 .stat-item{ font-size: 13px; }
 .stat-item span{ color: var(--muted); }
-.modal-section{ text-align: right; background: rgba(0,0,0,0.15); padding: 12px 14px; border-radius: 8px; margin-bottom: 10px; }
+.modal-section{ text-align: start; background: rgba(0,0,0,0.15); padding: 12px 14px; border-radius: 8px; margin-bottom: 10px; }
 .modal-section h4{ margin: 0 0 6px; font-size: 12px; color: var(--orange); font-weight: 700; letter-spacing: .3px; }
 .modal-section p{ margin: 0; font-size: 13px; line-height: 1.6; color: var(--text); }
 .team-tag{ display:inline-block; background: rgba(255,255,255,0.06); border: 1px solid var(--card-line); padding: 3px 9px; border-radius: 999px; font-size: 12px; margin: 2px 3px 2px 0; }
+.hebrew-note{ font-size:10.5px; color:var(--muted); font-style:italic; margin-top:4px; }
 
 @media (max-width: 640px){
   thead th:nth-child(7), tbody td:nth-child(7){ display:none; }
-  .hero h1{ font-size: 23px; }
+  .hero h1{ font-size: 22px; }
   table{ font-size: 12px; }
+  .lang-switch{ position:static; margin-bottom:10px; display:flex; justify-content:center; }
 }
 </style>
 </head>
@@ -77,55 +120,20 @@ tbody tr.star td{ background: rgba(232,116,59,0.06); }
 
 <div class="wrap">
   <div class="hero">
-    <div class="eyebrow">רוסטרים מלאים · לקראת עונת 2026/27</div>
-    <h1>ניקס, נטס, סלטיקס ו-76ers: כל השחקנים</h1>
-    <p>לחץ על שחקן לצפייה בנתונים המלאים: גיל, תאריך לידה, מקום לידה, קבוצות קודמות, תארים, גובה וסטטיסטיקות.</p>
+    <div class="lang-switch"><button class="lang-btn" id="langBtn">🌐 English</button></div>
+    <div class="eyebrow" id="eyebrowTxt">רוסטרים מלאים · לקראת עונת 2026/27</div>
+    <h1 id="heroTitle">ניקס, נטס, סלטיקס ו-76ers</h1>
+    <p id="heroSubtitle">בחר קבוצות או משחקים למעלה. לחץ על קבוצה כדי לראות הרכב מלא ופצועים, ולחץ על שחקן לצפייה בנתונים המלאים.</p>
   </div>
 
-  <div class="tabs" id="tabs">
-    <button class="tab active" data-team="knicks" style="--accent:#F58426"><span class="dot" style="background:#F58426"></span>ניקס</button>
-    <button class="tab" data-team="nets" style="--accent:#C9CCD4"><span class="dot" style="background:#C9CCD4"></span>נטס</button>
-    <button class="tab" data-team="celtics" style="--accent:#1E9E5A"><span class="dot" style="background:#1E9E5A"></span>סלטיקס</button>
-    <button class="tab" data-team="sixers" style="--accent:#ED174C"><span class="dot" style="background:#ED174C"></span>76ers</button>
+  <div class="mainnav" id="mainNav">
+    <button class="navbtn active" data-view="teams" id="navTeamsBtn">קבוצות</button>
+    <button class="navbtn" data-view="games" id="navGamesBtn">משחקים</button>
   </div>
 
-  <div class="panel active" id="panel-knicks" style="--accent:#F58426">
-    <div class="team-head"><h2>ניו יורק ניקס</h2><span class="note">אלופת ה-NBA 2026 · מאמן: מייק בראון</span></div>
-    <table>
-      <thead><tr><th class="num">#</th><th class="imgcol">תמונה</th><th>שחקן</th><th>עמדה</th><th class="num">נק'</th><th class="num">ריב'</th><th class="num">אס'</th></tr></thead>
-      <tbody id="tbody-knicks"></tbody>
-    </table>
-    <div class="legend">מיטשל רובינסון עזב לסלטיקס בפייה החופשית · דרימונד הגיע מפילדלפיה במקומו</div>
-  </div>
+  <div id="content"></div>
 
-  <div class="panel" id="panel-nets" style="--accent:#C9CCD4">
-    <div class="team-head"><h2>ברוקלין נטס</h2><span class="note">20-62 בעונה שעברה · בעיצומו של ריבילד · מאמן: ג'ורדי פרננדז</span></div>
-    <table>
-      <thead><tr><th class="num">#</th><th class="imgcol">תמונה</th><th>שחקן</th><th>עמדה</th><th class="num">נק'</th><th class="num">ריב'</th><th class="num">אס'</th></tr></thead>
-      <tbody id="tbody-nets"></tbody>
-    </table>
-    <div class="legend">רוסטר צעיר עם המון רוקים מהדראפט האחרון · פורטר ג'וניור נותר יעד טרייד מרכזי לקראת דצמבר</div>
-  </div>
-
-  <div class="panel" id="panel-celtics" style="--accent:#1E9E5A">
-    <div class="team-head"><h2>בוסטון סלטיקס</h2><span class="note">56-26 בעונה שעברה · מאמן: ג'ו מזולה</span></div>
-    <table>
-      <thead><tr><th class="num">#</th><th class="imgcol">תמונה</th><th>שחקן</th><th>עמדה</th><th class="num">נק'</th><th class="num">ריב'</th><th class="num">אס'</th></tr></thead>
-      <tbody id="tbody-celtics"></tbody>
-    </table>
-    <div class="legend">ג'יילן בראון עזב לפילדלפיה · אנפרני סיימונס עזב בסיין-אנד-טרייד · פול ג'ורג' ומיטשל רובינסון הצטרפו</div>
-  </div>
-
-  <div class="panel" id="panel-sixers" style="--accent:#ED174C">
-    <div class="team-head"><h2>פילדלפיה 76ers</h2><span class="note">45-37 בעונה שעברה · הקיץ הכי גדול בליגה · מאמן: ניק נרס</span></div>
-    <table>
-      <thead><tr><th class="num">#</th><th class="imgcol">תמונה</th><th>שחקן</th><th>עמדה</th><th class="num">נק'</th><th class="num">ריב'</th><th class="num">אס'</th></tr></thead>
-      <tbody id="tbody-sixers"></tbody>
-    </table>
-    <div class="legend">פול ג'ורג' עזב לבוסטון · אנדרה דרימונד עזב לניקס · ג'יילן בראון ולברון ג'יימס הצטרפו · שימו לב: ג'ארד מקיין נסחר לת'אנדר בפברואר 2026, ייתכן שיש להוריד אותו מהרשימה</div>
-  </div>
-
-  <div class="foot">נתונים: ממוצעי משחק, עונת 2025/26 (העונה האחרונה שהושלמה) · שיבוצי הרוסטר משקפים טריידים וחתימות חופשיות עד 25 ביולי 2026<br>פרטי לידה לשחקנים פחות מוכרים (רוקים/שחקני ספסל) הם למיטב הידיעה ולא אומתו במלואם<br><b>עודכן:</b> תוקנו 12 מזהי תמונה שגויים שגרמו לתמונות שחקנים לא נכונות</div>
+  <div class="foot" id="footTxt">נתונים: ממוצעי משחק, עונת 2025/26 (העונה האחרונה שהושלמה) · שיבוצי הרוסטר משקפים טריידים וחתימות חופשיות עד 25 ביולי 2026<br>תמונות השחקנים נטענות ישירות מה-CDN הרשמי של NBA.com<br>פרטי ביוגרפיה (מקום לידה, קבוצות בקריירה, תארים) מוצגים בעברית בשתי השפות</div>
 </div>
 
 <div class="modal-overlay" id="playerModal">
@@ -135,20 +143,21 @@ tbody tr.star td{ background: rgba(232,116,59,0.06); }
     <div id="mName" class="modal-name"></div>
     <div id="mEn" class="modal-en"></div>
     <div id="mBio" class="modal-bio"></div>
+    <div id="mInjuryBox" class="modal-injury" style="display:none;"></div>
     <div class="stats-grid">
-      <div class="stat-item"><span>גובה:</span> <b id="mHeight"></b></div>
-      <div class="stat-item"><span>דקות למשחק:</span> <b id="mMin"></b></div>
-      <div class="stat-item"><span>נקודות:</span> <b id="mPts"></b></div>
-      <div class="stat-item"><span>ריבאונדים:</span> <b id="mReb"></b></div>
-      <div class="stat-item"><span>אסיסטים:</span> <b id="mAst"></b></div>
-      <div class="stat-item"><span>עמדה:</span> <b id="mPos"></b></div>
+      <div class="stat-item"><span id="lHeight">גובה:</span> <b id="mHeight"></b></div>
+      <div class="stat-item"><span id="lMin">דקות למשחק:</span> <b id="mMin"></b></div>
+      <div class="stat-item"><span id="lPts">נקודות:</span> <b id="mPts"></b></div>
+      <div class="stat-item"><span id="lReb">ריבאונדים:</span> <b id="mReb"></b></div>
+      <div class="stat-item"><span id="lAst">אסיסטים:</span> <b id="mAst"></b></div>
+      <div class="stat-item"><span id="lPos">עמדה:</span> <b id="mPos"></b></div>
     </div>
     <div class="modal-section">
-      <h4>קבוצות בקריירה</h4>
+      <h4 id="lTeamsTitle">קבוצות בקריירה</h4>
       <p id="mTeams"></p>
     </div>
     <div class="modal-section">
-      <h4>תארים והישגים</h4>
+      <h4 id="lAwardsTitle">תארים והישגים</h4>
       <p id="mAwards"></p>
     </div>
   </div>
@@ -158,6 +167,74 @@ tbody tr.star td{ background: rgba(232,116,59,0.06); }
 function getPlayerImg(id){
   return 'https://cdn.nba.com/headshots/nba/latest/260x190/' + id + '.png';
 }
+
+const T = {
+  he: {
+    eyebrow: "רוסטרים מלאים · לקראת עונת 2026/27",
+    heroTitle: "ניקס, נטס, סלטיקס ו-76ers",
+    heroSubtitleTeams: "בחר קבוצה לצפייה בהרכב המלא, השחקנים והפצועים.",
+    heroSubtitleGames: "תוצאות אחרונות מהפלייאוף האחרון. לוח עונת 2026/27 יעודכן עם פרסומו.",
+    navTeams: "קבוצות", navGames: "משחקים",
+    back: "חזרה לרשימת הקבוצות",
+    injuredTitle: "שחקנים פצועים", injuredEmpty: "אין דיווח על פצועים בקבוצה כרגע",
+    rosterBadge: "שחקנים ברשימה", injBadge: "פצועים",
+    colNum:"#", colImg:"תמונה", colPlayer:"שחקן", colPos:"עמדה", colPts:"נק'", colReb:"ריב'", colAst:"אס'",
+    height:"גובה:", minutes:"דקות למשחק:", points:"נקודות:", rebounds:"ריבאונדים:", assists:"אסיסטים:", position:"עמדה:",
+    careerTeams:"קבוצות בקריירה", awardsTitle:"תארים והישגים",
+    langBtn:"🌐 English",
+    footHtml:"נתונים: ממוצעי משחק, עונת 2025/26 (העונה האחרונה שהושלמה) · שיבוצי הרוסטר משקפים טריידים וחתימות חופשיות עד 25 ביולי 2026<br>תמונות השחקנים נטענות ישירות מה-CDN הרשמי של NBA.com<br>פרטי ביוגרפיה (מקום לידה, קבוצות בקריירה, תארים) מוצגים בעברית בשתי השפות",
+    hebNote:"(הפרטים המלאים בעברית)",
+    gamesNote:"עונת 2026/27 עדיין לא התחילה — לוח המשחקים המלא יתעדכן כשיפורסם באוקטובר 2026."
+  },
+  en: {
+    eyebrow: "Full Rosters · Ahead of the 2026/27 Season",
+    heroTitle: "Knicks, Nets, Celtics & 76ers",
+    heroSubtitleTeams: "Pick a team to see the full roster, players and injuries.",
+    heroSubtitleGames: "Recent results from last season's playoffs. The 2026/27 schedule will be added once released.",
+    navTeams: "Teams", navGames: "Games",
+    back: "Back to team list",
+    injuredTitle: "Injured Players", injuredEmpty: "No reported injuries for this team right now",
+    rosterBadge: "players on roster", injBadge: "injured",
+    colNum:"#", colImg:"Photo", colPlayer:"Player", colPos:"Pos", colPts:"PTS", colReb:"REB", colAst:"AST",
+    height:"Height:", minutes:"Minutes:", points:"Points:", rebounds:"Rebounds:", assists:"Assists:", position:"Position:",
+    careerTeams:"Career Teams", awardsTitle:"Awards & Achievements",
+    langBtn:"🌐 עברית",
+    footHtml:"Data: per-game averages, 2025/26 season (last completed season) · Roster reflects trades and free agent signings through July 25, 2026<br>Player photos load directly from NBA.com's official CDN<br>Biographical details (birthplace, career teams, awards) are shown in Hebrew in both languages",
+    hebNote:"(full details in Hebrew)",
+    gamesNote:"The 2026/27 season hasn't started yet — the full schedule will be added once released in October 2026."
+  }
+};
+
+const teamsMeta = {
+  knicks: { color:"#F58426", he:"ניו יורק ניקס", en:"New York Knicks",
+    noteHe:"אלופת ה-NBA 2026 · מאמן: מייק בראון", noteEn:"2026 NBA Champions · Coach: Mike Brown",
+    legendHe:"מיטשל רובינסון עזב לסלטיקס בפייה החופשית · דרימונד הגיע מפילדלפיה במקומו",
+    legendEn:"Mitchell Robinson left for Boston in free agency · Drummond arrived from Philadelphia as his replacement" },
+  nets: { color:"#C9CCD4", he:"ברוקלין נטס", en:"Brooklyn Nets",
+    noteHe:"20-62 בעונה שעברה · בעיצומו של ריבילד · מאמן: ג'ורדי פרננדז", noteEn:"20-62 last season · Mid-rebuild · Coach: Jordi Fernandez",
+    legendHe:"רוסטר צעיר עם המון רוקים מהדראפט האחרון · פורטר ג'וניור נותר יעד טרייד מרכזי לקראת דצמבר",
+    legendEn:"Young roster full of recent draft picks · Porter Jr. remains a top trade target heading into December" },
+  celtics: { color:"#1E9E5A", he:"בוסטון סלטיקס", en:"Boston Celtics",
+    noteHe:"56-26 בעונה שעברה · מאמן: ג'ו מזולה", noteEn:"56-26 last season · Coach: Joe Mazzulla",
+    legendHe:"ג'יילן בראון עזב לפילדלפיה · אנפרני סיימונס עזב בסיין-אנד-טרייד · פול ג'ורג' ומיטשל רובינסון הצטרפו",
+    legendEn:"Jaylen Brown left for Philadelphia · Anfernee Simons left in a sign-and-trade · Paul George and Mitchell Robinson joined" },
+  sixers: { color:"#ED174C", he:"פילדלפיה 76ers", en:"Philadelphia 76ers",
+    noteHe:"45-37 בעונה שעברה · הקיץ הכי גדול בליגה · מאמן: ניק נרס", noteEn:"45-37 last season · The league's biggest offseason · Coach: Nick Nurse",
+    legendHe:"פול ג'ורג' עזב לבוסטון · אנדרה דרימונד עזב לניקס · ג'יילן בראון ולברון ג'יימס הצטרפו · שימו לב: ג'ארד מקיין נסחר לת'אנדר בפברואר 2026",
+    legendEn:"Paul George left for Boston · Andre Drummond left for New York · Jaylen Brown and LeBron James joined · Note: Jared McCain was traded to the Thunder in February 2026" }
+};
+
+const games = [
+  { labelHe:"גמר ה-NBA · משחק 5", labelEn:"NBA Finals · Game 5",
+    homeHe:"ניו יורק ניקס", homeEn:"New York Knicks", away:"San Antonio Spurs", awayHe:"סן אנטוניו ספרס",
+    score:"94–90", noteHe:"הניקס אלופת NBA 2026, מנצחת בסדרה 4-1", noteEn:"Knicks are 2026 NBA Champions, winning the series 4-1" },
+  { labelHe:"חצי גמר המזרח · משחק 4", labelEn:"East Semifinals · Game 4",
+    homeHe:"פילדלפיה 76ers", homeEn:"Philadelphia 76ers", away:"New York Knicks", awayHe:"ניו יורק ניקס",
+    score:"114–144", noteHe:"הניקס מתקדמת לגמר הקונפרנס", noteEn:"Knicks advance to the Conference Finals" },
+  { labelHe:"סיבוב ראשון · משחק 7", labelEn:"First Round · Game 7",
+    homeHe:"פילדלפיה 76ers", homeEn:"Philadelphia 76ers", away:"Boston Celtics", awayHe:"בוסטון סלטיקס",
+    score:"109–100", noteHe:"הסיקסרס מדיחה את הסלטיקס בסיבוב הראשון", noteEn:"Sixers eliminate the Celtics in the first round" }
+];
 
 const data = {
   knicks: [
@@ -235,7 +312,8 @@ const data = {
       teams:["ממפיס גריזליס (2021-2023)","ברוקלין נטס (2023-)"], awards:"אין תארים אישיים"},
     {rank:6, id:1642856, he:"אגור דמין", en:"Egor Demin", role:"בחירה 8, מגן חדש", pos:"PG", pts:10.3, reb:3.2, ast:3.3, height:"2.03m", min:23.0,
       age:19, dob:"3 בפברואר 2007", birthplace:"מוסקבה, רוסיה",
-      teams:["ברוקלין נטס (2025-)"], awards:"בחירה 8 בדראפט 2025, רוקי"},
+      teams:["ברוקלין נטס (2025-)"], awards:"בחירה 8 בדראפט 2025, רוקי",
+      injured:true, injuryHe:"התאושש מדלקת בפאשיה הפלנטרית ברגל שמאל בעונה שעברה; הסטטוס לתחילת העונה טרם אושר סופית", injuryEn:"Recovered from left plantar fasciitis last season; season-opener status not yet fully confirmed"},
     {rank:7, id:1642849, he:"נולאן טראורה", en:"Nolan Traore", role:"רוקי", pos:"PG", pts:8.9, reb:1.8, ast:3.8, height:"1.91m", min:21.0,
       age:20, dob:"8 בפברואר 2006", birthplace:"מאנט-לה-ז'ולי, צרפת",
       teams:["ברוקלין נטס (2025-)"], awards:"רוקי, אין תארים עדיין"},
@@ -264,7 +342,8 @@ const data = {
   celtics: [
     {rank:1, id:1628369, star:true, he:"ג'ייסון טייטום", en:"Jayson Tatum", role:"חוזר מפציעת אכילס", pos:"SF", pts:21.8, reb:10.0, ast:5.3, height:"2.03m", min:35.7,
       age:28, dob:"3 במרץ 1998", birthplace:"סנט לואיס, מיזורי, ארה\"ב",
-      teams:["בוסטון סלטיקס (2017-)"], awards:"אלוף NBA 2024 · 6x אול-סטאר · אול-אן.בי.איי פירסט טים · מדליית זהב אולימפית 2024"},
+      teams:["בוסטון סלטיקס (2017-)"], awards:"אלוף NBA 2024 · 6x אול-סטאר · אול-אן.בי.איי פירסט טים · מדליית זהב אולימפית 2024",
+      injured:true, injuryHe:"מחלים מניתוק גיד אכילס (אפריל 2025); הסטטוס לתחילת עונת 2026/27 טרם אושר סופית", injuryEn:"Recovering from a torn Achilles (April 2025); status for the start of the 2026/27 season not yet fully confirmed"},
     {rank:2, id:202331, star:true, he:"פול ג'ורג'", en:"Paul George", role:"הגיע מפילדלפיה תמורת ג'יילן בראון", badge:"הגיע בטרייד", pos:"SF", pts:17.3, reb:5.3, ast:3.6, height:"2.03m", min:33.8,
       age:36, dob:"2 במאי 1990", birthplace:"פאלמדייל, קליפורניה, ארה\"ב",
       teams:["אינדיאנה פייסרס (2010-2017)","אוקלהומה סיטי ת'אנדר (2017-2019)","לוס אנג'לס קליפרס (2019-2025)","פילדלפיה 76ers (2025-2026)","בוסטון סלטיקס (2026-)"],
@@ -312,7 +391,8 @@ const data = {
       teams:["בוסטון סלטיקס (2016-2026)","פילדלפיה 76ers (2026-)"], awards:"אלוף NBA 2024 · NBA Finals MVP (2024) · 3x אול-סטאר · מדליית זהב אולימפית 2024"},
     {rank:3, id:203954, star:true, he:"ג'ואל אמביד", en:"Joel Embiid", role:"כשבריא - כוכב עילית", pos:"C", pts:26.9, reb:7.7, ast:3.9, height:"2.13m", min:33.6,
       age:32, dob:"16 במרץ 1994", birthplace:"יאונדה, קמרון",
-      teams:["פילדלפיה 76ers (2014-)"], awards:"NBA MVP (2023) · 6x אול-סטאר · מוביל מלך שערים בליגה כמה עונות · מדליית זהב אולימפית 2024"},
+      teams:["פילדלפיה 76ers (2014-)"], awards:"NBA MVP (2023) · 6x אול-סטאר · מוביל מלך שערים בליגה כמה עונות · מדליית זהב אולימפית 2024",
+      injured:true, injuryHe:"היסטוריית פציעות ברכיים כרונית; הופעותיו מוגבלות מדי עונה, יש לעקוב אחרי עדכוני בריאות לפני העונה", injuryEn:"Chronic history of knee issues; availability limited every season — check health updates before the season starts"},
     {rank:4, id:2544, star:true, he:"לברון ג'יימס", en:"LeBron James", role:"הגיע מהלייקרס בחופשית", badge:"חתימה ענקית", pos:"SF", pts:20.9, reb:6.1, ast:7.2, height:"2.06m", min:34.0,
       age:41, dob:"30 בדצמבר 1984", birthplace:"אקרון, אוהיו, ארה\"ב",
       teams:["קליבלנד קאבלירס (2003-2010)","מיאמי היט (2010-2014)","קליבלנד קאבלירס (2014-2018)","לוס אנג'לס לייקרס (2018-2026)","פילדלפיה 76ers (2026-)"],
@@ -348,56 +428,178 @@ const data = {
   ]
 };
 
-function render(teamKey){
-  const tbody = document.getElementById('tbody-' + teamKey);
-  tbody.innerHTML = data[teamKey].map(p => {
-    const badgeHtml = p.badge ? '<span class="badge new">' + p.badge + '</span>' : '';
-    const roleHtml = p.role ? '<span class="role">' + p.role + '</span>' : '';
+let state = { lang:'he', view:'teams', team:null };
 
-    return '<tr class="' + (p.star ? 'star' : '') + '" onclick="showPlayerDetails(\'' + teamKey + '\', ' + p.rank + ')">' +
+function tr(key){ return T[state.lang][key]; }
+
+function applyStaticText(){
+  const t = T[state.lang];
+  document.getElementById('eyebrowTxt').textContent = t.eyebrow;
+  document.getElementById('heroTitle').textContent = t.heroTitle;
+  document.getElementById('heroSubtitle').textContent = state.view === 'games' ? t.heroSubtitleGames : t.heroSubtitleTeams;
+  document.getElementById('navTeamsBtn').textContent = t.navTeams;
+  document.getElementById('navGamesBtn').textContent = t.navGames;
+  document.getElementById('langBtn').textContent = t.langBtn;
+  document.getElementById('footTxt').innerHTML = t.footHtml;
+  document.getElementById('lHeight').textContent = t.height;
+  document.getElementById('lMin').textContent = t.minutes;
+  document.getElementById('lPts').textContent = t.points;
+  document.getElementById('lReb').textContent = t.rebounds;
+  document.getElementById('lAst').textContent = t.assists;
+  document.getElementById('lPos').textContent = t.position;
+  document.getElementById('lTeamsTitle').textContent = t.careerTeams;
+  document.getElementById('lAwardsTitle').textContent = t.awardsTitle;
+
+  document.body.classList.toggle('ltr', state.lang === 'en');
+  document.documentElement.setAttribute('dir', state.lang === 'en' ? 'ltr' : 'rtl');
+  document.documentElement.setAttribute('lang', state.lang === 'en' ? 'en' : 'he');
+}
+
+function teamName(key){ return state.lang === 'en' ? teamsMeta[key].en : teamsMeta[key].he; }
+function teamNote(key){ return state.lang === 'en' ? teamsMeta[key].noteEn : teamsMeta[key].noteHe; }
+function teamLegend(key){ return state.lang === 'en' ? teamsMeta[key].legendEn : teamsMeta[key].legendHe; }
+
+function renderTeamsList(){
+  const t = T[state.lang];
+  let html = '<div class="team-grid">';
+  Object.keys(teamsMeta).forEach(key => {
+    const meta = teamsMeta[key];
+    const injCount = data[key].filter(p => p.injured).length;
+    html += '<div class="team-card" style="--accent:' + meta.color + '" onclick="selectTeam(\'' + key + '\')">' +
+      '<div class="accent-bar"></div>' +
+      '<h3>' + teamName(key) + '</h3>' +
+      '<div class="meta">' + teamNote(key) + '</div>' +
+      '<div class="badges">' +
+        '<span class="pill roster">' + data[key].length + ' ' + t.rosterBadge + '</span>' +
+        (injCount > 0 ? '<span class="pill inj">' + injCount + ' ' + t.injBadge + '</span>' : '') +
+      '</div>' +
+    '</div>';
+  });
+  html += '</div>';
+  document.getElementById('content').innerHTML = html;
+}
+
+function renderTeamDetail(key){
+  const t = T[state.lang];
+  const meta = teamsMeta[key];
+  const players = data[key];
+  const injured = players.filter(p => p.injured);
+
+  let html = '<button class="back-btn" onclick="backToTeams()">' + (state.lang==='en' ? '← ' : '') + t.back + (state.lang==='he' ? ' →' : '') + '</button>';
+  html += '<div class="team-head"><h2>' + teamName(key) + '</h2><span class="note">' + teamNote(key) + '</span></div>';
+
+  html += '<div class="injured-box"><h4>🩹 ' + t.injuredTitle + '</h4>';
+  if(injured.length === 0){
+    html += '<div class="injured-empty">' + t.injuredEmpty + '</div>';
+  } else {
+    injured.forEach(p => {
+      html += '<div class="injured-row">' +
+        '<img src="' + getPlayerImg(p.id) + '" onerror="this.style.visibility=\'hidden\'">' +
+        '<div><div class="iname">' + (state.lang==='en' ? p.en : p.he) + '</div>' +
+        '<div class="istatus">' + (state.lang==='en' ? p.injuryEn : p.injuryHe) + '</div></div>' +
+      '</div>';
+    });
+  }
+  html += '</div>';
+
+  html += '<table><thead><tr><th class="num">' + t.colNum + '</th><th class="imgcol">' + t.colImg + '</th><th>' + t.colPlayer + '</th><th>' + t.colPos + '</th><th class="num">' + t.colPts + '</th><th class="num">' + t.colReb + '</th><th class="num">' + t.colAst + '</th></tr></thead><tbody>';
+  players.forEach(p => {
+    const badgeHtml = p.badge ? '<span class="badge new">' + p.badge + '</span>' : '';
+    const injBadgeHtml = p.injured ? '<span class="badge inj">' + t.injBadge + '</span>' : '';
+    const roleHtml = p.role ? '<span class="role">' + p.role + '</span>' : '';
+    const rowClass = (p.star ? 'star ' : '') + (p.injured ? 'injured-row-flag' : '');
+    html += '<tr class="' + rowClass + '" onclick="showPlayerDetails(\'' + key + '\', ' + p.rank + ')">' +
       '<td class="num">' + p.rank + '</td>' +
       '<td class="imgtd"><img class="player-img" src="' + getPlayerImg(p.id) + '" alt="' + p.en + '" onerror="this.style.visibility=\'hidden\'"></td>' +
-      '<td class="player">' + p.he + badgeHtml + roleHtml + '</td>' +
+      '<td class="player">' + (state.lang==='en' ? p.en : p.he) + badgeHtml + injBadgeHtml + roleHtml + '</td>' +
       '<td>' + p.pos + '</td>' +
       '<td class="num">' + p.pts.toFixed(1) + '</td>' +
       '<td class="num">' + p.reb.toFixed(1) + '</td>' +
       '<td class="num">' + p.ast.toFixed(1) + '</td>' +
     '</tr>';
-  }).join('');
+  });
+  html += '</tbody></table>';
+  html += '<div class="legend">' + teamLegend(key) + '</div>';
+
+  document.getElementById('content').innerHTML = html;
 }
 
-['knicks','nets','celtics','sixers'].forEach(render);
-
-const tabs = document.querySelectorAll('.tab');
-const panels = document.querySelectorAll('.panel');
-
-tabs.forEach(tab => {
-  tab.addEventListener('click', () => {
-    tabs.forEach(t => t.classList.remove('active'));
-    panels.forEach(p => p.classList.remove('active'));
-    tab.classList.add('active');
-    document.getElementById('panel-' + tab.dataset.team).classList.add('active');
+function renderGames(){
+  const t = T[state.lang];
+  let html = '<div class="games-list">';
+  games.forEach(g => {
+    const home = state.lang==='en' ? g.homeEn : g.homeHe;
+    const away = state.lang==='en' ? g.away : g.awayHe;
+    const note = state.lang==='en' ? g.noteEn : g.noteHe;
+    const label = state.lang==='en' ? g.labelEn : g.labelHe;
+    html += '<div class="game-card">' +
+      '<div class="glabel">' + label + '</div>' +
+      '<div class="game-row"><span>' + home + '</span><span class="vs">' + g.score + '</span><span>' + away + '</span></div>' +
+      '<div class="gnote">' + note + '</div>' +
+    '</div>';
   });
+  html += '</div><div class="games-note">' + t.gamesNote + '</div>';
+  document.getElementById('content').innerHTML = html;
+}
+
+function render(){
+  applyStaticText();
+  if(state.view === 'teams'){
+    if(state.team){ renderTeamDetail(state.team); } else { renderTeamsList(); }
+  } else {
+    renderGames();
+  }
+}
+
+function selectTeam(key){ state.team = key; render(); }
+function backToTeams(){ state.team = null; render(); }
+
+document.getElementById('navTeamsBtn').addEventListener('click', () => {
+  state.view = 'teams'; state.team = null;
+  document.getElementById('navTeamsBtn').classList.add('active');
+  document.getElementById('navGamesBtn').classList.remove('active');
+  render();
+});
+document.getElementById('navGamesBtn').addEventListener('click', () => {
+  state.view = 'games'; state.team = null;
+  document.getElementById('navGamesBtn').classList.add('active');
+  document.getElementById('navTeamsBtn').classList.remove('active');
+  render();
+});
+document.getElementById('langBtn').addEventListener('click', () => {
+  state.lang = state.lang === 'he' ? 'en' : 'he';
+  render();
 });
 
 function showPlayerDetails(teamKey, rank) {
   const player = data[teamKey].find(p => p.rank === rank);
   if(!player) return;
+  const t = T[state.lang];
 
   document.getElementById('mImg').src = getPlayerImg(player.id);
-  document.getElementById('mName').innerText = player.he;
-  document.getElementById('mEn').innerText = player.en;
-  document.getElementById('mBio').innerText = 'גיל ' + player.age + ' · נולד/ה ' + player.dob + ' · ' + player.birthplace;
-  document.getElementById('mHeight').innerText = player.height || 'לא צוין';
-  document.getElementById('mMin').innerText = player.min ? player.min + ' דק\'' : 'לא צוין';
+  document.getElementById('mName').innerText = state.lang==='en' ? player.en : player.he;
+  document.getElementById('mEn').innerText = state.lang==='en' ? player.he : player.en;
+  document.getElementById('mBio').innerHTML = 'גיל ' + player.age + ' · נולד/ה ' + player.dob + ' · ' + player.birthplace +
+    (state.lang==='en' ? '<div class="hebrew-note">' + t.hebNote + '</div>' : '');
+
+  const injBox = document.getElementById('mInjuryBox');
+  if(player.injured){
+    injBox.style.display = 'block';
+    injBox.textContent = '🩹 ' + (state.lang==='en' ? player.injuryEn : player.injuryHe);
+  } else {
+    injBox.style.display = 'none';
+  }
+
+  document.getElementById('mHeight').innerText = player.height || '—';
+  document.getElementById('mMin').innerText = player.min ? player.min + (state.lang==='en' ? ' min' : ' דק\'') : '—';
   document.getElementById('mPts').innerText = player.pts.toFixed(1);
   document.getElementById('mReb').innerText = player.reb.toFixed(1);
   document.getElementById('mAst').innerText = player.ast.toFixed(1);
   document.getElementById('mPos').innerText = player.pos;
 
-  const teamsHtml = (player.teams || []).map(t => '<span class="team-tag">' + t + '</span>').join(' ');
-  document.getElementById('mTeams').innerHTML = teamsHtml || 'אין מידע';
-  document.getElementById('mAwards').innerText = player.awards || 'אין תארים אישיים ידועים';
+  const teamsHtml = (player.teams || []).map(tm => '<span class="team-tag">' + tm + '</span>').join(' ');
+  document.getElementById('mTeams').innerHTML = teamsHtml || '—';
+  document.getElementById('mAwards').innerText = player.awards || '—';
 
   document.getElementById('playerModal').classList.add('active');
 }
@@ -405,12 +607,13 @@ function showPlayerDetails(teamKey, rank) {
 document.getElementById('modalClose').addEventListener('click', () => {
   document.getElementById('playerModal').classList.remove('active');
 });
-
 document.getElementById('playerModal').addEventListener('click', (e) => {
   if (e.target.id === 'playerModal') {
     document.getElementById('playerModal').classList.remove('active');
   }
 });
+
+render();
 </script>
 
 </body>
