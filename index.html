@@ -31,7 +31,14 @@ body.ltr{ direction: ltr; }
 .team-card{ cursor:pointer; background: var(--card); border: 1px solid var(--card-line); border-radius: 14px; padding: 15px; text-align: start; transition: transform .15s, border-color .15s; position:relative; overflow:hidden; }
 .team-card:hover{ transform: translateY(-2px); border-color: var(--accent); }
 .team-card .accent-bar{ position:absolute; inset-inline-start:0; top:0; bottom:0; width:5px; background: var(--accent); }
-.team-card h3{ margin:0 0 5px; font-size:16px; font-weight:900; }
+.team-card .card-top{ display:flex; align-items:center; gap:10px; margin-bottom:6px; }
+.team-logo-box{ width:32px; height:32px; flex-shrink:0; position:relative; }
+.team-logo{ width:32px; height:32px; object-fit:contain; display:block; }
+.team-logo-lg-box{ width:48px; height:48px; flex-shrink:0; position:relative; }
+.team-logo-lg{ width:48px; height:48px; object-fit:contain; display:block; }
+.logo-fallback{ width:100%; height:100%; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:800; color:#fff; font-size:11px; position:absolute; top:0; left:0; }
+.logo-fallback.lg{ font-size:15px; }
+.team-card h3{ margin:0; font-size:16px; font-weight:900; }
 .team-card .meta{ color: var(--muted); font-size: 11.5px; line-height:1.6; }
 .team-card .badges{ margin-top:8px; display:flex; gap:5px; flex-wrap:wrap; }
 .pill{ font-size:10.5px; font-weight:700; padding:3px 9px; border-radius:999px; }
@@ -43,6 +50,7 @@ body.ltr{ direction: ltr; }
 .back-btn:hover{ color:var(--text); border-color: var(--orange); }
 
 .team-head{ display:flex; align-items:baseline; justify-content: space-between; gap: 12px; margin-bottom: 14px; flex-wrap: wrap; }
+.team-head-title{ display:flex; align-items:center; gap:12px; }
 .team-head h2{ font-size: 21px; font-weight: 900; margin: 0; }
 .team-head .note{ font-size: 12.5px; color: var(--muted); }
 
@@ -52,7 +60,7 @@ body.ltr{ direction: ltr; }
 .injured-box h4{ margin:0 0 10px; font-size: 13px; color: var(--red); font-weight:800; display:flex; align-items:center; gap:6px; }
 .injured-row{ display:flex; align-items:center; gap:10px; padding:6px 0; border-top: 1px solid rgba(229,72,77,.15); }
 .injured-row:first-of-type{ border-top:none; }
-.injured-row img, .injured-row .avatar-mini{ width:34px; height:25px; object-fit:cover; border-radius:4px; background:var(--card-line); }
+.injured-row img, .injured-row .avatar-circle{ width:34px; height:25px; }
 .injured-row .iname{ font-weight:700; font-size:13.5px; }
 .injured-row .istatus{ font-size:11.5px; color: var(--muted); }
 .injured-empty{ color: var(--muted); font-size: 12.5px; }
@@ -75,7 +83,7 @@ tbody tr.injured-row-flag td{ background: rgba(229,72,77,0.05); }
 .badge.new{ background: rgba(30,158,90,.18); color:#6FE3A5; }
 .badge.inj{ background: rgba(229,72,77,.18); color: var(--red); }
 .player-img{ width: 44px; height: 32px; object-fit: cover; border-radius: 4px; background: var(--card-line); display: block; margin: 0 auto; }
-.avatar-circle{ width: 32px; height: 32px; border-radius: 50%; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:11px; font-weight:800; color:#fff; }
+.avatar-circle{ border-radius: 50%; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:11px; font-weight:800; color:#fff; }
 .legend{ font-size: 11.5px; color: var(--muted); margin: 10px 2px 20px; }
 .foot{ text-align:center; color: var(--muted); font-size: 12px; margin-top: 28px; line-height: 1.6; }
 
@@ -99,7 +107,7 @@ tbody tr.injured-row-flag td{ background: rgba(229,72,77,0.05); }
 .modal-content{ background: var(--card); border: 1px solid var(--card-line); border-radius: 16px; padding: 24px; max-width: 440px; width: 100%; text-align: center; position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.5); max-height: 88vh; overflow-y: auto; }
 .modal-close{ position: absolute; top: 12px; inset-inline-start: 16px; background: none; border: none; color: var(--muted); font-size: 20px; cursor: pointer; }
 .modal-img{ width: 100px; height: 75px; object-fit: cover; border-radius: 8px; margin-bottom: 12px; }
-.modal-avatar{ width:100px; height:75px; border-radius:8px; margin:0 auto 12px; display:flex; align-items:center; justify-content:center; font-size:26px; font-weight:800; color:#fff; }
+.modal-avatar{ width:100px; height:75px; border-radius:8px; margin:0 auto 12px; }
 .modal-name{ font-size: 20px; font-weight: 900; margin-bottom: 4px; }
 .modal-en{ color: var(--muted); font-size: 13px; margin-bottom: 4px; }
 .modal-bio{ color: var(--muted); font-size: 12.5px; margin-bottom: 12px; }
@@ -142,9 +150,9 @@ tbody tr.injured-row-flag td{ background: rgba(229,72,77,0.05); }
   </div>
 
   <div class="mainnav" id="mainNav">
-    <button class="navbtn active" data-view="teams" id="navTeamsBtn"></button>
-    <button class="navbtn" data-view="games" id="navGamesBtn"></button>
-    <button class="navbtn" data-view="standings" id="navStandingsBtn"></button>
+    <button class="navbtn active" id="navTeamsBtn"></button>
+    <button class="navbtn" id="navGamesBtn"></button>
+    <button class="navbtn" id="navStandingsBtn"></button>
   </div>
 
   <div id="content"></div>
@@ -182,10 +190,33 @@ tbody tr.injured-row-flag td{ background: rgba(229,72,77,0.05); }
 
 <script>
 function getPlayerImg(id){ return 'https://cdn.nba.com/headshots/nba/latest/260x190/' + id + '.png'; }
+
+const teamAbbrEspn = { knicks:"ny", nets:"bkn", celtics:"bos", sixers:"phi", pistons:"det", cavaliers:"cle", raptors:"tor", hawks:"atl", magic:"orl", hornets:"cha", heat:"mia", bucks:"mil", bulls:"chi", pacers:"ind", wizards:"wsh", thunder:"okc", spurs:"sa", nuggets:"den", lakers:"lal", rockets:"hou", timberwolves:"min", suns:"phx", blazers:"por", clippers:"lac", warriors:"gs", pelicans:"no", mavericks:"dal", grizzlies:"mem", kings:"sac", jazz:"utah" };
+function getTeamLogoUrl(key){ return 'https://a.espncdn.com/combiner/i?img=/i/teamlogos/nba/500/' + teamAbbrEspn[key] + '.png&w=200&h=200'; }
+
 function initialsOf(name){
-  const parts = name.replace(/[^A-Za-zÀ-ÿ\s]/g,'').trim().split(/\s+/);
+  const parts = (name || '').replace(/[^A-Za-zÀ-ÿ\s]/g,'').trim().split(/\s+/);
   if(parts.length === 0 || !parts[0]) return '?';
   return (parts[0][0] + (parts[1] ? parts[1][0] : '')).toUpperCase();
+}
+
+function teamLogoHtml(key, size){
+  const cls = size === 'lg' ? 'team-logo-lg' : 'team-logo';
+  const boxCls = size === 'lg' ? 'team-logo-lg-box' : 'team-logo-box';
+  const fbCls = size === 'lg' ? 'logo-fallback lg' : 'logo-fallback';
+  const meta = teamsMeta[key];
+  const abbr = (meta.en || key).split(' ').pop().slice(0,3).toUpperCase();
+  return '<div class="' + boxCls + '">' +
+    '<img class="' + cls + '" src="' + getTeamLogoUrl(key) + '" onerror="this.style.display=\'none\'; this.nextElementSibling.style.display=\'flex\';" onload="this.nextElementSibling.style.display=\'none\';">' +
+    '<div class="' + fbCls + '" style="background:' + meta.color + ';">' + abbr + '</div>' +
+  '</div>';
+}
+
+function avatarHtml(p, color, w, h){
+  if(p.id){
+    return '<img class="player-img" style="width:' + w + 'px;height:' + h + 'px;" src="' + getPlayerImg(p.id) + '" alt="" onerror="this.style.visibility=\'hidden\'">';
+  }
+  return '<div class="avatar-circle" style="width:' + w + 'px;height:' + h + 'px;background:' + color + ';">' + initialsOf(p.en) + '</div>';
 }
 
 const T = {
@@ -200,7 +231,7 @@ const T = {
     colNum:"#", colImg:"תמונה", colPlayer:"שחקן", colPos:"עמדה", colPts:"נק'", colReb:"ריב'", colAst:"אס'",
     height:"גובה:", minutes:"דקות למשחק:", points:"נקודות:", rebounds:"ריבאונדים:", assists:"אסיסטים:", position:"עמדה:",
     careerTeams:"קבוצות בקריירה", awardsTitle:"תארים והישגים",
-    footHtml:"נתונים: ממוצעי משחק, עונת 2025/26 · שיבוצי 4 הקבוצות המקוריות (ניקס, נטס, סלטיקס, סיקסרס) מאומתים כולל תמונות מ-CDN הרשמי של NBA.com<br>שאר 26 הקבוצות: הרכבים בסיסיים מהידע הכללי, ללא אימות פרטני לכל שחקן - ייתכנו אי-דיוקים בטריידים/חתימות עדכניות<br>פרטי ביוגרפיה מוצגים בעברית בכל השפות",
+    footHtml:"נתונים: ממוצעי משחק, עונת 2025/26 · 7 קבוצות (ניקס, נטס, סלטיקס, סיקסרס, פיסטונס, קאבלירס, ראפטורס) מאומתות מול NBA.com כולל תמונות אמיתיות<br>שאר 23 הקבוצות: הרכבים בסיסיים מהידע הכללי, ללא אימות פרטני - ייתכנו אי-דיוקים בטריידים/חתימות עדכניות<br>פרטי ביוגרפיה מוצגים בעברית בכל השפות",
     hebNote:"(הפרטים המלאים בעברית)",
     gamesNote:"עונת 2026/27 עדיין לא התחילה — לוח המשחקים המלא יתעדכן כשיפורסם באוקטובר 2026.",
     eastConf:"קונפרנס מזרח", westConf:"קונפרנס מערב",
@@ -218,7 +249,7 @@ const T = {
     colNum:"#", colImg:"Photo", colPlayer:"Player", colPos:"Pos", colPts:"PTS", colReb:"REB", colAst:"AST",
     height:"Height:", minutes:"Minutes:", points:"Points:", rebounds:"Rebounds:", assists:"Assists:", position:"Position:",
     careerTeams:"Career Teams", awardsTitle:"Awards & Achievements",
-    footHtml:"Data: per-game averages, 2025/26 season · The 4 original teams (Knicks, Nets, Celtics, 76ers) are verified, including photos from NBA.com's official CDN<br>The other 26 teams: basic rosters from general knowledge, not individually verified — recent trades/signings may not be reflected<br>Biographical details are shown in Hebrew in all languages",
+    footHtml:"Data: per-game averages, 2025/26 season · 7 teams (Knicks, Nets, Celtics, 76ers, Pistons, Cavaliers, Raptors) verified against NBA.com including real photos<br>The other 23 teams: basic rosters from general knowledge, not individually verified — recent trades/signings may not be reflected<br>Biographical details are shown in Hebrew in all languages",
     hebNote:"(full details in Hebrew)",
     gamesNote:"The 2026/27 season hasn't started yet — the full schedule will be added once released in October 2026.",
     eastConf:"Eastern Conference", westConf:"Western Conference",
@@ -236,7 +267,7 @@ const T = {
     colNum:"#", colImg:"Foto", colPlayer:"Jugador", colPos:"Pos", colPts:"PTS", colReb:"REB", colAst:"AST",
     height:"Altura:", minutes:"Minutos:", points:"Puntos:", rebounds:"Rebotes:", assists:"Asistencias:", position:"Posición:",
     careerTeams:"Equipos en su carrera", awardsTitle:"Premios y logros",
-    footHtml:"Datos: promedios por partido, temporada 2025/26 · Los 4 equipos originales (Knicks, Nets, Celtics, 76ers) están verificados, incluidas fotos del CDN oficial de NBA.com<br>Los otros 26 equipos: plantillas básicas de conocimiento general, no verificadas individualmente<br>Los detalles biográficos se muestran en hebreo en todos los idiomas",
+    footHtml:"Datos: promedios por partido, temporada 2025/26 · 7 equipos verificados contra NBA.com con fotos reales<br>Los otros 23 equipos: plantillas básicas de conocimiento general, no verificadas individualmente<br>Los detalles biográficos se muestran en hebreo en todos los idiomas",
     hebNote:"(detalles completos en hebreo)",
     gamesNote:"La temporada 2026/27 aún no ha comenzado — el calendario completo se añadirá cuando se publique en octubre de 2026.",
     eastConf:"Conferencia Este", westConf:"Conferencia Oeste",
@@ -254,7 +285,7 @@ const T = {
     colNum:"#", colImg:"صورة", colPlayer:"اللاعب", colPos:"المركز", colPts:"نقاط", colReb:"متابعات", colAst:"تمريرات",
     height:"الطول:", minutes:"الدقائق:", points:"النقاط:", rebounds:"المتابعات:", assists:"التمريرات الحاسمة:", position:"المركز:",
     careerTeams:"الفرق خلال المسيرة", awardsTitle:"الألقاب والإنجازات",
-    footHtml:"البيانات: متوسطات لكل مباراة، موسم 2025/26 · الفرق الأربعة الأصلية (نيكس، نتس، سلتيكس، 76ers) موثقة وتشمل صورًا من شبكة NBA.com الرسمية<br>الفرق الـ26 الأخرى: تشكيلات أساسية من المعرفة العامة، غير موثقة لكل لاعب<br>التفاصيل السيرة الذاتية تظهر بالعبرية في جميع اللغات",
+    footHtml:"البيانات: متوسطات لكل مباراة، موسم 2025/26 · 7 فرق موثقة مقابل NBA.com بصور حقيقية<br>الفرق الـ23 الأخرى: تشكيلات أساسية من المعرفة العامة، غير موثقة لكل لاعب<br>التفاصيل السيرة الذاتية تظهر بالعبرية في جميع اللغات",
     hebNote:"(التفاصيل الكاملة بالعبرية)",
     gamesNote:"لم يبدأ موسم 2026/27 بعد — سيتم إضافة الجدول الكامل عند نشره في أكتوبر 2026.",
     eastConf:"المؤتمر الشرقي", westConf:"المؤتمر الغربي",
@@ -272,7 +303,7 @@ const T = {
     colNum:"#", colImg:"Фото", colPlayer:"Игрок", colPos:"Поз", colPts:"Очки", colReb:"Подб", colAst:"Пас",
     height:"Рост:", minutes:"Минуты:", points:"Очки:", rebounds:"Подборы:", assists:"Передачи:", position:"Позиция:",
     careerTeams:"Команды в карьере", awardsTitle:"Награды и достижения",
-    footHtml:"Данные: средние показатели за игру, сезон 2025/26 · 4 исходные команды (Никс, Нетс, Селтикс, 76ers) проверены, включая фото с официального CDN NBA.com<br>Остальные 26 команд: базовые составы по общим данным, не проверены индивидуально<br>Биографические данные показаны на иврите на всех языках",
+    footHtml:"Данные: средние показатели за игру, сезон 2025/26 · 7 команд проверены по NBA.com с реальными фото<br>Остальные 23 команды: базовые составы по общим данным, не проверены индивидуально<br>Биографические данные показаны на иврите на всех языках",
     hebNote:"(полные данные на иврите)",
     gamesNote:"Сезон 2026/27 ещё не начался — полное расписание будет добавлено после публикации в октябре 2026 года.",
     eastConf:"Восточная конференция", westConf:"Западная конференция",
@@ -290,7 +321,7 @@ const T = {
     colNum:"#", colImg:"写真", colPlayer:"選手", colPos:"ポジション", colPts:"得点", colReb:"リバウンド", colAst:"アシスト",
     height:"身長:", minutes:"出場時間:", points:"得点:", rebounds:"リバウンド:", assists:"アシスト:", position:"ポジション:",
     careerTeams:"経歴チーム", awardsTitle:"受賞歴・実績",
-    footHtml:"データ:2025/26シーズンの1試合平均 · オリジナル4チーム（ニックス、ネッツ、セルティックス、76ers）はNBA.com公式CDNの写真を含めて確認済み<br>その他26チームは一般知識による基本的なロースターで、個別確認はしていません<br>経歴詳細はすべての言語でヘブライ語で表示されます",
+    footHtml:"データ:2025/26シーズンの1試合平均 · 7チームはNBA.com公式データと実際の写真で確認済み<br>その他23チームは一般知識による基本的なロースターで、個別確認はしていません<br>経歴詳細はすべての言語でヘブライ語で表示されます",
     hebNote:"(詳細はヘブライ語で表示)",
     gamesNote:"2026/27シーズンはまだ開始していません — 2026年10月の発表後に全日程を追加します。",
     eastConf:"イースタン・カンファレンス", westConf:"ウエスタン・カンファレンス",
@@ -299,7 +330,6 @@ const T = {
     noDetail:"この選手の詳細情報は利用できません" }
 };
 
-// ---- Verified teams (full detail, real photo IDs) ----
 const teamsMeta = {
   knicks: { color:"#F58426", he:"ניו יורק ניקס", en:"New York Knicks", conf:"E", verified:true,
     noteHe:"אלופת ה-NBA 2026 · מאמן: מייק בראון", noteEn:"2026 NBA Champions · Coach: Mike Brown",
@@ -317,10 +347,9 @@ const teamsMeta = {
     noteHe:"45-37 בעונה שעברה · הקיץ הכי גדול בליגה · מאמן: ניק נרס", noteEn:"45-37 last season · The league's biggest offseason · Coach: Nick Nurse",
     legendHe:"פול ג'ורג' עזב לבוסטון · אנדרה דרימונד עזב לניקס · ג'יילן בראון ולברון ג'יימס הצטרפו · שימו לב: ג'ארד מקיין נסחר לת'אנדר בפברואר 2026",
     legendEn:"Paul George left for Boston · Andre Drummond left for New York · Jaylen Brown and LeBron James joined · Note: Jared McCain was traded to the Thunder in February 2026" },
-  // ---- Unverified teams (basic info, real 2025/26 standings, approximate rosters) ----
-  pistons:{ color:"#C8102E", he:"דטרויט פיסטונס", en:"Detroit Pistons", conf:"E", w:60, l:22 },
-  cavaliers:{ color:"#860038", he:"קליבלנד קאבלירס", en:"Cleveland Cavaliers", conf:"E", w:52, l:30 },
-  raptors:{ color:"#CE1141", he:"טורונטו ראפטורס", en:"Toronto Raptors", conf:"E", w:46, l:36 },
+  pistons:{ color:"#C8102E", he:"דטרויט פיסטונס", en:"Detroit Pistons", conf:"E", w:60, l:22, rosterVerified:true },
+  cavaliers:{ color:"#860038", he:"קליבלנד קאבלירס", en:"Cleveland Cavaliers", conf:"E", w:52, l:30, rosterVerified:true },
+  raptors:{ color:"#CE1141", he:"טורונטו ראפטורס", en:"Toronto Raptors", conf:"E", w:46, l:36, rosterVerified:true },
   hawks:{ color:"#E03A3E", he:"אטלנטה הוקס", en:"Atlanta Hawks", conf:"E", w:46, l:36 },
   magic:{ color:"#0077C0", he:"אורלנדו מג'יק", en:"Orlando Magic", conf:"E", w:45, l:37 },
   hornets:{ color:"#1D1160", he:"שארלוט הורנטס", en:"Charlotte Hornets", conf:"E", w:44, l:38 },
@@ -358,7 +387,6 @@ const games = [
     score:"109–100", noteHe:"הסיקסרס מדיחה את הסלטיקס בסיבוב הראשון", noteEn:"Sixers eliminate the Celtics in the first round" }
 ];
 
-// Standings order (seed order within conference), matches teamsMeta keys
 const standingsEast = ["pistons","celtics","knicks","cavaliers","raptors","hawks","sixers","magic","hornets","heat","bucks","bulls","nets","pacers","wizards"];
 const standingsWest = ["thunder","spurs","nuggets","lakers","rockets","timberwolves","suns","blazers","clippers","warriors","pelicans","mavericks","grizzlies","kings","jazz"];
 
@@ -481,30 +509,29 @@ const data = {
     {rank:5, id:1629011, he:"מיטשל רובינסון", en:"Mitchell Robinson", role:"הגיע מניו יורק בחופשית", badge:"חתימה חדשה", pos:"C", pts:5.7, reb:8.8, ast:0.9, height:"2.13m", min:24.0,
       age:28, dob:"1 באפריל 1998", birthplace:"פורט וורת', טקסס, ארה\"ב",
       teams:["ניו יורק ניקס (2018-2026)","בוסטון סלטיקס (2026-)"], awards:"מוביל ריבאונד התקפי בליגה בכמה עונות"},
-    {rank:6, id:1629750, he:"נימיאס קווטה", en:"Neemias Queta", pos:"C", pts:10.2, reb:8.4, ast:1.7, height:"2.13m", min:21.2,
-      age:26, dob:"13 בנובמבר 1999", birthplace:"קווה דה פיאדדה, פורטוגל",
-      teams:["סקרמנטו קינגס (חוזה שני-דרכים)","בוסטון סלטיקס (2023-)"], awards:"אין תארים אישיים"},
-    {rank:7, id:1629833, he:"סם האוזר", en:"Sam Hauser", pos:"SF", pts:9.2, reb:3.8, ast:1.5, height:"2.01m", min:22.0,
+    {rank:6, id:1629674, he:"נימיאס קווטה", en:"Neemias Queta", pos:"C", pts:10.2, reb:8.4, ast:1.7, height:"2.13m", min:21.2,
+      age:26, dob:"13 ביולי 1999", birthplace:"קווה דה פיאדדה, פורטוגל",
+      teams:["בוסטון סלטיקס (2023-)"], awards:"אין תארים אישיים"},
+    {rank:7, id:1630573, he:"סם האוזר", en:"Sam Hauser", pos:"SF", pts:9.2, reb:3.8, ast:1.5, height:"2.01m", min:22.0,
       age:28, dob:"8 בדצמבר 1997", birthplace:"סטיבנס פוינט, ויסקונסין, ארה\"ב",
       teams:["בוסטון סלטיקס (2021-)"], awards:"אלוף NBA 2024"},
-    {rank:8, id:202696, he:"ניקולה ווצ'ביץ'", en:"Nikola Vucevic", pos:"C", pts:9.7, reb:6.6, ast:2.0, height:"2.08m", min:20.5,
+    {rank:8, id:202696, he:"ניקולה ווצ'ביץ'", en:"Nikola Vucevic", role:"הגיע משיקגו בטרייד", badge:"הגיע בטרייד", pos:"C", pts:9.7, reb:6.6, ast:2.0, height:"2.08m", min:20.5,
       age:35, dob:"24 באוקטובר 1990", birthplace:"מורז', שוויץ",
-      teams:["אורלנדו מג'יק (2011-2021)","שיקגו בולס (2021-2025)","בוסטון סלטיקס (2025-)"], awards:"2x אול-סטאר"},
+      teams:["אורלנדו מג'יק (2011-2021)","שיקגו בולס (2021-2026)","בוסטון סלטיקס (2026-)"], awards:"2x אול-סטאר"},
     {rank:9, id:1630568, he:"לוקה גארזה", en:"Luka Garza", pos:"C", pts:8.1, reb:4.1, ast:1.0, height:"2.08m", min:15.3,
       age:27, dob:"27 בנובמבר 1998", birthplace:"וושינגטון די.סי, ארה\"ב",
       teams:["בוסטון סלטיקס"], awards:"אין תארים אישיים ב-NBA"},
     {rank:10, id:1631248, he:"בייילור שייארמן", en:"Baylor Scheierman", pos:"SG", pts:5.5, reb:3.5, ast:1.5, height:"2.01m", min:14.0,
       age:25, dob:"6 באפריל 2001", birthplace:"סו פולס, דרום דקוטה, ארה\"ב",
       teams:["בוסטון סלטיקס (2024-)"], awards:"אין תארים אישיים עדיין"},
-    {rank:11, id:1631172, he:"ג'ורדן וולש", en:"Jordan Walsh", pos:"SF", pts:5.4, reb:4.0, ast:0.8, height:"2.01m", min:13.2,
+    {rank:11, id:1641775, he:"ג'ורדן וולש", en:"Jordan Walsh", pos:"SF", pts:5.4, reb:4.0, ast:0.8, height:"2.01m", min:13.2,
       age:22, dob:"3 בנובמבר 2003", birthplace:"פורט וורת', טקסס, ארה\"ב",
       teams:["בוסטון סלטיקס (2023-)"], awards:"אין תארים אישיים"},
-    {rank:12, id:1631167, he:"ג'וש מינוט", en:"Josh Minott", pos:"SF", pts:5.8, reb:3.6, ast:1.0, height:"2.03m", min:12.8,
-      age:23, dob:"13 בספטמבר 2002", birthplace:"ג'רמנטאון, מרילנד, ארה\"ב",
-      teams:["מינסוטה טימברוולבס (2022-2024)","בוסטון סלטיקס (2024-)"], awards:"אין תארים אישיים"},
-    {rank:13, id:1642864, he:"הוגו גונסלס", en:"Hugo Gonzalez", pos:"SF", pts:3.9, reb:3.3, ast:0.5, height:"1.98m", min:10.0,
+    {rank:12, id:1642864, he:"הוגו גונסלס", en:"Hugo Gonzalez", pos:"SF", pts:3.9, reb:3.3, ast:0.5, height:"1.98m", min:10.0,
       age:19, dob:"2006, מדריד (תאריך מדויק לא ידוע)", birthplace:"מדריד, ספרד",
-      teams:["בוסטון סלטיקס (2025-)"], awards:"רוקי, אין תארים עדיין"}
+      teams:["בוסטון סלטיקס (2025-)"], awards:"רוקי, אין תארים עדיין"},
+    {rank:13, id:1642910, he:"ג'ון טונייה", en:"John Tonje", role:"חתימה חדשה", badge:"חתימה חדשה", pos:"G", pts:4.0, reb:2.0, ast:1.0,
+      age:25, dob:"23 באפריל 2001", birthplace:"ויסקונסין, ארה\"ב", teams:["בוסטון סלטיקס (2026-)"], awards:"רוקי"}
   ],
   sixers: [
     {rank:1, id:1630178, star:true, he:"טייריס מקסי", en:"Tyrese Maxey", pos:"PG", pts:28.3, reb:4.1, ast:6.6, height:"1.88m", min:37.5,
@@ -550,34 +577,42 @@ const data = {
       age:23, dob:"21 במרץ 2003", birthplace:"לאגוס, ניגריה",
       teams:["פילדלפיה 76ers (2024-)"], awards:"אין תארים אישיים עדיין"}
   ],
-  // ---- Unverified / basic rosters (approximate, no verified photo IDs) ----
-  pistons: [ {rank:1, he:"קייד קנינגהאם", en:"Cade Cunningham", pos:"PG", pts:23.9, reb:6.4, ast:9.9},
-    {rank:2, he:"ג'יילן דורן", en:"Jalen Duren", pos:"C", pts:12.0, reb:10.5, ast:2.0},
-    {rank:3, he:"אוסאר תומפסון", en:"Ausar Thompson", pos:"SF", pts:11.0, reb:6.0, ast:3.0},
-    {rank:4, he:"טוביאס האריס", en:"Tobias Harris", pos:"PF", pts:12.0, reb:5.0, ast:2.0},
-    {rank:5, he:"דנקן רובינסון", en:"Duncan Robinson", pos:"SG", pts:11.0, reb:3.0, ast:2.0},
-    {rank:6, he:"אייזאיה סטיוארט", en:"Isaiah Stewart", pos:"C", pts:9.0, reb:7.0, ast:1.0},
-    {rank:7, he:"מרקוס סאסר", en:"Marcus Sasser", pos:"PG", pts:8.0, reb:2.0, ast:3.0},
-    {rank:8, he:"רון הולנד", en:"Ron Holland", pos:"SF", pts:8.0, reb:4.0, ast:2.0},
-    {rank:9, he:"פול ריד", en:"Paul Reed", pos:"PF", pts:6.0, reb:5.0, ast:1.0} ],
-  cavaliers: [ {rank:1, he:"דונובן מיטשל", en:"Donovan Mitchell", pos:"SG", pts:26.0, reb:4.0, ast:5.0},
-    {rank:2, he:"דריוס גארלנד", en:"Darius Garland", pos:"PG", pts:20.0, reb:3.0, ast:6.0},
-    {rank:3, he:"אוואן מובלי", en:"Evan Mobley", pos:"PF", pts:17.0, reb:9.0, ast:3.0},
-    {rank:4, he:"ג'רט אלן", en:"Jarrett Allen", pos:"C", pts:13.0, reb:9.0, ast:1.0},
-    {rank:5, he:"די'אנדרה האנטר", en:"De'Andre Hunter", pos:"SF", pts:15.0, reb:4.0, ast:2.0},
-    {rank:6, he:"מקס שטראוס", en:"Max Strus", pos:"SG", pts:11.0, reb:4.0, ast:2.0},
-    {rank:7, he:"סם מריל", en:"Sam Merrill", pos:"SG", pts:9.0, reb:2.0, ast:2.0},
-    {rank:8, he:"לארי ננס ג'וניור", en:"Larry Nance Jr", pos:"PF", pts:7.0, reb:5.0, ast:2.0},
-    {rank:9, he:"קרייג פורטר ג'וניור", en:"Craig Porter Jr", pos:"PG", pts:6.0, reb:2.0, ast:3.0} ],
-  raptors: [ {rank:1, he:"קווהי לנארד", en:"Kawhi Leonard", role:"הגיע מהקליפרס בטרייד", badge:"הגיע בטרייד", pos:"SF", pts:24.0, reb:6.0, ast:4.0},
-    {rank:2, he:"סקוטי בארנס", en:"Scottie Barnes", pos:"PF", pts:19.0, reb:7.0, ast:6.0},
-    {rank:3, he:"אר.ג'יי בארט", en:"RJ Barrett", pos:"SG", pts:20.0, reb:5.0, ast:3.0},
-    {rank:4, he:"עמנואל קווקלי", en:"Immanuel Quickley", pos:"PG", pts:17.0, reb:4.0, ast:6.0},
-    {rank:5, he:"יעקב פלטל", en:"Jakob Poeltl", pos:"C", pts:10.0, reb:9.0, ast:2.0},
-    {rank:6, he:"גרדי דיק", en:"Gradey Dick", pos:"SG", pts:12.0, reb:3.0, ast:2.0},
-    {rank:7, he:"ג'מאל שיד", en:"Jamal Shead", pos:"PG", pts:8.0, reb:3.0, ast:4.0},
-    {rank:8, he:"ג'ייקובי וולטר", en:"Ja'Kobe Walter", pos:"SG", pts:7.0, reb:3.0, ast:1.0},
-    {rank:9, he:"קלי אולינייק", en:"Kelly Olynyk", pos:"C", pts:7.0, reb:4.0, ast:2.0} ],
+  pistons: [ {rank:1, id:1630595, he:"קייד קנינגהאם", en:"Cade Cunningham", pos:"PG", pts:23.9, reb:6.4, ast:9.9},
+    {rank:2, id:1631105, he:"ג'יילן דורן", en:"Jalen Duren", pos:"C", pts:12.0, reb:10.5, ast:2.0},
+    {rank:3, id:1641709, he:"אוסאר תומפסון", en:"Ausar Thompson", pos:"F-G", pts:11.0, reb:6.0, ast:3.0},
+    {rank:4, id:1628381, he:"ג'ון קולינס", en:"John Collins", role:"הגיע מהקליפרס בטרייד", badge:"הגיע בטרייד", pos:"F-C", pts:14.0, reb:7.0, ast:1.0},
+    {rank:5, id:1629130, he:"דנקן רובינסון", en:"Duncan Robinson", pos:"F", pts:11.0, reb:3.0, ast:2.0},
+    {rank:6, id:203914, he:"גארי האריס", en:"Gary Harris", role:"הגיע ממילווקי בטרייד", badge:"הגיע בטרייד", pos:"G", pts:10.0, reb:2.0, ast:2.0},
+    {rank:7, id:1627752, he:"טוריאן פרינס", en:"Taurean Prince", role:"הגיע ממילווקי בטרייד", badge:"הגיע בטרייד", pos:"F", pts:9.0, reb:4.0, ast:2.0},
+    {rank:8, id:1630198, he:"איזאיה ג'ו", en:"Isaiah Joe", role:"הגיע מהת'אנדר בטרייד", badge:"הגיע בטרייד", pos:"G", pts:8.0, reb:2.0, ast:1.0},
+    {rank:9, id:1628989, he:"קווין הוארטר", en:"Kevin Huerter", pos:"G-F", pts:9.0, reb:3.0, ast:3.0},
+    {rank:10, id:1630194, he:"פול ריד", en:"Paul Reed", pos:"F", pts:6.0, reb:5.0, ast:1.0},
+    {rank:11, id:1631111, he:"רונלד הולנד השני", en:"Ronald Holland II", pos:"F", pts:8.0, reb:4.0, ast:2.0},
+    {rank:12, id:1642450, he:"דניס ג'נקינס", en:"Daniss Jenkins", pos:"G", pts:5.0, reb:2.0, ast:3.0} ],
+  cavaliers: [ {rank:1, id:1628378, he:"דונובן מיטשל", en:"Donovan Mitchell", pos:"G", pts:26.0, reb:4.0, ast:5.0},
+    {rank:2, id:201935, he:"ג'יימס הארדן", en:"James Harden", role:"הגיע מהקליפרס בטרייד", badge:"הגיע בטרייד", pos:"G", pts:22.0, reb:6.0, ast:9.0},
+    {rank:3, id:1630596, he:"אוואן מובלי", en:"Evan Mobley", pos:"C", pts:17.0, reb:9.0, ast:3.0},
+    {rank:4, id:1628386, he:"ג'רט אלן", en:"Jarrett Allen", pos:"C", pts:13.0, reb:9.0, ast:1.0},
+    {rank:5, id:203471, he:"דניס שרדר", en:"Dennis Schroder", role:"הגיע מסקרמנטו בטרייד", badge:"הגיע בטרייד", pos:"G", pts:14.0, reb:3.0, ast:6.0},
+    {rank:6, id:1629622, he:"מקס שטראוס", en:"Max Strus", pos:"G-F", pts:11.0, reb:4.0, ast:2.0},
+    {rank:7, id:1630241, he:"סם מריל", en:"Sam Merrill", pos:"G", pts:9.0, reb:2.0, ast:2.0},
+    {rank:8, id:1626204, he:"לארי ננס ג'וניור", en:"Larry Nance Jr", pos:"F-C", pts:7.0, reb:5.0, ast:2.0},
+    {rank:9, id:1631165, he:"קיאון אליס", en:"Keon Ellis", role:"הגיע מסקרמנטו בטרייד", badge:"הגיע בטרייד", pos:"G", pts:8.0, reb:2.0, ast:2.0},
+    {rank:10, id:1629731, he:"דין וייד", en:"Dean Wade", pos:"F-C", pts:7.0, reb:4.0, ast:1.0},
+    {rank:11, id:1641854, he:"קרייג פורטר ג'וניור", en:"Craig Porter Jr", pos:"G", pts:6.0, reb:2.0, ast:3.0},
+    {rank:12, id:1628418, he:"תומאס בראיינט", en:"Thomas Bryant", pos:"C-F", pts:7.0, reb:5.0, ast:1.0} ],
+  raptors: [ {rank:1, id:1630567, he:"סקוטי בארנס", en:"Scottie Barnes", pos:"F-G", pts:19.0, reb:7.0, ast:6.0},
+    {rank:2, id:1627742, he:"ברנדון אינגרם", en:"Brandon Ingram", pos:"F", pts:20.0, reb:5.0, ast:4.0},
+    {rank:3, id:1629628, he:"אר.ג'יי בארט", en:"RJ Barrett", pos:"F-G", pts:20.0, reb:5.0, ast:3.0},
+    {rank:4, id:1630193, he:"עמנואל קווקלי", en:"Immanuel Quickley", pos:"G", pts:17.0, reb:4.0, ast:6.0},
+    {rank:5, id:1627751, he:"יעקב פלטל", en:"Jakob Poeltl", pos:"C", pts:10.0, reb:9.0, ast:2.0},
+    {rank:6, id:1641711, he:"גרדי דיק", en:"Gradey Dick", pos:"G-F", pts:6.0, reb:2.0, ast:1.0},
+    {rank:7, id:1642347, he:"ג'מאל שיד", en:"Jamal Shead", pos:"G", pts:8.0, reb:3.0, ast:4.0},
+    {rank:8, id:1642266, he:"ג'ייקובי וולטר", en:"Ja'Kobe Walter", pos:"G", pts:7.0, reb:3.0, ast:1.0},
+    {rank:9, id:1642867, he:"קולין מארי-בויילס", en:"Collin Murray-Boyles", role:"בחירה 9, דראפט 2025", badge:"רוקי", pos:"F", pts:9.0, reb:5.0, ast:2.0},
+    {rank:10, id:202066, he:"גארט טמפל", en:"Garrett Temple", pos:"G-F", pts:4.0, reb:2.0, ast:1.0},
+    {rank:11, id:1630572, he:"סנדרו ממוקלשווילי", en:"Sandro Mamukelashvili", pos:"F-C", pts:8.0, reb:4.0, ast:2.0},
+    {rank:12, id:1631218, he:"טרייס ג'קסון-דייויס", en:"Trayce Jackson-Davis", pos:"F", pts:5.0, reb:4.0, ast:1.0} ],
   hawks: [ {rank:1, he:"טרה יאנג", en:"Trae Young", pos:"PG", pts:22.0, reb:3.0, ast:10.0},
     {rank:2, he:"ג'יילן ג'ונסון", en:"Jalen Johnson", pos:"SF", pts:18.0, reb:9.0, ast:4.0},
     {rank:3, he:"דייסון דניאלס", en:"Dyson Daniels", pos:"SG", pts:14.0, reb:4.0, ast:3.0},
@@ -708,13 +743,12 @@ const data = {
     {rank:6, he:"ג'רמי גרנט", en:"Jerami Grant", pos:"SF", pts:15.0, reb:4.0, ast:2.0},
     {rank:7, he:"דונובן קלינגן", en:"Donovan Clingan", pos:"C", pts:9.0, reb:8.0, ast:1.0},
     {rank:8, he:"מטיס תיבול", en:"Matisse Thybulle", pos:"SG", pts:5.0, reb:2.0, ast:1.0} ],
-  clippers: [ {rank:1, he:"ג'יימס הארדן", en:"James Harden", pos:"PG", pts:22.0, reb:6.0, ast:9.0},
+  clippers: [ {rank:1, he:"נורמן פאוול", en:"Norman Powell", pos:"SG", pts:22.0, reb:3.0, ast:2.0},
     {rank:2, he:"איביצה זובאץ'", en:"Ivica Zubac", pos:"C", pts:15.0, reb:12.0, ast:2.0},
     {rank:3, he:"דריק ג'ונס ג'וניור", en:"Derrick Jones Jr", pos:"SF", pts:11.0, reb:5.0, ast:2.0},
     {rank:4, he:"קריס דאן", en:"Kris Dunn", pos:"PG", pts:8.0, reb:3.0, ast:4.0},
     {rank:5, he:"בוגדן בוגדנוביץ'", en:"Bogdan Bogdanovic", pos:"SG", pts:12.0, reb:3.0, ast:3.0},
-    {rank:6, he:"ניקולה בטום", en:"Nicolas Batum", pos:"SF", pts:6.0, reb:4.0, ast:3.0},
-    {rank:7, he:"ג'ון קולינס", en:"John Collins", pos:"PF", pts:14.0, reb:7.0, ast:1.0} ],
+    {rank:6, he:"ניקולה בטום", en:"Nicolas Batum", pos:"SF", pts:6.0, reb:4.0, ast:3.0} ],
   warriors: [ {rank:1, he:"סטפן קרי", en:"Stephen Curry", pos:"PG", pts:24.0, reb:4.0, ast:6.0},
     {rank:2, he:"ג'ימי באטלר", en:"Jimmy Butler", pos:"SF", pts:20.0, reb:5.0, ast:5.0},
     {rank:3, he:"דרימונד גרין", en:"Draymond Green", pos:"PF", pts:10.0, reb:6.0, ast:6.0},
@@ -728,43 +762,33 @@ const data = {
     {rank:3, he:"הרברט ג'ונס", en:"Herbert Jones", pos:"SF", pts:12.0, reb:4.0, ast:2.0},
     {rank:4, he:"איב מיסי", en:"Yves Missi", pos:"C", pts:9.0, reb:8.0, ast:1.0},
     {rank:5, he:"ג'ורדן פול", en:"Jordan Poole", pos:"SG", pts:16.0, reb:3.0, ast:4.0},
-    {rank:6, he:"סאדיק ביי", en:"Saddiq Bey", pos:"SF", pts:10.0, reb:5.0, ast:2.0},
-    {rank:7, he:"קרלו מטקוביץ'", en:"Karlo Matkovic", pos:"C", pts:6.0, reb:5.0, ast:1.0} ],
+    {rank:6, he:"סאדיק ביי", en:"Saddiq Bey", pos:"SF", pts:10.0, reb:5.0, ast:2.0} ],
   mavericks: [ {rank:1, he:"קופר פלאג", en:"Cooper Flagg", role:"בחירה 1, דראפט 2025", badge:"רוקי", pos:"SF", pts:16.0, reb:8.0, ast:4.0},
     {rank:2, he:"אנתוני דייוויס", en:"Anthony Davis", pos:"PF", pts:24.0, reb:11.0, ast:3.0},
     {rank:3, he:"קיירי אירווינג", en:"Kyrie Irving", pos:"PG", pts:22.0, reb:4.0, ast:5.0},
     {rank:4, he:"פי.ג'יי וושינגטון", en:"PJ Washington", pos:"PF", pts:13.0, reb:6.0, ast:2.0},
     {rank:5, he:"קליי תומפסון", en:"Klay Thompson", pos:"SG", pts:14.0, reb:3.0, ast:2.0},
     {rank:6, he:"דניאל גאפורד", en:"Daniel Gafford", pos:"C", pts:11.0, reb:7.0, ast:1.0},
-    {rank:7, he:"דרק לייבלי השני", en:"Dereck Lively II", pos:"C", pts:9.0, reb:8.0, ast:1.0},
-    {rank:8, he:"נאג'י מרשל", en:"Naji Marshall", pos:"SF", pts:10.0, reb:4.0, ast:3.0} ],
+    {rank:7, he:"דרק לייבלי השני", en:"Dereck Lively II", pos:"C", pts:9.0, reb:8.0, ast:1.0} ],
   grizzlies: [ {rank:1, he:"ג'ה מוראנט", en:"Ja Morant", pos:"PG", pts:23.0, reb:4.0, ast:7.0},
     {rank:2, he:"ג'ארן ג'קסון ג'וניור", en:"Jaren Jackson Jr", pos:"PF", pts:21.0, reb:6.0, ast:2.0},
     {rank:3, he:"זאק אדיי", en:"Zach Edey", pos:"C", pts:11.0, reb:8.0, ast:1.0},
     {rank:4, he:"וינס וויליאמס ג'וניור", en:"Vince Williams Jr", pos:"SF", pts:10.0, reb:4.0, ast:3.0},
     {rank:5, he:"סנטי אלדמה", en:"Santi Aldama", pos:"PF", pts:12.0, reb:6.0, ast:2.0},
-    {rank:6, he:"ג'י.ג'י ג'קסון", en:"GG Jackson", pos:"SF", pts:11.0, reb:4.0, ast:1.0},
-    {rank:7, he:"סקוטי פיפן ג'וניור", en:"Scotty Pippen Jr", pos:"PG", pts:9.0, reb:2.0, ast:4.0} ],
+    {rank:6, he:"ג'י.ג'י ג'קסון", en:"GG Jackson", pos:"SF", pts:11.0, reb:4.0, ast:1.0} ],
   kings: [ {rank:1, he:"דומנטס סבוניס", en:"Domantas Sabonis", pos:"C", pts:19.0, reb:13.0, ast:6.0},
     {rank:2, he:"זאק לאווין", en:"Zach LaVine", pos:"SG", pts:22.0, reb:4.0, ast:4.0},
     {rank:3, he:"קיגן מארי", en:"Keegan Murray", pos:"SF", pts:15.0, reb:5.0, ast:2.0},
     {rank:4, he:"מאליק מונק", en:"Malik Monk", pos:"PG", pts:17.0, reb:3.0, ast:5.0},
-    {rank:5, he:"דימאר דירוזאן", en:"DeMar DeRozan", pos:"SF", pts:20.0, reb:4.0, ast:4.0},
-    {rank:6, he:"דוין קרטר", en:"Devin Carter", pos:"SG", pts:9.0, reb:4.0, ast:2.0},
-    {rank:7, he:"דאג מקדרמוט", en:"Doug McDermott", pos:"SF", pts:8.0, reb:2.0, ast:1.0} ],
+    {rank:5, he:"דימאר דירוזאן", en:"DeMar DeRozan", pos:"SF", pts:20.0, reb:4.0, ast:4.0} ],
   jazz: [ {rank:1, he:"לאורי מארקנן", en:"Lauri Markkanen", pos:"PF", pts:22.0, reb:6.0, ast:2.0},
     {rank:2, he:"וולקר קסלר", en:"Walker Kessler", pos:"C", pts:11.0, reb:10.0, ast:1.0},
     {rank:3, he:"קיונטה ג'ורג'", en:"Keyonte George", pos:"PG", pts:18.0, reb:4.0, ast:6.0},
     {rank:4, he:"אייס ביילי", en:"Ace Bailey", role:"רוקי, דראפט 2025", badge:"רוקי", pos:"SF", pts:13.0, reb:5.0, ast:2.0},
-    {rank:5, he:"קולין סקסטון", en:"Collin Sexton", pos:"PG", pts:16.0, reb:3.0, ast:4.0},
-    {rank:6, he:"איזיה קוליר", en:"Isaiah Collier", pos:"PG", pts:9.0, reb:3.0, ast:5.0},
-    {rank:7, he:"טיילור הנדריקס", en:"Taylor Hendricks", pos:"PF", pts:10.0, reb:5.0, ast:1.0},
-    {rank:8, he:"בריס סנסבו", en:"Brice Sensabaugh", pos:"SF", pts:9.0, reb:3.0, ast:1.0} ]
+    {rank:5, he:"קולין סקסטון", en:"Collin Sexton", pos:"PG", pts:16.0, reb:3.0, ast:4.0} ]
 };
 
 let state = { lang:'he', view:'teams', team:null };
-
-function tr(key){ return T[state.lang][key]; }
 
 function applyStaticText(){
   const t = T[state.lang];
@@ -786,8 +810,7 @@ function applyStaticText(){
   document.getElementById('lTeamsTitle').textContent = t.careerTeams;
   document.getElementById('lAwardsTitle').textContent = t.awardsTitle;
 
-  const rtlLangs = ['he','ar'];
-  const isRtl = rtlLangs.includes(state.lang);
+  const isRtl = (state.lang === 'he' || state.lang === 'ar');
   document.body.classList.toggle('ltr', !isRtl);
   document.documentElement.setAttribute('dir', isRtl ? 'rtl' : 'ltr');
   document.documentElement.setAttribute('lang', state.lang);
@@ -807,27 +830,20 @@ function teamLegend(key){
   return T[state.lang].approxNote;
 }
 
-function avatarCell(p, color){
-  if(p.id){
-    return '<img class="player-img" src="' + getPlayerImg(p.id) + '" alt="' + p.en + '" onerror="this.style.visibility=\'hidden\'">';
-  }
-  return '<div class="avatar-circle" style="background:' + color + '">' + initialsOf(p.en) + '</div>';
-}
-
 function renderTeamsList(){
   const t = T[state.lang];
   let html = '<div class="team-grid">';
-  Object.keys(teamsMeta).forEach(key => {
+  Object.keys(teamsMeta).forEach(function(key){
     const meta = teamsMeta[key];
-    const injCount = (data[key] || []).filter(p => p.injured).length;
+    const injCount = (data[key] || []).filter(function(p){ return p.injured; }).length;
     html += '<div class="team-card" style="--accent:' + meta.color + '" onclick="selectTeam(\'' + key + '\')">' +
       '<div class="accent-bar"></div>' +
-      '<h3>' + teamName(key) + '</h3>' +
+      '<div class="card-top">' + teamLogoHtml(key, 'sm') + '<h3>' + teamName(key) + '</h3></div>' +
       '<div class="meta">' + teamNote(key) + '</div>' +
       '<div class="badges">' +
         '<span class="pill roster">' + (data[key] || []).length + ' ' + t.rosterBadge + '</span>' +
         (injCount > 0 ? '<span class="pill inj">' + injCount + ' ' + t.injBadge + '</span>' : '') +
-        (!meta.verified ? '<span class="pill unverified">' + t.unverifiedBadge + '</span>' : '') +
+        (!meta.verified && !meta.rosterVerified ? '<span class="pill unverified">' + t.unverifiedBadge + '</span>' : '') +
       '</div>' +
     '</div>';
   });
@@ -839,12 +855,13 @@ function renderTeamDetail(key){
   const t = T[state.lang];
   const meta = teamsMeta[key];
   const players = data[key] || [];
-  const injured = players.filter(p => p.injured);
+  const injured = players.filter(function(p){ return p.injured; });
+  const isRtl = (state.lang === 'he' || state.lang === 'ar');
 
-  let html = '<button class="back-btn" onclick="backToTeams()">' + (state.lang!=='he' && state.lang!=='ar' ? '← ' : '') + t.back + ((state.lang==='he'||state.lang==='ar') ? ' →' : '') + '</button>';
-  html += '<div class="team-head"><h2>' + teamName(key) + '</h2><span class="note">' + teamNote(key) + '</span></div>';
+  let html = '<button class="back-btn" onclick="backToTeams()">' + (isRtl ? (t.back + ' →') : ('← ' + t.back)) + '</button>';
+  html += '<div class="team-head"><div class="team-head-title">' + teamLogoHtml(key, 'lg') + '<h2>' + teamName(key) + '</h2></div><span class="note">' + teamNote(key) + '</span></div>';
 
-  if(!meta.verified){
+  if(!meta.verified && !meta.rosterVerified){
     html += '<div class="approx-banner">⚠ ' + t.approxNote + '</div>';
   }
 
@@ -852,8 +869,8 @@ function renderTeamDetail(key){
   if(injured.length === 0){
     html += '<div class="injured-empty">' + t.injuredEmpty + '</div>';
   } else {
-    injured.forEach(p => {
-      html += '<div class="injured-row">' + avatarCell(p, meta.color) +
+    injured.forEach(function(p){
+      html += '<div class="injured-row">' + avatarHtml(p, meta.color, 34, 25) +
         '<div><div class="iname">' + (state.lang==='he' ? p.he : p.en) + '</div>' +
         '<div class="istatus">' + (state.lang==='he' ? p.injuryHe : p.injuryEn) + '</div></div>' +
       '</div>';
@@ -862,14 +879,14 @@ function renderTeamDetail(key){
   html += '</div>';
 
   html += '<table><thead><tr><th class="num">' + t.colNum + '</th><th class="imgcol">' + t.colImg + '</th><th>' + t.colPlayer + '</th><th>' + t.colPos + '</th><th class="num">' + t.colPts + '</th><th class="num">' + t.colReb + '</th><th class="num">' + t.colAst + '</th></tr></thead><tbody>';
-  players.forEach(p => {
+  players.forEach(function(p){
     const badgeHtml = p.badge ? '<span class="badge new">' + p.badge + '</span>' : '';
     const injBadgeHtml = p.injured ? '<span class="badge inj">' + t.injBadge + '</span>' : '';
     const roleHtml = p.role ? '<span class="role">' + p.role + '</span>' : '';
     const rowClass = (p.star ? 'star ' : '') + (p.injured ? 'injured-row-flag' : '');
     html += '<tr class="' + rowClass + '" onclick="showPlayerDetails(\'' + key + '\', ' + p.rank + ')">' +
       '<td class="num">' + p.rank + '</td>' +
-      '<td class="imgtd">' + avatarCell(p, meta.color) + '</td>' +
+      '<td class="imgtd">' + avatarHtml(p, meta.color, 44, 32) + '</td>' +
       '<td class="player">' + (state.lang==='he' ? p.he : p.en) + badgeHtml + injBadgeHtml + roleHtml + '</td>' +
       '<td>' + p.pos + '</td>' +
       '<td class="num">' + p.pts.toFixed(1) + '</td>' +
@@ -886,7 +903,7 @@ function renderTeamDetail(key){
 function renderGames(){
   const t = T[state.lang];
   let html = '<div class="games-list">';
-  games.forEach(g => {
+  games.forEach(function(g){
     const home = state.lang==='he' ? g.homeHe : g.homeEn;
     const away = state.lang==='he' ? g.awayHe : g.away;
     const note = state.lang==='he' ? g.noteHe : g.noteEn;
@@ -904,7 +921,7 @@ function renderGames(){
 function renderStandingsTable(list, titleKey){
   const t = T[state.lang];
   let html = '<div class="standings-table"><h3>' + t[titleKey] + '</h3><table><thead><tr><th>' + t.colTeam + '</th><th class="num">' + t.colW + '</th><th class="num">' + t.colL + '</th><th class="num">' + t.colPct + '</th></tr></thead><tbody>';
-  list.forEach((key, i) => {
+  list.forEach(function(key, i){
     const m = teamsMeta[key];
     const pct = (m.w / (m.w + m.l)).toFixed(3).replace(/^0/, '');
     html += '<tr><td class="teamcell"><span class="seed-dot" style="background:' + m.color + '"></span>' + (i+1) + '. ' + teamName(key) + '</td><td class="num">' + m.w + '</td><td class="num">' + m.l + '</td><td class="num">' + pct + '</td></tr>';
@@ -940,13 +957,13 @@ function setActiveNav(view){
   document.getElementById('navGamesBtn').classList.toggle('active', view==='games');
   document.getElementById('navStandingsBtn').classList.toggle('active', view==='standings');
 }
-document.getElementById('navTeamsBtn').addEventListener('click', () => { state.view='teams'; state.team=null; setActiveNav('teams'); render(); });
-document.getElementById('navGamesBtn').addEventListener('click', () => { state.view='games'; state.team=null; setActiveNav('games'); render(); });
-document.getElementById('navStandingsBtn').addEventListener('click', () => { state.view='standings'; state.team=null; setActiveNav('standings'); render(); });
-document.getElementById('langSelect').addEventListener('change', (e) => { state.lang = e.target.value; render(); });
 
-function showPlayerDetails(teamKey, rank) {
-  const player = (data[teamKey] || []).find(p => p.rank === rank);
+function goTeams(){ state.view='teams'; state.team=null; setActiveNav('teams'); render(); }
+function goGames(){ state.view='games'; state.team=null; setActiveNav('games'); render(); }
+function goStandings(){ state.view='standings'; state.team=null; setActiveNav('standings'); render(); }
+
+function showPlayerDetails(teamKey, rank){
+  const player = (data[teamKey] || []).find(function(p){ return p.rank === rank; });
   if(!player) return;
   const t = T[state.lang];
   const meta = teamsMeta[teamKey];
@@ -955,14 +972,14 @@ function showPlayerDetails(teamKey, rank) {
   if(player.id){
     avatarWrap.innerHTML = '<img id="mImg" class="modal-img" src="' + getPlayerImg(player.id) + '" alt="">';
   } else {
-    avatarWrap.innerHTML = '<div class="modal-avatar" style="background:' + meta.color + '">' + initialsOf(player.en) + '</div>';
+    avatarWrap.innerHTML = '<div class="avatar-circle modal-avatar" style="background:' + meta.color + '; font-size:26px;">' + initialsOf(player.en) + '</div>';
   }
 
   document.getElementById('mName').innerText = state.lang==='he' ? player.he : player.en;
   document.getElementById('mEn').innerText = state.lang==='he' ? player.en : player.he;
 
   const approxBox = document.getElementById('mApproxBox');
-  if(!meta.verified){
+  if(!meta.verified && !meta.rosterVerified){
     approxBox.style.display = 'block';
     approxBox.textContent = '⚠ ' + t.approxNote;
   } else {
@@ -995,7 +1012,7 @@ function showPlayerDetails(teamKey, rank) {
   const awardsSection = document.getElementById('mAwardsSection');
   if(player.teams){
     teamsSection.style.display = 'block';
-    document.getElementById('mTeams').innerHTML = player.teams.map(tm => '<span class="team-tag">' + tm + '</span>').join(' ');
+    document.getElementById('mTeams').innerHTML = player.teams.map(function(tm){ return '<span class="team-tag">' + tm + '</span>'; }).join(' ');
   } else { teamsSection.style.display = 'none'; }
   if(player.awards){
     awardsSection.style.display = 'block';
@@ -1005,13 +1022,15 @@ function showPlayerDetails(teamKey, rank) {
   document.getElementById('playerModal').classList.add('active');
 }
 
-document.getElementById('modalClose').addEventListener('click', () => {
-  document.getElementById('playerModal').classList.remove('active');
-});
-document.getElementById('playerModal').addEventListener('click', (e) => {
-  if (e.target.id === 'playerModal') {
-    document.getElementById('playerModal').classList.remove('active');
-  }
+function closeModal(){ document.getElementById('playerModal').classList.remove('active'); }
+
+document.getElementById('navTeamsBtn').addEventListener('click', goTeams);
+document.getElementById('navGamesBtn').addEventListener('click', goGames);
+document.getElementById('navStandingsBtn').addEventListener('click', goStandings);
+document.getElementById('langSelect').addEventListener('change', function(e){ state.lang = e.target.value; render(); });
+document.getElementById('modalClose').addEventListener('click', closeModal);
+document.getElementById('playerModal').addEventListener('click', function(e){
+  if (e.target.id === 'playerModal') closeModal();
 });
 
 render();
