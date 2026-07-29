@@ -190,6 +190,7 @@ tbody tr.injured-row-flag td{ background: rgba(229,72,77,0.05); }
 
 <script>
 function getPlayerImg(id){ return 'https://cdn.nba.com/headshots/nba/latest/260x190/' + id + '.png'; }
+function getEspnImg(espnId){ return 'https://a.espncdn.com/i/headshots/nba/players/full/' + espnId + '.png'; }
 
 const teamAbbrEspn = { knicks:"ny", nets:"bkn", celtics:"bos", sixers:"phi", pistons:"det", cavaliers:"cle", raptors:"tor", hawks:"atl", magic:"orl", hornets:"cha", heat:"mia", bucks:"mil", bulls:"chi", pacers:"ind", wizards:"wsh", thunder:"okc", spurs:"sa", nuggets:"den", lakers:"lal", rockets:"hou", timberwolves:"min", suns:"phx", blazers:"por", clippers:"lac", warriors:"gs", pelicans:"no", mavericks:"dal", grizzlies:"mem", kings:"sac", jazz:"utah" };
 function getTeamLogoUrl(key){ return 'https://a.espncdn.com/combiner/i?img=/i/teamlogos/nba/500/' + teamAbbrEspn[key] + '.png&w=200&h=200'; }
@@ -215,6 +216,9 @@ function teamLogoHtml(key, size){
 function avatarHtml(p, color, w, h){
   if(p.id){
     return '<img class="player-img" style="width:' + w + 'px;height:' + h + 'px;" src="' + getPlayerImg(p.id) + '" alt="" onerror="this.style.visibility=\'hidden\'">';
+  }
+  if(p.espnId){
+    return '<img class="player-img" style="width:' + w + 'px;height:' + h + 'px;" src="' + getEspnImg(p.espnId) + '" alt="" onerror="this.style.visibility=\'hidden\'">';
   }
   return '<div class="avatar-circle" style="width:' + w + 'px;height:' + h + 'px;background:' + color + ';">' + initialsOf(p.en) + '</div>';
 }
@@ -746,14 +750,14 @@ const data = {
     {rank:6, he:"ג'ורדן גודווין", en:"Jordan Goodwin", pos:"G", pts:7.0, reb:4.0, ast:3.0},
     {rank:7, he:"קובי בריאה", en:"Koby Brea", pos:"G", pts:6.0, reb:2.0, ast:1.0},
     {rank:9, he:"מיילס בריג'ס", en:"Miles Bridges", role:"הגיע מהורנטס בחופשית", badge:"חתימה חדשה", pos:"F", pts:20.0, reb:7.0, ast:3.0} ],
-  blazers: [ {rank:1, he:"סקוט הנדרסון", en:"Scoot Henderson", pos:"G", pts:17.0, reb:4.0, ast:6.0},
-    {rank:2, he:"שידיאון שארפ", en:"Shaedon Sharpe", pos:"G", pts:19.0, reb:5.0, ast:3.0},
-    {rank:3, he:"דני אבדיה", en:"Deni Avdija", role:"אול-סטאר ישראלי ראשון בהיסטוריה", badge:"אול-סטאר", pos:"F", pts:24.0, reb:8.0, ast:6.0},
-    {rank:4, he:"דונובן קלינגן", en:"Donovan Clingan", pos:"C", pts:12.0, reb:9.0, ast:1.0},
-    {rank:5, he:"ג'רמי גרנט", en:"Jerami Grant", pos:"F", pts:15.0, reb:4.0, ast:2.0},
+  blazers: [ {rank:1, espnId:4683678, he:"סקוט הנדרסון", en:"Scoot Henderson", pos:"G", pts:17.0, reb:4.0, ast:6.0},
+    {rank:2, espnId:4914336, he:"שידיאון שארפ", en:"Shaedon Sharpe", pos:"G", pts:19.0, reb:5.0, ast:3.0},
+    {rank:3, espnId:4683021, he:"דני אבדיה", en:"Deni Avdija", role:"אול-סטאר ישראלי ראשון בהיסטוריה", badge:"אול-סטאר", pos:"F", pts:24.0, reb:8.0, ast:6.0},
+    {rank:4, espnId:5105565, he:"דונובן קלינגן", en:"Donovan Clingan", pos:"C", pts:12.0, reb:9.0, ast:1.0},
+    {rank:5, espnId:2991070, he:"ג'רמי גרנט", en:"Jerami Grant", pos:"F", pts:15.0, reb:4.0, ast:2.0},
     {rank:6, he:"טומאני קאמארה", en:"Toumani Camara", pos:"F", pts:12.0, reb:6.0, ast:2.0},
     {rank:7, he:"רוברט וויליאמס השלישי", en:"Robert Williams III", pos:"C", pts:8.0, reb:7.0, ast:1.0},
-    {rank:8, he:"יאנג האנסן", en:"Yang Hansen", role:"רוקי סיני, דראפט 2025", badge:"רוקי", pos:"C", pts:6.0, reb:5.0, ast:1.0},
+    {rank:8, espnId:5217746, he:"יאנג האנסן", en:"Yang Hansen", role:"רוקי סיני, דראפט 2025", badge:"רוקי", pos:"C", pts:6.0, reb:5.0, ast:1.0},
     {rank:9, he:"מטיס תיבול", en:"Matisse Thybulle", pos:"G", pts:5.0, reb:2.0, ast:1.0} ],
   clippers: [ {rank:1, he:"ג'יימס הארדן", en:"James Harden", pos:"G", pts:22.0, reb:6.0, ast:9.0},
     {rank:2, he:"דריק ג'ונס ג'וניור", en:"Derrick Jones Jr", pos:"F", pts:11.0, reb:5.0, ast:2.0},
@@ -772,12 +776,14 @@ const data = {
     {rank:10, he:"גארי פייטון השני", en:"Gary Payton II", pos:"G", pts:5.0, reb:2.0, ast:1.0},
     {rank:11, he:"אל.ג'יי קרייר", en:"LJ Cryer", pos:"G", pts:6.0, reb:1.0, ast:2.0},
     {rank:12, he:"טרייס ג'קסון-דייויס", en:"Trayce Jackson-Davis", pos:"F-C", pts:5.0, reb:4.0, ast:1.0} ],
-  pelicans: [ {rank:1, he:"זיון וויליאמסון", en:"Zion Williamson", pos:"PF", pts:22.0, reb:7.0, ast:4.0},
-    {rank:2, he:"טריי מרפי השלישי", en:"Trey Murphy III", pos:"SF", pts:20.0, reb:5.0, ast:2.0},
-    {rank:3, he:"הרברט ג'ונס", en:"Herbert Jones", pos:"SF", pts:12.0, reb:4.0, ast:2.0},
-    {rank:4, he:"איב מיסי", en:"Yves Missi", pos:"C", pts:9.0, reb:8.0, ast:1.0},
-    {rank:5, he:"ג'ורדן פול", en:"Jordan Poole", pos:"SG", pts:16.0, reb:3.0, ast:4.0},
-    {rank:6, he:"סאדיק ביי", en:"Saddiq Bey", pos:"SF", pts:10.0, reb:5.0, ast:2.0} ],
+  pelicans: [ {rank:1, espnId:4395628, he:"זיון וויליאמסון", en:"Zion Williamson", pos:"PF", pts:22.0, reb:7.0, ast:4.0},
+    {rank:2, espnId:4397688, he:"טריי מרפי השלישי", en:"Trey Murphy III", pos:"SF", pts:20.0, reb:5.0, ast:2.0},
+    {rank:3, espnId:4277813, he:"הרברט ג'ונס", en:"Herbert Jones", pos:"SF", pts:12.0, reb:4.0, ast:2.0},
+    {rank:4, espnId:5061589, he:"איב מיסי", en:"Yves Missi", pos:"C", pts:9.0, reb:8.0, ast:1.0},
+    {rank:5, espnId:4277956, he:"ג'ורדן פול", en:"Jordan Poole", pos:"SG", pts:16.0, reb:3.0, ast:4.0},
+    {rank:6, espnId:4869780, he:"דריק קווין", en:"Derik Queen", role:"רוקי, דראפט 2025", badge:"רוקי", pos:"C", pts:11.0, reb:7.0, ast:2.0},
+    {rank:7, espnId:5144091, he:"ג'רמיה פירס", en:"Jeremiah Fears", role:"רוקי, דראפט 2025", badge:"רוקי", pos:"PG", pts:10.0, reb:3.0, ast:4.0},
+    {rank:8, espnId:4997538, he:"קרלו מטקוביץ'", en:"Karlo Matkovic", pos:"F", pts:6.0, reb:5.0, ast:1.0} ],
   mavericks: [ {rank:1, he:"קופר פלאג", en:"Cooper Flagg", role:"בחירה 1, דראפט 2025", badge:"רוקי", pos:"SF", pts:16.0, reb:8.0, ast:4.0},
     {rank:2, he:"אנתוני דייוויס", en:"Anthony Davis", pos:"PF", pts:24.0, reb:11.0, ast:3.0},
     {rank:3, he:"קיירי אירווינג", en:"Kyrie Irving", pos:"PG", pts:22.0, reb:4.0, ast:5.0},
@@ -792,11 +798,16 @@ const data = {
     {rank:4, he:"וינס וויליאמס ג'וניור", en:"Vince Williams Jr", pos:"SF", pts:10.0, reb:4.0, ast:3.0},
     {rank:5, he:"סנטי אלדמה", en:"Santi Aldama", pos:"PF", pts:12.0, reb:6.0, ast:2.0},
     {rank:6, he:"ג'י.ג'י ג'קסון", en:"GG Jackson", pos:"SF", pts:11.0, reb:4.0, ast:1.0} ],
-  kings: [ {rank:1, he:"דומנטס סבוניס", en:"Domantas Sabonis", pos:"C", pts:19.0, reb:13.0, ast:6.0},
-    {rank:2, he:"זאק לאווין", en:"Zach LaVine", pos:"SG", pts:22.0, reb:4.0, ast:4.0},
-    {rank:3, he:"קיגן מארי", en:"Keegan Murray", pos:"SF", pts:15.0, reb:5.0, ast:2.0},
-    {rank:4, he:"מאליק מונק", en:"Malik Monk", pos:"PG", pts:17.0, reb:3.0, ast:5.0},
-    {rank:5, he:"דימאר דירוזאן", en:"DeMar DeRozan", pos:"SF", pts:20.0, reb:4.0, ast:4.0} ],
+  kings: [ {rank:1, espnId:3155942, he:"דומנטס סבוניס", en:"Domantas Sabonis", pos:"C", pts:19.0, reb:13.0, ast:6.0},
+    {rank:2, espnId:3064440, he:"זאק לאווין", en:"Zach LaVine", pos:"SG", pts:22.0, reb:4.0, ast:4.0},
+    {rank:3, espnId:3978, he:"דימאר דירוזאן", en:"DeMar DeRozan", pos:"SF", pts:20.0, reb:4.0, ast:4.0},
+    {rank:4, espnId:3468, he:"ראסל ווסטברוק", en:"Russell Westbrook", pos:"PG", pts:15.2, reb:5.4, ast:6.7},
+    {rank:5, espnId:4594327, he:"קיגן מארי", en:"Keegan Murray", pos:"SF", pts:15.0, reb:5.0, ast:2.0},
+    {rank:6, espnId:4066262, he:"מאליק מונק", en:"Malik Monk", pos:"PG", pts:17.0, reb:3.0, ast:5.0},
+    {rank:7, espnId:2528588, he:"דאג מקדרמוט", en:"Doug McDermott", pos:"SF", pts:8.0, reb:2.0, ast:1.0},
+    {rank:8, espnId:4433188, he:"דוין קרטר", en:"Devin Carter", pos:"SG", pts:9.0, reb:4.0, ast:2.0},
+    {rank:9, espnId:4702384, he:"ניק קליפורד", en:"Nique Clifford", role:"רוקי, דראפט 2025", badge:"רוקי", pos:"SG", pts:8.0, reb:4.0, ast:2.0},
+    {rank:10, espnId:4898371, he:"מקסים ריינו", en:"Maxime Raynaud", role:"רוקי, דראפט 2025", badge:"רוקי", pos:"C", pts:6.0, reb:5.0, ast:1.0} ],
   jazz: [ {rank:1, he:"לאורי מארקנן", en:"Lauri Markkanen", pos:"PF", pts:22.0, reb:6.0, ast:2.0},
     {rank:2, he:"וולקר קסלר", en:"Walker Kessler", pos:"C", pts:11.0, reb:10.0, ast:1.0},
     {rank:3, he:"קיונטה ג'ורג'", en:"Keyonte George", pos:"PG", pts:18.0, reb:4.0, ast:6.0},
@@ -987,6 +998,8 @@ function showPlayerDetails(teamKey, rank){
   const avatarWrap = document.getElementById('mAvatarWrap');
   if(player.id){
     avatarWrap.innerHTML = '<img id="mImg" class="modal-img" src="' + getPlayerImg(player.id) + '" alt="">';
+  } else if(player.espnId){
+    avatarWrap.innerHTML = '<img id="mImg" class="modal-img" src="' + getEspnImg(player.espnId) + '" alt="">';
   } else {
     avatarWrap.innerHTML = '<div class="avatar-circle modal-avatar" style="background:' + meta.color + '; font-size:26px;">' + initialsOf(player.en) + '</div>';
   }
